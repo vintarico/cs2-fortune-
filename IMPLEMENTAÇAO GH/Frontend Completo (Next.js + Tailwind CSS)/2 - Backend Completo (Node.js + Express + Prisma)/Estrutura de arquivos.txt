@@ -1,0 +1,8 @@
+cs2-fortune-backend/
+  ├─ prisma/
+  │   └─ schema.prisma
+  ├─ .env
+  ├─ index.js
+  ├─ steamBot.js
+  ├─ package.json
+  └─ README.md

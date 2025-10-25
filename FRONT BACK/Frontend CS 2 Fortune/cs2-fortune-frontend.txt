@@ -1,0 +1,24 @@
+cs2-fortune-frontend/
+  ├─ pages/
+  │   ├─ index.js          (Home)
+  │   ├─ cases.js          (Abrir caixas)
+  │   ├─ login.js          (Login Steam)
+  │   ├─ deposit.js        (Depositar)
+  │   ├─ withdraw.js       (Retirar)
+  │   ├─ trade.js          (Mercado de skins)
+  │   ├─ admin.js          (Painel admin)
+  ├─ components/
+  │   ├─ Navbar.js
+  │   ├─ Footer.js
+  │   ├─ CaseCard.js
+  ├─ styles/
+  │   ├─ globals.css
+  ├─ public/
+  │   ├─ images/
+  │       ├─ logo.png      (Logo CS 2 Fortune)
+  │       ├─ case-skins/   (Imagens originais geradas)
+  ├─ .env.local          (Para variáveis ambiente)
+  ├─ next.config.js
+  ├─ tailwind.config.js
+  ├─ package.json
+  └─ README.md

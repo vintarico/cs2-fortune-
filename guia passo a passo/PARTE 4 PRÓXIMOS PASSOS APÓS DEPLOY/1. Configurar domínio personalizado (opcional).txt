@@ -1,0 +1,13 @@
+Vá em "Settings" → "Domains"
+
+Adicione seu domínio (ex: cs2fortune.com)
+
+Configure DNS conforme instruções
+
+No Railway:
+
+Vá em "Settings" → "Networking"
+
+Adicione domínio customizado
+
+Configure DNS

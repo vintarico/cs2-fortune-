@@ -1,0 +1,5 @@
+Clique no serviço backend (não no PostgreSQL)
+
+Vá em "Variables"
+
+Adicione as seguintes variáveis:

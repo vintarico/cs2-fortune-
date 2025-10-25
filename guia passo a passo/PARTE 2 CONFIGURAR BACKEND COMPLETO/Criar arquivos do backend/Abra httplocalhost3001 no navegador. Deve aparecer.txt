@@ -1,0 +1,5 @@
+{
+  "message": "CS 2 Fortune API",
+  "version": "1.0.0",
+  "status": "online"
+}

@@ -1,0 +1,7 @@
+Clique no serviço backend
+
+Vá em "Settings" → "Service"
+
+Em "Variables", procure "Postgres" e clique em "Add Reference"
+
+Isso conectará automaticamente o DATABASE_URL

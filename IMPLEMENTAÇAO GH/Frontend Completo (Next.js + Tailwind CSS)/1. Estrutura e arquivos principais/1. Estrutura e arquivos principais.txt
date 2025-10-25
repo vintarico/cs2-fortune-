@@ -1,0 +1,23 @@
+cs2-fortune-frontend/
+  ├─ components/
+  │   └─ Navbar.js
+  ├─ pages/
+  │   ├─ _app.js
+  │   ├─ index.js
+  │   ├─ login.js
+  │   ├─ saldo.js
+  │   ├─ cases.js
+  │   ├─ deposit.js
+  │   ├─ withdraw.js
+  │   ├─ trade.js
+  │   ├─ admin.js
+  ├─ public/
+  │   └─ images/
+  │       └─ logo.png
+  ├─ styles/
+  │   └─ globals.css
+  ├─ .gitignore
+  ├─ package.json
+  ├─ tailwind.config.js
+  ├─ postcss.config.js
+  └─ README.md

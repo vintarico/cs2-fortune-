@@ -1,0 +1,9 @@
+Acesse https://vercel.com
+
+Faça login com GitHub
+
+Clique em "Add New..." → "Project"
+
+Selecione o repositório cs2-fortune-frontend
+
+Clique em "Import"

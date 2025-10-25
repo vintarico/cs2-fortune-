@@ -1,0 +1,19 @@
+Funcionalidades que você pode implementar:
+
+✅ Sistema de abertura de caixas com animação
+
+✅ Integração real com Steam OpenID
+
+✅ Bot de trade funcional
+
+✅ Mercado de skins P2P
+
+✅ Sistema de níveis e XP
+
+✅ Bônus diários
+
+✅ Ranking de jogadores
+
+✅ Chat ao vivo
+
+✅ Notificações push

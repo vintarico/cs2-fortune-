@@ -1,0 +1,19 @@
+Mercado Pago:
+
+Crie conta em https://mercadopago.com.br/developers
+
+Obtenha credenciais de produção
+
+Adicione ao Railway: MERCADO_PAGO_ACCESS_TOKEN
+
+Implemente SDK oficial no backend
+
+CoinPayments (Cripto):
+
+Crie conta em https://coinpayments.net
+
+Obtenha API keys
+
+Adicione ao Railway
+
+Integre com biblioteca coinpayments

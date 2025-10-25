@@ -1,0 +1,5 @@
+No mesmo projeto Railway, clique em "New"
+
+Selecione "Database" → "PostgreSQL"
+
+Aguarde a criação do banco

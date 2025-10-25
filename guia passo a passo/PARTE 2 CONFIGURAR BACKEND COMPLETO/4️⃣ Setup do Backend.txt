@@ -1,0 +1,9 @@
+# Volte para a pasta raiz
+cd ..
+cd backend
+
+# Inicializar projeto
+npm init -y
+
+# Instalar todas as dependências
+npm install express cors dotenv jsonwebtoken @prisma/client prisma speakeasy qrcode axios steam-user steam-tradeoffer-manager steam-totp

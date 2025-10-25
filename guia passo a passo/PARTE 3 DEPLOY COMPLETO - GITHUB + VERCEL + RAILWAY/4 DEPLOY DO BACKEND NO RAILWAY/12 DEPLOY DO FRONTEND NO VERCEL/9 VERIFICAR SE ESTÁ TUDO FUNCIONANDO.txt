@@ -1,0 +1,30 @@
+Teste 1: Backend online
+Acesse: https://seu-backend.up.railway.app/
+
+Deve aparecer:
+
+json
+{
+  "message": "CS 2 Fortune API",
+  "version": "1.0.0",
+  "status": "online"
+}
+Teste 2: Frontend online
+Acesse: https://seu-site.vercel.app
+
+Deve aparecer a página inicial do CS 2 Fortune.
+
+Teste 3: Login funcionando
+Vá em: https://seu-site.vercel.app/login
+
+Insira um SteamID de teste: 76561198000000001
+
+Username: TestUser
+
+Clique em "Entrar com Steam"
+
+Deve aparecer: "✅ Login bem sucedido!"
+
+Você será redirecionado para /saldo
+
+Deve aparecer: R$ 100.00 (bônus inicial)

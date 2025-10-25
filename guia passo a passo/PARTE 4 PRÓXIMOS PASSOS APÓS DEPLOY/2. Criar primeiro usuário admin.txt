@@ -1,0 +1,40 @@
+Opção A: Via Prisma Studio no Railway
+
+No Railway, clique no serviço PostgreSQL
+
+Copie a DATABASE_URL
+
+No seu terminal local:
+
+bash
+cd backend
+# Adicione a DATABASE_URL ao .env local temporariamente
+npx prisma studio
+Abra a tabela User
+
+Edite um usuário e marque isAdmin: true
+
+Opção B: Via código (adicionar rota temporária)
+
+Adicione ao index.js (TEMPORARIAMENTE):
+
+js
+app.post('/api/admin/create-first', async (req, res) => {
+  const { steamId } = req.body;
+  try {
+    const user = await prisma.user.update({
+      where: { steamId },
+      data: { isAdmin: true }
+    });
+    res.json({ message: 'Admin criado', user });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+Teste com:
+
+bash
+curl -X POST https://seu-backend.up.railway.app/api/admin/create-first \
+  -H "Content-Type: application/json" \
+  -d '{"steamId":"76561198000000001"}'
+⚠️ REMOVA essa rota depois!

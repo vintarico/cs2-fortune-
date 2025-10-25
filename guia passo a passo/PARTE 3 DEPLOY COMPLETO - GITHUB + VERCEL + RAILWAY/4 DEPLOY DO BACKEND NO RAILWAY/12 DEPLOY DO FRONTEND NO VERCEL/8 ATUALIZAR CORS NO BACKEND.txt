@@ -1,0 +1,12 @@
+Para que o frontend consiga se comunicar com o backend, certifique-se de que a variável FRONTEND_URL no Railway está configurada corretamente com a URL do Vercel.
+
+O código do backend já está preparado para usar essa variável:
+
+
+
+
+js
+app.use(cors({
+  origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+  credentials: true
+}));

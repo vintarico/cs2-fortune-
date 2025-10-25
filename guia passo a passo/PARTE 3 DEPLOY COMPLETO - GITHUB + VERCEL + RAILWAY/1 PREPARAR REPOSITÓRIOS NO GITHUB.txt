@@ -1,0 +1,24 @@
+A) Criar repositórios
+Acesse https://github.com
+
+Clique em "New repository" (2 vezes, um para frontend e outro para backend)
+
+Repositório 1: Frontend
+
+Nome: cs2-fortune-frontend
+
+Descrição: CS 2 Fortune - Frontend Next.js
+
+Visibilidade: Public ou Private
+
+✅ Não inicialize com README
+
+Repositório 2: Backend
+
+Nome: cs2-fortune-backend
+
+Descrição: CS 2 Fortune - Backend API
+
+Visibilidade: Public ou Private
+
+✅ Não inicialize com README

@@ -1,0 +1,3 @@
+Na tela de configuração:
+
+Framework Preset: Next.js (detectado automaticamente)

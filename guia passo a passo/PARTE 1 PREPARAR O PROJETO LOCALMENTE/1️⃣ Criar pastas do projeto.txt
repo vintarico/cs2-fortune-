@@ -1,0 +1,7 @@
+# Abra o terminal e execute:
+mkdir cs2-fortune
+cd cs2-fortune
+
+# Criar subpastas
+mkdir frontend
+mkdir backend

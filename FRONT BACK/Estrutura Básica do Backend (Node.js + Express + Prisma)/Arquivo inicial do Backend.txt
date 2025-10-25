@@ -1,0 +1,5 @@
+mkdir cs2-fortune-backend
+cd cs2-fortune-backend
+npm init -y
+npm install express cors prisma @prisma/client dotenv jsonwebtoken
+npx prisma init

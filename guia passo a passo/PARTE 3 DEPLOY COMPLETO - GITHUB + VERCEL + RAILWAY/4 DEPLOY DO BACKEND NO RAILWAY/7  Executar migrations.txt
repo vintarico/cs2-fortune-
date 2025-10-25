@@ -1,0 +1,5 @@
+No Railway, clique no serviço backend
+
+Vá em "Settings" → "Deploy"
+
+Em "Build Command", adicione:

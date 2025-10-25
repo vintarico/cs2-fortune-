@@ -1,0 +1,441 @@
+❌ ERRO: "Network Error" no Frontend
+Sintomas:
+
+Login não funciona
+
+Saldo não carrega
+
+Console mostra: Network Error ou ERR_CONNECTION_REFUSED
+
+Causas Possíveis:
+
+Backend não está rodando
+
+URL incorreta no .env.local
+
+CORS bloqueando requisições
+
+Soluções:
+
+✅ 1. Verificar se backend está online
+
+bash
+# Teste direto no navegador
+https://seu-backend.up.railway.app/health
+
+# Deve retornar:
+{"status":"OK","timestamp":"..."}
+✅ 2. Verificar variável de ambiente
+
+bash
+# Frontend: .env.local
+NEXT_PUBLIC_API_URL=https://seu-backend.up.railway.app
+
+# SEM barra no final!
+# ✅ Correto: https://api.exemplo.com
+# ❌ Errado:  https://api.exemplo.com/
+✅ 3. Reconstruir frontend
+
+bash
+cd frontend
+rm -rf .next
+npm run build
+npm run dev
+✅ 4. Verificar CORS no Railway
+
+text
+FRONTEND_URL=https://seu-site.vercel.app
+❌ ERRO: "Token inválido" ou "Token expirado"
+Sintomas:
+
+Logout automático
+
+Acesso negado em rotas protegidas
+
+Console: 403 Forbidden
+
+Soluções:
+
+✅ 1. Limpar storage e fazer novo login
+
+javascript
+// No console do navegador (F12)
+localStorage.clear()
+// Depois faça login novamente
+✅ 2. Verificar SECRET_KEY no backend
+
+text
+# Railway → Variables
+SECRET_KEY=mesma_chave_que_voce_usou_antes
+⚠️ Se mudar o SECRET_KEY, todos os tokens antigos ficam inválidos!
+
+❌ ERRO: "Prisma Client não inicializado"
+Sintomas:
+
+text
+PrismaClientInitializationError: Prisma Client could not locate the binaries
+Soluções:
+
+✅ 1. Gerar cliente Prisma
+
+bash
+cd backend
+npx prisma generate
+✅ 2. No Railway, adicionar ao Build Command
+
+bash
+npm install && npx prisma generate && npx prisma migrate deploy
+✅ 3. Reinstalar dependências
+
+bash
+rm -rf node_modules
+rm package-lock.json
+npm install
+❌ ERRO: "Table does not exist"
+Sintomas:
+
+text
+Error: Table 'User' does not exist in the current database
+Soluções:
+
+✅ 1. Executar migrations
+
+bash
+# Local
+npx prisma migrate dev
+
+# Railway (via CLI)
+railway run npx prisma migrate deploy
+✅ 2. Reset completo do banco (⚠️ APAGA DADOS)
+
+bash
+npx prisma migrate reset
+npx prisma migrate dev
+✅ 3. Verificar DATABASE_URL
+
+text
+# Formato correto:
+DATABASE_URL=postgresql://user:pass@host:5432/database?schema=public
+❌ ERRO: "Port 3001 already in use"
+Sintomas:
+
+text
+Error: listen EADDRINUSE: address already in use :::3001
+Soluções:
+
+✅ Linux/Mac:
+
+bash
+# Encontrar processo
+lsof -ti:3001
+
+# Matar processo
+lsof -ti:3001 | xargs kill -9
+
+# Ou usar outra porta
+PORT=3002 npm start
+✅ Windows:
+
+text
+# Encontrar PID
+netstat -ano | findstr :3001
+
+# Matar processo (substitua PID)
+taskkill /PID 12345 /F
+❌ ERRO: Build falha no Vercel
+Sintomas:
+
+text
+Error: Module not found: Can't resolve 'axios'
+Soluções:
+
+✅ 1. Verificar package.json
+
+json
+{
+  "dependencies": {
+    "axios": "^1.4.0",
+    "next": "^13.0.0",
+    "react": "^18.0.0"
+  }
+}
+✅ 2. Limpar cache do Vercel
+
+Vá em Settings → Advanced
+
+Click em "Clear Cache"
+
+Redeploy
+
+✅ 3. Verificar Node version
+
+json
+// package.json
+{
+  "engines": {
+    "node": ">=16.x"
+  }
+}
+❌ ERRO: Railway build falha
+Sintomas:
+
+text
+Error: Cannot find module '@prisma/client'
+Soluções:
+
+✅ 1. Build Command correto
+
+bash
+npm install && npx prisma generate && npx prisma migrate deploy
+✅ 2. Start Command correto
+
+bash
+npm start
+✅ 3. Verificar package.json
+
+json
+{
+  "scripts": {
+    "start": "node index.js"
+  }
+}
+❌ ERRO: CORS bloqueado
+Sintomas:
+
+text
+Access to XMLHttpRequest blocked by CORS policy
+Soluções:
+
+✅ 1. Verificar variável FRONTEND_URL no Railway
+
+text
+FRONTEND_URL=https://seu-site.vercel.app
+✅ 2. Código CORS no index.js
+
+javascript
+app.use(cors({
+  origin: process.env.FRONTEND_URL,
+  credentials: true
+}));
+✅ 3. Permitir múltiplas origens
+
+javascript
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://seu-site.vercel.app',
+  'https://seu-dominio.com'
+];
+
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed'));
+    }
+  },
+  credentials: true
+}));
+❌ ERRO: Página em branco no Vercel
+Sintomas:
+
+Site carrega mas fica em branco
+
+Console: Erros de JavaScript
+
+Soluções:
+
+✅ 1. Verificar console do navegador (F12)
+
+Procure por erros em vermelho
+
+Anote a linha e arquivo do erro
+
+✅ 2. Testar build local
+
+bash
+npm run build
+npm start
+# Acessar localhost:3000
+✅ 3. Verificar importações
+
+javascript
+// ✅ Correto
+import Navbar from '../components/Navbar'
+
+// ❌ Errado (case-sensitive)
+import navbar from '../components/navbar'
+❌ ERRO: Admin não consegue acessar painel
+Sintomas:
+
+json
+{"error":"Acesso negado - Admin apenas"}
+Soluções:
+
+✅ 1. Verificar campo isAdmin no banco
+
+bash
+# Railway → PostgreSQL → Connect
+# Ou local: npx prisma studio
+
+# Alterar usuário para admin:
+UPDATE "User" SET "isAdmin" = true WHERE "steamId" = 'SEU_STEAM_ID';
+✅ 2. Via Prisma Studio
+
+bash
+npx prisma studio
+# Abra tabela User
+# Edite o usuário
+# Marque isAdmin = true
+✅ 3. Criar rota temporária de setup
+
+javascript
+// Adicionar ao index.js (REMOVER DEPOIS!)
+app.post('/api/setup-admin', async (req, res) => {
+  const { steamId } = req.body;
+  const user = await prisma.user.update({
+    where: { steamId },
+    data: { isAdmin: true }
+  });
+  res.json(user);
+});
+Teste:
+
+bash
+curl -X POST https://seu-backend.up.railway.app/api/setup-admin \
+  -H "Content-Type: application/json" \
+  -d '{"steamId":"76561198000000001"}'
+❌ ERRO: Imagens não carregam
+Sintomas:
+
+Ícones quebrados
+
+404 em /images/...
+
+Soluções:
+
+✅ 1. Verificar pasta public/
+
+text
+frontend/
+└── public/
+    └── images/
+        ├── logo.png
+        └── case-skins/
+✅ 2. Caminho correto no código
+
+jsx
+// ✅ Correto
+<img src="/images/logo.png" alt="Logo" />
+
+// ❌ Errado
+<img src="./images/logo.png" alt="Logo" />
+<img src="images/logo.png" alt="Logo" />
+✅ 3. Next.js Image (recomendado)
+
+jsx
+import Image from 'next/image'
+
+<Image 
+  src="/images/logo.png" 
+  alt="Logo" 
+  width={200} 
+  height={50}
+/>
+❌ ERRO: Database connection timeout
+Sintomas:
+
+text
+Error: Can't reach database server
+Soluções:
+
+✅ 1. Verificar URL do banco
+
+bash
+# Railway → PostgreSQL → Variables → DATABASE_URL
+# Copiar exatamente como está
+✅ 2. Testar conexão
+
+bash
+npx prisma db pull
+# Se funcionar, conexão OK
+✅ 3. Reiniciar banco no Railway
+
+PostgreSQL → Settings → Restart
+
+🐛 DEBUG AVANÇADO
+Habilitar logs detalhados
+Backend:
+
+javascript
+// index.js - adicionar no topo
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path}`);
+  next();
+});
+Prisma:
+
+javascript
+const prisma = new PrismaClient({
+  log: ['query', 'info', 'warn', 'error'],
+});
+Testar endpoints manualmente
+bash
+# Login
+curl -X POST https://seu-backend.up.railway.app/api/login/steam \
+  -H "Content-Type: application/json" \
+  -d '{"steamId":"76561198000000001","username":"Test"}'
+
+# Salvar token
+TOKEN="eyJhbGciOiJIUzI1NiIs..."
+
+# Obter saldo
+curl https://seu-backend.up.railway.app/api/saldo \
+  -H "Authorization: Bearer $TOKEN"
+📞 SUPORTE
+Se nenhuma solução funcionou:
+
+Verifique logs do Railway:
+
+bash
+railway logs
+Verifique logs do Vercel:
+
+Dashboard → Seu projeto → Deployments → Último deploy → View Function Logs
+
+Abra issue no GitHub com:
+
+Descrição do erro
+
+Logs completos
+
+Passos para reproduzir
+
+✅ CHECKLIST FINAL
+Antes de abrir chamado, verifique:
+
+ Backend responde em /health
+
+ NEXT_PUBLIC_API_URL está correta
+
+ FRONTEND_URL no Railway está correta
+
+ DATABASE_URL está conectada
+
+ Migrations foram executadas
+
+ Token JWT está sendo salvo no localStorage
+
+ CORS está configurado
+
+ Não há erros no console do navegador (F12)
+
+ Build local funciona (npm run build)
+
+💡 Dica: 90% dos problemas são resolvidos com:
+
+Rebuild do projeto
+
+Limpar cache
+
+Verificar variáveis de ambiente

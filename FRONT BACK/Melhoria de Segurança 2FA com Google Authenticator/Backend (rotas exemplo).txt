@@ -1,0 +1,17 @@
+const speakeasy = require('speakeasy');
+const qrcode = require('qrcode');
+
+// Criar segredo 2FA
+app.post('/api/2fa/setup', authenticateToken, async (req, res) => {
+  const secret = speakeasy.generateSecret({ length: 20, name: "CS 2 Fortune" });
+  // Salvar secret temporariamente para o usuário no banco (exemplo omitido)
+  const url = await qrcode.toDataURL(secret.otpauth_url);
+  res.json({ secret: secret.base32, qrCode: url });
+});
+
+// Verificar token 2FA
+app.post('/api/2fa/verify', authenticateToken, async (req, res) => {
+  const { token, secret } = req.body;
+  const verified = speakeasy.totp.verify({ secret, encoding: 'base32', token });
+  res.json({ verified });
+});

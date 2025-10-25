@@ -1,0 +1,15 @@
+📘 GUIA COMPLETO DE DEPLOY - CS 2 Fortune
+Passo a Passo para deixar seu site ONLINE
+📋 CHECKLIST INICIAL
+Antes de começar, tenha em mãos:
+
+ Conta no GitHub
+
+ Conta no Vercel (gratuita)
+
+ Conta no Railway (gratuita)
+
+ Git instalado no seu computador
+
+ Node.js instalado (v16 ou superior)
+

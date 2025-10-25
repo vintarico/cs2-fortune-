@@ -1,0 +1,3 @@
+DATABASE_URL será preenchida automaticamente quando você conectar ao PostgreSQL
+
+Copie a URL do seu site Vercel (vamos criar no próximo passo) e cole em FRONTEND_URL

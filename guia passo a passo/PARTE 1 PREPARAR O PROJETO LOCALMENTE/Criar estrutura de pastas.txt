@@ -1,0 +1,2 @@
+mkdir pages components styles public
+mkdir public/images

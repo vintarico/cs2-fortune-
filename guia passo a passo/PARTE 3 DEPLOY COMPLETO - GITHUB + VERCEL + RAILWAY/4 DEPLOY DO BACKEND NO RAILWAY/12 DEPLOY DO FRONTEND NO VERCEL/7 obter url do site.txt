@@ -1,0 +1,5 @@
+Copie a URL gerada (ex: cs2-fortune.vercel.app)
+
+Volte ao Railway e atualize a variável FRONTEND_URL com essa URL
+
+No Railway, clique em "Redeploy" para aplicar a mudança

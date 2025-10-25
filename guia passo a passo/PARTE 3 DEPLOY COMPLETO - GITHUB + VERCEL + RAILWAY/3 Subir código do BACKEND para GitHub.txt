@@ -1,0 +1,19 @@
+# Volte para a pasta raiz e entre no backend
+cd ..
+cd backend
+
+# Inicializar git
+git init
+
+# Adicionar todos os arquivos
+git add .
+
+# Commit inicial
+git commit -m "Initial commit - CS2 Fortune Backend"
+
+# Conectar ao repositório remoto
+git remote add origin https://github.com/SEU_USUARIO/cs2-fortune-backend.git
+
+# Enviar para GitHub
+git branch -M main
+git push -u origin main

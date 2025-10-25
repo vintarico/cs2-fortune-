@@ -1,0 +1,8 @@
+# Gerar cliente Prisma
+npx prisma generate
+
+# Criar migration inicial
+npx prisma migrate dev --name init
+
+# (Opcional) Abrir Prisma Studio para visualizar dados
+npx prisma studio

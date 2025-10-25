@@ -1,0 +1,17 @@
+Expanda "Environment Variables"
+
+Adicione:
+
+text
+Name: NEXT_PUBLIC_API_URL
+Value: https://seu-backend.up.railway.app
+⚠️ Substitua seu-backend.up.railway.app pela URL do Railway que você copiou!
+
+Clique em "Deploy"
+
+D) Aguardar deploy
+O Vercel vai buildar e fazer deploy automaticamente
+
+Aguarde 2-5 minutos
+
+Quando terminar, você verá: "Your project is ready!"

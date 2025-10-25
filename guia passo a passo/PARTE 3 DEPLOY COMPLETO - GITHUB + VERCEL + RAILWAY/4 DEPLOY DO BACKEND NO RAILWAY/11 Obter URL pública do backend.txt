@@ -1,0 +1,7 @@
+Após o deploy, vá em "Settings" → "Networking"
+
+Clique em "Generate Domain"
+
+Copie a URL gerada (ex: cs2-fortune-backend.up.railway.app)
+
+Guarde essa URL - você vai usar no frontend!

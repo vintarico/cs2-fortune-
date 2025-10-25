@@ -1,0 +1,7 @@
+cd frontend
+
+# Criar package.json
+npm init -y
+
+# Instalar dependências
+npm install next@13 react@18 react-dom@18 axios tailwindcss@3 autoprefixer postcss

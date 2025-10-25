@@ -1,0 +1,9 @@
+Acesse https://railway.app
+
+Faça login com GitHub
+
+Clique em "New Project"
+
+Selecione "Deploy from GitHub repo"
+
+Escolha cs2-fortune-backend

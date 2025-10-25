@@ -1,0 +1,18 @@
+# Entre na pasta do frontend
+cd frontend
+
+# Inicializar git
+git init
+
+# Adicionar todos os arquivos
+git add .
+
+# Commit inicial
+git commit -m "Initial commit - CS2 Fortune Frontend"
+
+# Conectar ao repositório remoto (substitua SEU_USUARIO pelo seu username do GitHub)
+git remote add origin https://github.com/SEU_USUARIO/cs2-fortune-frontend.git
+
+# Enviar para GitHub
+git branch -M main
+git push -u origin main

@@ -1,0 +1,180 @@
+const SteamUser = require('steam-user');
+const TradeOfferManager = require('steam-tradeoffer-manager');
+const SteamTotp = require('steam-totp');
+require('dotenv').config();
+
+const client = new SteamUser();
+const manager = new TradeOfferManager({
+  steam: client,
+  domain: process.env.STEAM_BOT_DOMAIN || 'cs2fortune.com',
+  language: 'pt',
+});
+
+const steamAccountName = process.env.STEAM_USERNAME;
+const steamPassword = process.env.STEAM_PASSWORD;
+const steamSharedSecret = process.env.STEAM_SHARED_SECRET;
+const steamIdentitySecret = process.env.STEAM_IDENTITY_SECRET;
+
+// ============================================
+// LOGIN NO STEAM
+// ============================================
+
+function login() {
+  client.logOn({
+    accountName: steamAccountName,
+    password: steamPassword,
+    twoFactorCode: SteamTotp.generateAuthCode(steamSharedSecret),
+  });
+}
+
+client.on('loggedOn', () => {
+  console.log('✅ Steam Bot logado com sucesso!');
+  client.setPersona(SteamUser.EPersonaState.Online);
+  client.gamesPlayed([730]); // CS2 AppID
+});
+
+client.on('webSession', (sessionID, cookies) => {
+  manager.setCookies(cookies, (err) => {
+    if (err) {
+      console.error('❌ Erro ao configurar cookies:', err);
+      return;
+    }
+    console.log('✅ TradeOfferManager configurado');
+  });
+});
+
+client.on('error', (err) => {
+  console.error('❌ Erro no Steam Client:', err);
+  // Tentar reconectar após 30 segundos
+  setTimeout(login, 30000);
+});
+
+// ============================================
+// MONITORAR OFERTAS RECEBIDAS
+// ============================================
+
+manager.on('newOffer', (offer) => {
+  console.log(`📦 Nova oferta recebida: ${offer.id}`);
+  console.log(`👤 De: ${offer.partner.getSteamID64()}`);
+  console.log(`📊 Items deles: ${offer.itemsToReceive.length}`);
+  console.log(`📊 Items nossos: ${offer.itemsToGive.length}`);
+
+  // Lógica para aceitar depósitos automaticamente
+  if (offer.itemsToGive.length === 0 && offer.itemsToReceive.length > 0) {
+    console.log('💰 Oferta de depósito detectada');
+    
+    offer.accept((err, status) => {
+      if (err) {
+        console.error('❌ Erro ao aceitar oferta:', err);
+        return;
+      }
+      
+      console.log(`✅ Oferta aceita! Status: ${status}`);
+      
+      // Confirmar com mobile (se necessário)
+      if (status === 'pending' && steamIdentitySecret) {
+        community.acceptConfirmationForObject(steamIdentitySecret, offer.id, (err) => {
+          if (err) {
+            console.error('❌ Erro na confirmação mobile:', err);
+          } else {
+            console.log('✅ Confirmação mobile aceita');
+          }
+        });
+      }
+      
+      // Atualizar backend com depósito confirmado
+      notifyBackendDeposit(offer.partner.getSteamID64(), offer.itemsToReceive);
+    });
+  }
+});
+
+manager.on('sentOfferChanged', (offer, oldState) => {
+  console.log(`📬 Oferta ${offer.id} mudou de estado: ${oldState} -> ${offer.state}`);
+  
+  if (offer.state === TradeOfferManager.ETradeOfferState.Accepted) {
+    console.log('✅ Oferta de retirada aceita pelo usuário');
+    notifyBackendWithdraw(offer.partner.getSteamID64(), offer.itemsToGive);
+  }
+});
+
+// ============================================
+// ENVIAR OFERTA DE RETIRADA
+// ============================================
+
+async function enviarOfertaRetirada(steamId64, items) {
+  const offer = manager.createOffer(steamId64);
+  
+  // Adicionar items do bot para o usuário
+  offer.addMyItems(items);
+  
+  offer.setMessage('Retirada de skins - CS 2 Fortune');
+  
+  return new Promise((resolve, reject) => {
+    offer.send((err, status) => {
+      if (err) {
+        console.error('❌ Erro ao enviar oferta:', err);
+        reject(err);
+        return;
+      }
+      
+      console.log(`✅ Oferta enviada! Status: ${status}`);
+      
+      // Se precisar confirmação mobile
+      if (status === 'pending' && steamIdentitySecret) {
+        community.acceptConfirmationForObject(steamIdentitySecret, offer.id, (err) => {
+          if (err) {
+            console.error('❌ Erro na confirmação mobile:', err);
+            reject(err);
+          } else {
+            console.log('✅ Confirmação mobile aceita');
+            resolve(offer);
+          }
+        });
+      } else {
+        resolve(offer);
+      }
+    });
+  });
+}
+
+// ============================================
+// NOTIFICAR BACKEND
+// ============================================
+
+async function notifyBackendDeposit(steamId, items) {
+  // Integrar com seu backend para registrar depósito
+  console.log(`🔔 Notificando backend sobre depósito de ${steamId}`);
+  // axios.post('http://localhost:3001/api/bot/deposit', { steamId, items });
+}
+
+async function notifyBackendWithdraw(steamId, items) {
+  console.log(`🔔 Notificando backend sobre retirada de ${steamId}`);
+  // axios.post('http://localhost:3001/api/bot/withdraw', { steamId, items });
+}
+
+// ============================================
+// OBTER INVENTÁRIO DO BOT
+// ============================================
+
+function getInventory() {
+  return new Promise((resolve, reject) => {
+    manager.getInventoryContents(730, 2, true, (err, inventory) => {
+      if (err) {
+        reject(err);
+        return;
+      }
+      resolve(inventory);
+    });
+  });
+}
+
+// ============================================
+// INICIAR BOT
+// ============================================
+
+login();
+
+module.exports = {
+  enviarOfertaRetirada,
+  getInventory
+};
