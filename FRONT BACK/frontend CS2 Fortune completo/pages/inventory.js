@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useUser } from '../contexts/UserContext';
+import { useNotifications } from '../contexts/NotificationContext';
 import SkinImage from '../components/SkinImage';
 import { RARITY_CONFIG } from '../data/cases-new';
 
 export default function Inventory() {
   const { balance, user } = useUser();
+  const { success, error, warning, info } = useNotifications();
   const [inventory, setInventory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({
@@ -129,7 +131,7 @@ export default function Inventory() {
   // Vender itens selecionados
   const sellSelectedItems = async () => {
     if (selectedItems.length === 0) {
-      alert('⚠️ Selecione ao menos um item para vender');
+      warning('Nenhum Item Selecionado', 'Selecione ao menos um item para vender');
       return;
     }
 
@@ -163,20 +165,25 @@ export default function Inventory() {
         }
       }
 
-      alert(`✅ ${selectedItems.length} item(ns) vendido(s)!\n💰 Total recebido: R$ ${totalValue.toFixed(2)}`);
+      success(
+        '💰 Itens Vendidos!', 
+        `${selectedItems.length} item(ns) vendido(s)! Total recebido: R$ ${totalValue.toFixed(2)}`,
+        {
+          duration: 6000
+        }
+      );
       setSelectedItems([]);
       loadInventory();
 
     } catch (error) {
-      console.error('Erro ao vender itens:', error);
-      alert('❌ Erro ao vender itens');
+      error('Erro na Venda', 'Não foi possível vender os itens. Tente novamente.');
     }
   };
 
   // Retirar itens para Steam
   const withdrawToSteam = async () => {
     if (selectedItems.length === 0) {
-      alert('⚠️ Selecione ao menos um item para retirar');
+      warning('Nenhum Item Selecionado', 'Selecione ao menos um item para retirar');
       return;
     }
 

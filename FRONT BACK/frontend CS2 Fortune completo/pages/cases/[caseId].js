@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { ORIGINAL_CASES } from '../../data/cases-original';
 import { NEW_CASES, RARITY_CONFIG } from '../../data/cases-new';
 import { useUser } from '../../contexts/UserContext';
+import { useNotifications } from '../../contexts/NotificationContext';
 import useCasePrices from '../../hooks/useCasePrices';
 import SkinImage from '../../components/SkinImage';
 import CaseImage from '../../components/CaseImage';
@@ -15,6 +16,7 @@ export default function CasePage() {
   const router = useRouter();
   const { caseId } = router.query;
   const { balance, updateBalance, token } = useUser();
+  const { success, error, info } = useNotifications();
   
   const [caseData, setCaseData] = useState(null);
   const [isOpening, setIsOpening] = useState(false);
@@ -94,14 +96,22 @@ export default function CasePage() {
 
   const openCase = async () => {
     if (!token) {
-      alert('Você precisa fazer login para abrir caixas!');
+      error('Login Necessário', 'Você precisa fazer login para abrir caixas!');
       router.push('/login');
       return;
     }
 
     const totalCost = caseData.price * quantityToOpen;
     if (balance < totalCost) {
-      alert(`Saldo insuficiente! Você precisa de R$ ${totalCost.toFixed(2)} mas tem apenas R$ ${balance.toFixed(2)}`);
+      error('Saldo Insuficiente', 
+        `Você precisa de R$ ${totalCost.toFixed(2)} mas tem apenas R$ ${balance.toFixed(2)}`,
+        {
+          action: {
+            label: 'Depositar',
+            onClick: () => router.push('/deposit')
+          }
+        }
+      );
       return;
     }
 
@@ -140,7 +150,7 @@ export default function CasePage() {
         });
       }
     } catch (error) {
-      console.error('Erro no Provably Fair:', error);
+      error('Erro no Sistema', 'Houve um problema com o sistema Provably Fair. Usando sistema local.');
       // Fallback para sistema local
       const fairResult = generateProvablyFairResult(caseData.items, RARITY_CONFIG);
       allWonItems.push({
@@ -160,13 +170,6 @@ export default function CasePage() {
     // ✅ POSIÇÃO 85 = ITEM VENCEDOR
     rouletteArray[85] = firstWonItem;
     
-    console.log('═══════════════════════════════════');
-    console.log('🎯 ITEM SORTEADO (DEFINITIVO):');
-    console.log('Nome:', firstWonItem.name);
-    console.log('Raridade:', firstWonItem.rarity);
-    console.log('Valor:', firstWonItem.value);
-    console.log('Posição 85:', rouletteArray[85].name);
-    console.log('═══════════════════════════════════');
     
     // Guardar o item FINAL que deve aparecer
     setFinalWonItem(firstWonItem);
@@ -175,6 +178,9 @@ export default function CasePage() {
     setRouletteItems(rouletteArray);
     setShowAnimation(true);
     setIsOpening(true);
+
+    // Mostrar notificação de abertura
+    info('🎲 Girando a Roleta', 'Abrindo sua caixa... Boa sorte!');
 
     // Após 10 segundos de animação
     setTimeout(async () => {
@@ -193,6 +199,20 @@ export default function CasePage() {
       // Setar wonItem para o modal USANDO O ITEM DA POSIÇÃO 85
       setWonItem(itemQueParouNaRoleta);
       setShowModal(true);
+
+      // Mostrar notificação do item ganho
+      const rarityColor = RARITY_CONFIG[itemQueParouNaRoleta.rarity]?.color || '#888';
+      success(
+        `🎉 ${itemQueParouNaRoleta.name}`, 
+        `Você ganhou um item ${itemQueParouNaRoleta.rarity}!`,
+        {
+          duration: 8000,
+          action: {
+            label: 'Ver no Inventário',
+            onClick: () => router.push('/inventory')
+          }
+        }
+      );
 
       try {
         // Enviar todas as aberturas para o backend
@@ -230,7 +250,7 @@ export default function CasePage() {
         
         fetchHistory();
       } catch (error) {
-        console.error('Erro ao abrir caixa:', error);
+        error('Erro na Abertura', 'Houve um problema ao processar a abertura da caixa.');
       }
     }, 10000);
   };
@@ -630,14 +650,21 @@ export default function CasePage() {
                         const itemPrice = Number(prices[w.item.name]) || Number(w.item.value) || 0;
                         return total + itemPrice;
                       }, 0);
-                      alert(`✅ Todos os itens vendidos!\n💰 +R$ ${totalValue.toFixed(2)}\n💵 Novo saldo: R$ ${newBalance.toFixed(2)}`);
+                      
+                      success(
+                        '💰 Itens Vendidos!', 
+                        `+R$ ${totalValue.toFixed(2)} adicionados ao seu saldo`,
+                        {
+                          duration: 6000
+                        }
+                      );
+                      
                       setShowModal(false);
                       setWonItems([]);
                       setWonItem(null);
                       setShowAnimation(false);
                     } catch (error) {
-                      console.error('Erro ao vender:', error);
-                      alert('❌ Erro ao conectar com o servidor');
+                      error('Erro na Venda', 'Não foi possível vender os itens. Tente novamente.');
                     }
                   }}
                   className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-4 py-4 rounded-lg font-semibold transition flex flex-col items-center gap-2 transform hover:scale-105"
@@ -675,14 +702,24 @@ export default function CasePage() {
                         });
                       }
 
-                      alert(`✅ ${wonItems.length === 1 ? 'Item adicionado' : wonItems.length + ' itens adicionados'} ao inventário!\n🎒 Acesse /inventory para visualizar.`);
+                      success(
+                        '🎒 Itens Salvos!', 
+                        `${wonItems.length === 1 ? 'Item adicionado' : wonItems.length + ' itens adicionados'} ao inventário!`,
+                        {
+                          duration: 6000,
+                          action: {
+                            label: 'Ver Inventário',
+                            onClick: () => router.push('/inventory')
+                          }
+                        }
+                      );
+                      
                       setShowModal(false);
                       setWonItems([]);
                       setWonItem(null);
                       setShowAnimation(false);
                     } catch (error) {
-                      console.error('Erro ao guardar:', error);
-                      alert('❌ Erro ao conectar com o servidor');
+                      error('Erro ao Salvar', 'Não foi possível salvar os itens no inventário. Tente novamente.');
                     }
                   }}
                   className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-4 py-4 rounded-lg font-semibold transition flex flex-col items-center gap-2 transform hover:scale-105"
