@@ -217,6 +217,8 @@ app.post('/api/payment/coinpayments', authenticateToken, async (req, res) => {
 const adminRoutes = require('./routes/admin');
 // Importar rotas de IA
 const aiRoutes = require('./routes/ai');
+// Importar rotas Provably Fair
+const provablyFairRoutes = require('./routes/provablyFair');
 
 // Middleware para verificar se o usuário é admin
 function requireAdmin(req, res, next) {
@@ -230,6 +232,8 @@ function requireAdmin(req, res, next) {
 app.use('/api/admin', adminRoutes);
 // Usar rotas de IA (protegidas)
 app.use('/api/ai', authenticateToken, aiRoutes);
+// Usar rotas Provably Fair
+app.use('/api/provably-fair', provablyFairRoutes);
 
 // ═══════════════════════════════════════════════════════════════
 // 🎁 ROTAS DE CASES - Sistema de Abertura de Caixas

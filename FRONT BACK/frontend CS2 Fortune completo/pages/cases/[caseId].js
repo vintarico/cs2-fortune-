@@ -108,8 +108,40 @@ export default function CasePage() {
     // Array para armazenar todos os itens ganhos
     const allWonItems = [];
 
-    // Gerar itens vencedores para cada abertura
-    for (let i = 0; i < quantityToOpen; i++) {
+    // Gerar itens vencedores usando Provably Fair
+    try {
+      // Usar o sistema Provably Fair do backend
+      const response = await fetch('http://localhost:3001/api/provably-fair/open-case', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          caseItems: caseData.items.map(item => ({
+            ...item,
+            chance: RARITY_CONFIG[item.rarity]?.chance || 1
+          }))
+        })
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        allWonItems.push({
+          item: result.result.wonItem,
+          provablyFair: result.result.verificationData
+        });
+      } else {
+        // Fallback para sistema local se API falhar
+        const fairResult = generateProvablyFairResult(caseData.items, RARITY_CONFIG);
+        allWonItems.push({
+          item: fairResult.selectedItem,
+          provablyFair: fairResult
+        });
+      }
+    } catch (error) {
+      console.error('Erro no Provably Fair:', error);
+      // Fallback para sistema local
       const fairResult = generateProvablyFairResult(caseData.items, RARITY_CONFIG);
       allWonItems.push({
         item: fairResult.selectedItem,
