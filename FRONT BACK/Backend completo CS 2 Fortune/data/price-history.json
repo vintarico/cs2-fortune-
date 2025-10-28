@@ -4754,5 +4754,149 @@
       "brl": 64.8,
       "volume": "96"
     }
+  ],
+  "Tec-9 | Fubar (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:35:54.893Z",
+      "usd": 0.34,
+      "brl": 1.7,
+      "volume": "285"
+    }
+  ],
+  "USP-S | Flashback (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:37:03.376Z",
+      "usd": 0.84,
+      "brl": 4.2,
+      "volume": "368"
+    }
+  ],
+  "MP5-SD | Acid Wash (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:38:21.548Z",
+      "usd": 1.2,
+      "brl": 6,
+      "volume": "24"
+    }
+  ],
+  "Negev | Lionfish (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:38:24.583Z",
+      "usd": 0.7,
+      "brl": 3.5,
+      "volume": "95"
+    }
+  ],
+  "Glock-18 | Oxide Blaze (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:38:27.642Z",
+      "usd": 0.26,
+      "brl": 1.3,
+      "volume": "358"
+    }
+  ],
+  "Sawed-Off | Black Sand (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:38:30.608Z",
+      "usd": 0.19,
+      "brl": 0.95,
+      "volume": "102"
+    }
+  ],
+  "MAG-7 | SWAG-7 (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:38:33.652Z",
+      "usd": 0.7,
+      "brl": 3.5,
+      "volume": "127"
+    }
+  ],
+  "PP-Bizon | High Roller (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:38:36.623Z",
+      "usd": 6.9,
+      "brl": 34.5,
+      "volume": "109"
+    }
+  ],
+  "XM1014 | Oxide Blaze (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:38:39.677Z",
+      "usd": 0.15,
+      "brl": 0.75,
+      "volume": "243"
+    }
+  ],
+  "G3SG1 | Hunter (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:38:42.643Z",
+      "usd": 0.35,
+      "brl": 1.75,
+      "volume": "139"
+    }
+  ],
+  "Nova | Gila (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:38:45.658Z",
+      "usd": 3.49,
+      "brl": 17.45,
+      "volume": "9"
+    }
+  ],
+  "Dual Berettas | Shred (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:38:48.789Z",
+      "usd": 0.37,
+      "brl": 1.85,
+      "volume": "145"
+    }
+  ],
+  "AK-47 | Asiimov (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:38:51.717Z",
+      "usd": 43.29,
+      "brl": 216.45,
+      "volume": "503"
+    }
+  ],
+  "Nova | Wild Six (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:38:54.663Z",
+      "usd": 0.84,
+      "brl": 4.2,
+      "volume": "126"
+    }
+  ],
+  "MP7 | Mischief (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:38:57.804Z",
+      "usd": 0.42,
+      "brl": 2.1,
+      "volume": "165"
+    }
+  ],
+  "M4A4 | Magnesium (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:39:00.867Z",
+      "usd": 0.4,
+      "brl": 2,
+      "volume": "357"
+    }
+  ],
+  "Desert Eagle | Mecha Industries (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:39:03.665Z",
+      "usd": 5.7,
+      "brl": 28.5,
+      "volume": "611"
+    }
+  ],
+  "M4A4 | Buzz Kill (Field-Tested)": [
+    {
+      "timestamp": "2025-10-28T20:39:06.696Z",
+      "usd": 265.88,
+      "brl": 1329.4,
+      "volume": "429"
+    }
   ]
 }
