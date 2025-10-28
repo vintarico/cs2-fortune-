@@ -1,0 +1,793 @@
+═══════════════════════════════════════════════════════════════════════════════
+  🎮 PLANEJAMENTO COMPLETO - CS2 FORTUNE (INSPIRADO EM SITES PROFISSIONAIS)
+═══════════════════════════════════════════════════════════════════════════════
+
+📋 ANÁLISE DE SITES PROFISSIONAIS DE CASE OPENING
+═══════════════════════════════════════════════════════════════════════════════
+
+Baseado em: CSGORoll, CSGOEmpire, Hellcase, CSGOFast, DatDrop
+
+1. ESTRUTURA DE NAVEGAÇÃO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Header (sempre visível):
+├── Logo (canto esquerdo)
+├── Menu Principal:
+│   ├── 🏠 Home
+│   ├── 🎁 Cases
+│   ├── ⚔️ Battles (Case Battles)
+│   ├── 🎒 Inventory
+│   ├── 💰 Withdraw
+│   └── 📊 Leaderboard
+├── Saldo (centro-direita):
+│   ├── Valor atual
+│   ├── Botão [+] Deposit
+│   └── Histórico rápido
+└── User (canto direito):
+    ├── Avatar + Username
+    ├── Level Badge
+    ├── Dropdown:
+    │   ├── 👤 Profile
+    │   ├── ⚙️ Settings
+    │   ├── 📜 History
+    │   └── 🚪 Logout
+
+Sidebar (colapsável):
+├── 🔥 Live Drops (em tempo real)
+├── 💬 Chat
+└── 🎰 Recentes Aberturas
+
+
+2. HOMEPAGE (/) - DESIGN PROFISSIONAL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Seção 1: HERO BANNER
+┌─────────────────────────────────────────────────────────────────────┐
+│  🎮 CS2 FORTUNE - OPEN CASES & WIN SKINS                           │
+│                                                                     │
+│  Background: Animado com partículas                                │
+│  Texto: "Abra caixas, ganhe skins valiosas!"                      │
+│  CTA: [Abrir Primeira Caixa] [Ver Cases]                          │
+│  Contador: "10,234 caixas abertas hoje"                           │
+└─────────────────────────────────────────────────────────────────────┘
+
+Seção 2: ESTATÍSTICAS AO VIVO
+┌─────────────────────────────────────────────────────────────────────┐
+│  📊 ESTATÍSTICAS                                                    │
+│  ┌──────────┬──────────┬──────────┬──────────┐                    │
+│  │ 1.2M+    │ R$ 5.8M  │ 45 now   │ R$ 892   │                    │
+│  │ Usuários │ Pagos    │ Online   │ Maior $  │                    │
+│  └──────────┴──────────┴──────────┴──────────┘                    │
+└─────────────────────────────────────────────────────────────────────┘
+
+Seção 3: CASES EM DESTAQUE (Carrossel)
+┌─────────────────────────────────────────────────────────────────────┐
+│  🎁 CASES EM DESTAQUE                          [Ver Todos →]       │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐ ┌──────────┐            │
+│  │ NEW      │ │ HOT      │ │          │ │          │            │
+│  │ [Image]  │ │ [Image]  │ │ [Image]  │ │ [Image]  │            │
+│  │ Fracture │ │ Chroma 3 │ │ Riptide  │ │ Dreams   │            │
+│  │ R$ 15.00 │ │ R$ 25.00 │ │ R$ 18.50 │ │ R$ 42.00 │            │
+│  │ [Abrir]  │ │ [Abrir]  │ │ [Abrir]  │ │ [Abrir]  │            │
+│  └──────────┘ └──────────┘ └──────────┘ └──────────┘            │
+└─────────────────────────────────────────────────────────────────────┘
+
+Seção 4: ÚLTIMOS DROPS (Feed ao vivo)
+┌─────────────────────────────────────────────────────────────────────┐
+│  🔥 ÚLTIMOS DROPS                                                   │
+│  ┌──────────────────────────────────────────────────────────────┐  │
+│  │ [Avatar] @player123 ganhou AK-47 | Redline   R$ 245.00 🔥  │  │
+│  │ [Avatar] @winner99  ganhou M4A4 | Asiimov     R$ 892.00 💎  │  │
+│  │ [Avatar] @lucky777  ganhou Glock | Fade       R$ 1,240.00 👑│  │
+│  └──────────────────────────────────────────────────────────────┘  │
+│  (Auto-scroll, animação suave)                                     │
+└─────────────────────────────────────────────────────────────────────┘
+
+Seção 5: CASE BATTLES ATIVAS
+┌─────────────────────────────────────────────────────────────────────┐
+│  ⚔️ BATALHAS ATIVAS                            [Criar Batalha →]   │
+│  ┌──────────┐ ┌──────────┐ ┌──────────┐                          │
+│  │ 1v1      │ │ 2v2      │ │ 1v1v1v1  │                          │
+│  │ R$ 50.00 │ │ R$ 100   │ │ R$ 25.00 │                          │
+│  │ 1/2      │ │ 3/4      │ │ 2/4      │                          │
+│  │ [Entrar] │ │ [Entrar] │ │ [Entrar] │                          │
+│  └──────────┘ └──────────┘ └──────────┘                          │
+└─────────────────────────────────────────────────────────────────────┘
+
+Seção 6: TOP WINNERS
+┌─────────────────────────────────────────────────────────────────────┐
+│  🏆 TOP VENCEDORES (Hoje)                                          │
+│  1. 🥇 @megawinner   R$ 5,240.00  (18 caixas)                     │
+│  2. 🥈 @luckyplayer  R$ 3,890.00  (12 caixas)                     │
+│  3. 🥉 @kingofcs     R$ 2,450.00  (25 caixas)                     │
+└─────────────────────────────────────────────────────────────────────┘
+
+
+3. SISTEMA PROVABLY FAIR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Componentes:
+├── Server Seed (hash público antes da abertura)
+├── Client Seed (escolhido pelo usuário)
+├── Nonce (contador de aberturas)
+├── Resultado = Hash(ServerSeed + ClientSeed + Nonce)
+└── Verificação pública do resultado
+
+Interface na abertura:
+┌─────────────────────────────────────────────────────────────────────┐
+│  🎲 PROVABLY FAIR                                                   │
+│  Server Seed (SHA256): a7b3c4d5... [Verificar]                     │
+│  Client Seed: [seu-seed-aqui] [🔄 Trocar]                          │
+│  Nonce: #1234                                                       │
+│  ✅ Este resultado pode ser verificado                             │
+└─────────────────────────────────────────────────────────────────────┘
+
+Histórico de verificação:
+- Todas as aberturas salvas com seeds
+- Botão "Verificar Fairness" em cada item
+- Página dedicada /provably-fair com explicação
+
+
+4. SISTEMA DE CASES (/cases)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Galeria de Cases:
+├── Filtros:
+│   ├── Preço: Todas, < R$10, R$10-50, > R$50
+│   ├── Novidade: Novas, Populares, Raras
+│   ├── Tipo: Originais, Exclusivas, Especiais
+│   └── Busca por nome
+├── Ordenação:
+│   ├── Mais populares
+│   ├── Mais baratas
+│   ├── Mais caras
+│   └── Mais novas
+
+Card de Case:
+┌─────────────────────────────────────┐
+│  [Badge: NEW/HOT/EXCLUSIVE]         │
+│  [Imagem da caixa - 3D rotation]    │
+│  Nome da Caixa                      │
+│  R$ 25.00                           │
+│  ┌─────────────────────────────┐    │
+│  │ Min: R$ 5    Max: R$ 2,400  │    │
+│  │ Média: R$ 45  Items: 24     │    │
+│  └─────────────────────────────┘    │
+│  [Abrir Caixa]  [Ver Itens]        │
+└─────────────────────────────────────┘
+
+Página Individual (/cases/[id]):
+├── Layout 2 Colunas:
+│   ├── ESQUERDA (Sticky):
+│   │   ├── Imagem da caixa (3D)
+│   │   ├── Nome + Preço
+│   │   ├── Botões:
+│   │   │   ├── [Abrir 1x] R$ X
+│   │   │   ├── [Abrir 3x] R$ X (-5%)
+│   │   │   └── [Abrir 5x] R$ X (-10%)
+│   │   ├── Provably Fair info
+│   │   ├── Estatísticas
+│   │   └── Últimas 5 aberturas
+│   └── DIREITA:
+│       ├── Todos os itens (grid)
+│       ├── Cada item mostra:
+│       │   ├── Imagem da skin
+│       │   ├── Nome
+│       │   ├── Raridade (cor)
+│       │   ├── Valor
+│       │   └── % de chance
+│       └── Ordenar por: Valor, Raridade, Nome
+
+Animação de Abertura:
+1. Roleta horizontal com todos os itens
+2. Velocidade inicial rápida
+3. Desaceleração suave
+4. Para no item ganho
+5. Explosão de confete/partículas
+6. Modal com resultado:
+   ┌─────────────────────────────────┐
+   │  🎉 VOCÊ GANHOU!                │
+   │  [Imagem grande da skin]        │
+   │  Nome da Skin                   │
+   │  Raridade: Legendary            │
+   │  Valor: R$ 245.00               │
+   │  ┌──────────┐  ┌──────────┐    │
+   │  │💰 VENDER │  │🎒 GUARDAR│    │
+   │  │R$ 245.00 │  │Inventário│    │
+   │  └──────────┘  └──────────┘    │
+   │  [Abrir Novamente] [Fechar]    │
+   └─────────────────────────────────┘
+
+
+5. SISTEMA DE INVENTÁRIO (/inventory)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Header:
+├── Valor Total: R$ 1,245.00
+├── Total de Itens: 38
+├── Filtros:
+│   ├── Raridade (Todas, Common, Rare, Legendary, etc)
+│   ├── Valor (Menor→Maior, Maior→Menor)
+│   └── Data (Recentes primeiro)
+└── Ações em massa:
+    ├── [Selecionar Todos]
+    ├── [Vender Selecionados]
+    └── [Transferir para Steam]
+
+Grid de Itens:
+┌──────────┐ ┌──────────┐ ┌──────────┐
+│ ☑️       │ │ ☑️       │ │          │
+│ [Image]  │ │ [Image]  │ │ [Image]  │
+│ AK-47    │ │ M4A4     │ │ Glock    │
+│ Redline  │ │ Asiimov  │ │ Fade     │
+│ R$ 45.00 │ │ R$ 92.00 │ │ R$ 240   │
+│ [Vender] │ │ [Vender] │ │ [Vender] │
+└──────────┘ └──────────┘ └──────────┘
+
+Detalhes do Item (ao clicar):
+┌─────────────────────────────────────┐
+│  [Imagem 3D rotativa]               │
+│  AK-47 | Redline                    │
+│  Raridade: Classified (Rosa)        │
+│  Exterior: Field-Tested             │
+│  Valor Atual: R$ 245.00             │
+│  Valor na Compra: R$ 230.00         │
+│  Lucro: +R$ 15.00 (6.5%)           │
+│  Data: 26/10/2025 14:35            │
+│  ┌──────────┐  ┌──────────┐        │
+│  │💰 VENDER │  │🔄 TRADE  │        │
+│  │R$ 245.00 │  │  Steam   │        │
+│  └──────────┘  └──────────┘        │
+└─────────────────────────────────────┘
+
+
+6. SISTEMA DE DEPÓSITO (/deposit)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Métodos de Pagamento:
+├── 💳 PIX
+│   ├── Valores pré-definidos: R$ 10, 25, 50, 100, 250, 500
+│   ├── Valor personalizado
+│   ├── Gera QR Code instantâneo
+│   ├── Aprovação automática
+│   └── Bônus: +5% em depósitos > R$ 100
+├── 💳 Cartão de Crédito
+│   ├── Stripe/PagSeguro integration
+│   ├── Parcelamento disponível
+│   └── Taxa: 3.5%
+├── 🎮 Steam Skins
+│   ├── Conectar conta Steam
+│   ├── Bot envia trade offer
+│   ├── Aceita skins, avalia valor
+│   └── Crédito instantâneo
+└── ₿ Cripto (Bitcoin, USDT)
+    ├── Wallet address
+    ├── Confirmação: 1-3 blocks
+    └── Sem taxas
+
+Interface:
+┌─────────────────────────────────────────────────────────────────────┐
+│  💰 ADICIONAR SALDO                                                 │
+│  ┌─────────┬─────────┬─────────┬─────────┐                        │
+│  │   PIX   │  Cartão │  Steam  │  Cripto │                        │
+│  │  (Ativo)│         │         │         │                        │
+│  └─────────┴─────────┴─────────┴─────────┘                        │
+│  Escolha o valor:                                                   │
+│  ┌─────┬─────┬─────┬─────┬─────┬─────┐                           │
+│  │ R$10│ R$25│ R$50│R$100│R$250│R$500│                           │
+│  └─────┴─────┴─────┴─────┴─────┴─────┘                           │
+│  Ou digite: [_______________] R$                                   │
+│  Bônus: +5% (acima de R$ 100)                                      │
+│  Você receberá: R$ 105.00                                          │
+│  [Gerar PIX]                                                       │
+└─────────────────────────────────────────────────────────────────────┘
+
+
+7. SISTEMA DE SAQUE (/withdraw)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Requisitos:
+├── Mínimo: R$ 20.00
+├── Verificação de conta (email + telefone)
+├── 2FA obrigatório para > R$ 500
+└── Limite diário: R$ 5,000
+
+Métodos:
+├── PIX (instantâneo)
+├── Steam Trade (bot envia skins)
+└── Transferência bancária (1-2 dias)
+
+Interface:
+┌─────────────────────────────────────────────────────────────────────┐
+│  💸 SACAR SALDO                                                     │
+│  Saldo Disponível: R$ 1,245.00                                     │
+│  Método: [🏦 PIX ▼]                                                │
+│  Valor: [_______________] R$  (Min: R$ 20)                         │
+│  Chave PIX: [_______________]                                      │
+│  Você receberá: R$ XXX.XX (Taxa: R$ 0.00)                          │
+│  ┌────────────────────────────────────────────────────────────┐    │
+│  │ ⚠️ IMPORTANTE:                                              │    │
+│  │ • Saques via PIX são processados em até 5 minutos         │    │
+│  │ • Verifique seus dados antes de confirmar                 │    │
+│  │ • Limite diário: R$ 5,000                                 │    │
+│  └────────────────────────────────────────────────────────────┘    │
+│  [Solicitar Saque]                                                 │
+└─────────────────────────────────────────────────────────────────────┘
+
+
+8. CASE BATTLES (/battles)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Conceito:
+- Jogadores abrem a mesma caixa simultaneamente
+- Ganha quem tirar o maior valor total
+- Modos: 1v1, 2v2, 1v1v1v1
+- Custo = Preço da caixa × Número de rodadas
+
+Criar Batalha:
+┌─────────────────────────────────────────────────────────────────────┐
+│  ⚔️ CRIAR BATALHA                                                   │
+│  Escolha o modo:                                                    │
+│  ○ 1v1 (2 jogadores)  ○ 2v2 (4 jogadores)  ○ 1v1v1v1 (4 jogadores)│
+│  Escolha a(s) caixa(s):                                            │
+│  [Fracture Case] × 3 rodadas = R$ 45.00 por jogador               │
+│  Privacidade:                                                       │
+│  ○ Pública (qualquer um pode entrar)                              │
+│  ○ Privada (apenas com link)                                       │
+│  [Criar Batalha - R$ 45.00]                                        │
+└─────────────────────────────────────────────────────────────────────┘
+
+Sala de Batalha (ao vivo):
+┌─────────────────────────────────────────────────────────────────────┐
+│  ⚔️ BATALHA #12345                          [Copiar Link] [Sair]   │
+│  ┌──────────────────┬──────────────────┐                           │
+│  │   JOGADOR 1      │   JOGADOR 2      │                           │
+│  │   @player123     │   Aguardando...  │                           │
+│  │   Lv. 24  🔥     │                  │                           │
+│  │   ┌──────────┐   │   ┌──────────┐   │                           │
+│  │   │ Pronto ✅ │   │   │ Vazio    │   │                           │
+│  │   └──────────┘   │   └──────────┘   │                           │
+│  └──────────────────┴──────────────────┘                           │
+│  [Iniciar Batalha] (Aguardando jogadores)                          │
+└─────────────────────────────────────────────────────────────────────┘
+
+Durante a Batalha:
+- Animação simultânea das aberturas
+- Contador de valor em tempo real
+- Efeitos visuais quando alguém tira item raro
+- Ao final, vencedor leva todos os itens
+
+Resultado:
+┌─────────────────────────────────────────────────────────────────────┐
+│  🏆 VENCEDOR: @player123                                           │
+│  Total: R$ 342.00  vs  R$ 198.00                                   │
+│  Itens ganhos: 6 skins                                             │
+│  [Ver Itens] [Nova Batalha] [Compartilhar]                        │
+└─────────────────────────────────────────────────────────────────────┘
+
+
+9. SISTEMA DE NÍVEIS E RECOMPENSAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Sistema de XP:
+├── +10 XP por caixa aberta
+├── +50 XP por batalha vencida
+├── +5 XP por R$ 10 depositados
+├── Bônus diário: +100 XP (primeira abertura do dia)
+└── Níveis: 1-100 (XP necessário aumenta progressivamente)
+
+Recompensas por Nível:
+├── Nível 5: R$ 5.00 grátis
+├── Nível 10: 1 caixa grátis
+├── Nível 15: R$ 10.00 grátis
+├── Nível 20: Avatar frame exclusivo
+├── Nível 25: 2 caixas grátis
+├── Nível 30: R$ 25.00 grátis
+└── ... (recompensas aumentam)
+
+Bônus Diários:
+┌─────────────────────────────────────────────────────────────────────┐
+│  🎁 RECOMPENSA DIÁRIA                                               │
+│  Dia 1: ✅ R$ 2.00                                                 │
+│  Dia 2: ✅ R$ 3.00                                                 │
+│  Dia 3: ✅ R$ 5.00                                                 │
+│  Dia 4: 🔒 R$ 7.00                                                 │
+│  Dia 5: 🔒 1 Caixa Grátis                                          │
+│  Dia 6: 🔒 R$ 15.00                                                │
+│  Dia 7: 🔒 R$ 25.00 + Caixa Especial                              │
+│  [Resgatar Dia 3]                                                  │
+└─────────────────────────────────────────────────────────────────────┘
+
+Achievements (Conquistas):
+├── 🎯 Primeira Abertura
+├── 💎 Tirou um item Legendary
+├── 🔥 10 caixas em um dia
+├── 💰 Lucrou R$ 500
+├── ⚔️ Venceu 5 batalhas
+└── ... (50+ conquistas)
+
+
+10. PERFIL DO USUÁRIO (/profile/[username])
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Header:
+┌─────────────────────────────────────────────────────────────────────┐
+│  [Avatar Grande]  @username                    [Editar Perfil]     │
+│  Level 24  🔥 Streak: 7 dias                                       │
+│  Membro desde: Janeiro 2025                                        │
+│  ┌──────────┬──────────┬──────────┬──────────┐                    │
+│  │  1,234   │  R$ 5.8K │    42    │   15     │                    │
+│  │  Caixas  │  Ganho   │ Battles  │ Rare+    │                    │
+│  └──────────┴──────────┴──────────┴──────────┘                    │
+└─────────────────────────────────────────────────────────────────────┘
+
+Tabs:
+├── 📊 Estatísticas
+│   ├── Gráfico de atividade (últimos 30 dias)
+│   ├── Caixas mais abertas
+│   ├── Melhor lucro em uma abertura
+│   └── Taxa de vitória em batalhas
+├── 🎁 Histórico de Aberturas
+│   ├── Lista com todas as aberturas
+│   ├── Filtros: Data, Caixa, Raridade
+│   └── Verificação Provably Fair
+├── 🏆 Conquistas
+│   ├── Grid com todas as conquistas
+│   ├── Progresso em cada uma
+│   └── Recompensas disponíveis
+└── 💎 Melhores Drops
+    ├── Top 10 itens mais valiosos
+    └── Galeria visual
+
+
+11. CONFIGURAÇÕES (/settings)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Seções:
+├── 👤 Conta
+│   ├── Email (verificado ✅)
+│   ├── Username
+│   ├── Avatar
+│   └── Senha
+├── 🔐 Segurança
+│   ├── 2FA (Google Authenticator)
+│   ├── Sessões ativas
+│   └── Histórico de login
+├── 💰 Pagamentos
+│   ├── Chave PIX salva
+│   ├── Cartões salvos
+│   └── Conta Steam linkada
+├── 🔔 Notificações
+│   ├── Email: Depósitos, Saques, Promoções
+│   ├── Push: Batalhas, Drops raros
+│   └── Som: Efeitos sonoros ativados
+├── 🎨 Aparência
+│   ├── Tema: Dark/Light
+│   ├── Idioma: PT-BR
+│   └── Animações: Habilitadas
+└── 🎯 Privacidade
+    ├── Perfil público/privado
+    ├── Mostrar histórico de aberturas
+    └── Aceitar convites de batalha
+
+
+12. SISTEMA DE ATUALIZAÇÃO DE PREÇOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Integração Steam Market:
+├── API: Steam Market API + Scraping fallback
+├── Frequência: A cada 2 horas (cronjob)
+├── Cache: 30 minutos
+├── Fallback: Imagens locais + preços manual
+└── Taxa de conversão: USD → BRL (API externa)
+
+Banco de Dados:
+PriceSkin {
+  id: String
+  marketHashName: String
+  priceUSD: Float
+  priceBRL: Float
+  image: String
+  lastUpdate: DateTime
+  source: Enum (steam, manual, cached)
+}
+
+Admin Panel - Atualização Manual:
+┌─────────────────────────────────────────────────────────────────────┐
+│  🔄 ATUALIZAR PREÇOS                                                │
+│  Status: ✅ Última atualização: Há 45 minutos                      │
+│  Próxima atualização: Em 1h 15min                                  │
+│  ┌─────────────────────────────────────────────────────────────┐   │
+│  │ [Atualizar Agora] [Ver Log] [Configurar Cronjob]           │   │
+│  └─────────────────────────────────────────────────────────────┘   │
+│  Skins cadastradas: 850                                            │
+│  Skins com preço Steam: 823                                        │
+│  Skins com preço manual: 27                                        │
+│  Skins sem preço: 0                                                │
+└─────────────────────────────────────────────────────────────────────┘
+
+
+13. DESIGN SYSTEM - CORES E ESTILOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Paleta de Cores:
+├── Primary: #1E40AF (Blue 700)
+├── Secondary: #7C3AED (Purple 600)
+├── Accent: #F59E0B (Amber 500)
+├── Success: #10B981 (Green 500)
+├── Danger: #EF4444 (Red 500)
+├── Warning: #F59E0B (Amber 500)
+├── Background: #0F172A (Slate 900)
+├── Surface: #1E293B (Slate 800)
+├── Text Primary: #F1F5F9 (Slate 100)
+└── Text Secondary: #94A3B8 (Slate 400)
+
+Raridades (CS:GO/CS2):
+├── Consumer Grade: #B0C3D9 (Cinza claro)
+├── Industrial Grade: #5E98D9 (Azul claro)
+├── Mil-Spec: #4B69FF (Azul)
+├── Restricted: #8847FF (Roxo)
+├── Classified: #D32CE6 (Rosa)
+├── Covert: #EB4B4B (Vermelho)
+├── Exceedingly Rare: #FFD700 (Dourado - Facas/Luvas)
+
+Gradientes:
+├── Hero: linear-gradient(135deg, #667eea 0%, #764ba2 100%)
+├── Cards: linear-gradient(145deg, #1E293B 0%, #0F172A 100%)
+├── Buttons: linear-gradient(90deg, #1E40AF 0%, #7C3AED 100%)
+└── Rare Items: linear-gradient(45deg, #FFD700 0%, #FFA500 100%)
+
+Fontes:
+├── Heading: "Poppins", sans-serif (bold)
+├── Body: "Inter", sans-serif (regular)
+└── Monospace: "Fira Code", monospace (para seeds, valores)
+
+Animações:
+├── Hover: transform scale(1.05) + shadow
+├── Click: transform scale(0.95)
+├── Loading: spin/pulse
+├── Case Opening: smooth horizontal scroll
+└── Particles: floating effects em drops raros
+
+
+14. PROBABILIDADES REALISTAS (Baseadas no CS:GO)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Raridade → Chance Aproximada:
+├── Consumer Grade (Branco): ~79.92%
+├── Industrial Grade (Azul Claro): ~15.98%
+├── Mil-Spec (Azul): ~3.20%
+├── Restricted (Roxo): ~0.64%
+├── Classified (Rosa): ~0.32%
+├── Covert (Vermelho): ~0.64%
+└── Exceedingly Rare (Dourado): ~0.26% (Facas/Luvas)
+
+Exemplo de Caixa (24 itens):
+├── 12 Consumer Grade (50% cada = 79.92% total)
+├── 7 Industrial Grade (2.28% cada ≈ 15.98% total)
+├── 3 Mil-Spec (1.07% cada ≈ 3.20% total)
+├── 1 Restricted (0.64%)
+├── 1 Classified (0.32%)
+└── 1 Covert ou Faca (0.64% vermelho + 0.26% faca = 0.90%)
+
+Sistema de Roll (0-9999):
+- 0-7991: Consumer Grade
+- 7992-9589: Industrial Grade
+- 9590-9909: Mil-Spec
+- 9910-9973: Restricted
+- 9974-9993: Classified
+- 9994-9999: Covert (9994-9997) ou Faca (9998-9999)
+
+
+15. ESTRUTURA DO BANCO DE DADOS (Prisma Schema)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+model User {
+  id            String   @id @default(cuid())
+  username      String   @unique
+  email         String   @unique
+  password      String
+  avatar        String?
+  balance       Float    @default(0)
+  level         Int      @default(1)
+  xp            Int      @default(0)
+  streak        Int      @default(0)
+  lastLogin     DateTime?
+  createdAt     DateTime @default(now())
+  
+  // 2FA
+  twoFactorSecret String?
+  twoFactorEnabled Boolean @default(false)
+  
+  // Relações
+  inventory     InventoryItem[]
+  caseOpenings  CaseOpening[]
+  battles       BattleParticipant[]
+  transactions  Transaction[]
+  achievements  UserAchievement[]
+}
+
+model InventoryItem {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  skinName    String
+  skinImage   String
+  rarity      String
+  value       Float
+  acquiredAt  DateTime @default(now())
+  sold        Boolean  @default(false)
+  soldAt      DateTime?
+  soldPrice   Float?
+}
+
+model CaseOpening {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  caseId        String
+  caseName      String
+  casePrice     Float
+  wonItemName   String
+  wonItemValue  Float
+  wonItemRarity String
+  wonItemImage  String
+  profit        Float
+  
+  // Provably Fair
+  serverSeed    String
+  clientSeed    String
+  nonce         Int
+  resultHash    String
+  
+  openedAt      DateTime @default(now())
+}
+
+model Battle {
+  id            String   @id @default(cuid())
+  mode          String   // "1v1", "2v2", "1v1v1v1"
+  caseId        String
+  caseName      String
+  rounds        Int
+  costPerPlayer Float
+  isPrivate     Boolean  @default(false)
+  status        String   @default("waiting") // waiting, active, finished
+  winnerId      String?
+  createdAt     DateTime @default(now())
+  startedAt     DateTime?
+  finishedAt    DateTime?
+  
+  participants  BattleParticipant[]
+  results       BattleResult[]
+}
+
+model BattleParticipant {
+  id        String   @id @default(cuid())
+  battleId  String
+  battle    Battle   @relation(fields: [battleId], references: [id])
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  position  Int
+  totalValue Float   @default(0)
+  isWinner  Boolean  @default(false)
+  joinedAt  DateTime @default(now())
+}
+
+model Transaction {
+  id          String   @id @default(cuid())
+  userId      String
+  user        User     @relation(fields: [userId], references: [id])
+  type        String   // deposit, withdraw
+  method      String   // pix, card, steam, crypto
+  amount      Float
+  status      String   @default("pending") // pending, completed, failed
+  metadata    Json?
+  createdAt   DateTime @default(now())
+  completedAt DateTime?
+}
+
+model Achievement {
+  id          String   @id @default(cuid())
+  code        String   @unique
+  name        String
+  description String
+  icon        String
+  rewardType  String   // balance, xp, case
+  rewardValue Float
+  
+  users       UserAchievement[]
+}
+
+model UserAchievement {
+  id            String   @id @default(cuid())
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  achievementId String
+  achievement   Achievement @relation(fields: [achievementId], references: [id])
+  progress      Int      @default(0)
+  completed     Boolean  @default(false)
+  completedAt   DateTime?
+  claimed       Boolean  @default(false)
+  claimedAt     DateTime?
+}
+
+
+16. ROADMAP DE IMPLEMENTAÇÃO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FASE 1 - HOMEPAGE E ESTRUTURA BASE (Prioridade Alta)
+├── ✅ Já implementado: Sistema de cases individuais
+├── ✅ Já implementado: Sistema de venda de skins
+├── 🔲 Criar homepage profissional com hero banner
+├── 🔲 Live drops feed (últimas aberturas)
+├── 🔲 Estatísticas ao vivo
+├── 🔲 Cases em destaque (carrossel)
+└── 🔲 Top winners do dia
+
+FASE 2 - PROVABLY FAIR (Prioridade Alta)
+├── 🔲 Gerar server seed (hash SHA256)
+├── 🔲 Client seed personalizável
+├── 🔲 Sistema de nonce
+├── 🔲 Cálculo de resultado verificável
+├── 🔲 Página de verificação
+└── 🔲 Histórico de seeds
+
+FASE 3 - INVENTÁRIO COMPLETO (Prioridade Alta)
+├── 🔲 Página de inventário com grid
+├── 🔲 Filtros e ordenação
+├── 🔲 Venda individual e em massa
+├── 🔲 Detalhes do item (modal)
+└── 🔲 Integração com backend
+
+FASE 4 - DEPÓSITO E SAQUE (Prioridade Alta)
+├── 🔲 Interface de depósito
+├── 🔲 Integração PIX (MercadoPago/PagSeguro)
+├── 🔲 Sistema de saque
+├── 🔲 Histórico de transações
+└── 🔲 Validações e limites
+
+FASE 5 - SISTEMA DE NÍVEIS (Prioridade Média)
+├── 🔲 Cálculo de XP
+├── 🔲 Níveis e progressão
+├── 🔲 Recompensas por nível
+├── 🔲 Bônus diários
+└── 🔲 Sistema de streak
+
+FASE 6 - CASE BATTLES (Prioridade Média)
+├── 🔲 Criar batalha
+├── 🔲 Listar batalhas ativas
+├── 🔲 Sala de espera
+├── 🔲 Animação da batalha
+├── 🔲 Sistema de resultado
+└── 🔲 Distribuição de prêmios
+
+FASE 7 - PERFIL E CONQUISTAS (Prioridade Baixa)
+├── 🔲 Página de perfil
+├── 🔲 Estatísticas detalhadas
+├── 🔲 Sistema de conquistas
+└── 🔲 Histórico completo
+
+FASE 8 - CONFIGURAÇÕES E 2FA (Prioridade Média)
+├── 🔲 Página de settings
+├── 🔲 2FA com Google Authenticator
+├── 🔲 Configurações de privacidade
+└── 🔲 Preferências de notificações
+
+FASE 9 - MELHORIAS VISUAIS (Prioridade Baixa)
+├── 🔲 Animações avançadas
+├── 🔲 Efeitos sonoros
+├── 🔲 Partículas em drops raros
+└── 🔲 Temas personalizáveis
+
+FASE 10 - ADMIN PANEL (Prioridade Alta)
+├── 🔲 Dashboard administrativo
+├── 🔲 Gerenciar cases
+├── 🔲 Gerenciar skins e preços
+├── 🔲 Monitorar transações
+├── 🔲 Gerenciar usuários
+└── 🔲 Relatórios e analytics
+
+
+═══════════════════════════════════════════════════════════════════════════════
+                            FIM DO PLANEJAMENTO
+═══════════════════════════════════════════════════════════════════════════════

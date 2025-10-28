@@ -1,0 +1,1 @@
+diretório raiz do workspace para descobrir o caminho absoluto correto onde criar os arquivos (resultado: caminhos existentes; próximo passo: aplicar patch com caminhos absolutos).

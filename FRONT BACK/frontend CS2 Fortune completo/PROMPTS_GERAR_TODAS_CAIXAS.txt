@@ -1,0 +1,298 @@
+===========================================
+PROMPTS DE IA PARA GERAR TODAS AS IMAGENS
+CS2 Fortune - Caixas Personalizadas
+Estilo: Realista CS2/CS:GO Oficial
+===========================================
+
+📋 CAIXAS QUE PRECISAM DE IMAGENS:
+
+CASES-ORIGINAL.JS:
+1. weapon.webp - Weapon Case
+
+CASES-NEW.JS:
+2. starter-bronze.webp - Caixa Bronze
+3. starter-silver.webp - Caixa Prata
+4. ak47-empress.webp - Caixa Empress
+5. m4a4-howl.webp - Caixa Howl
+6. awp-dragon-lore.webp - Caixa Dragon Lore
+7. m4a4-neo-noir.webp - Caixa Neo Noir
+8. karambit-fade.webp - Caixa Karambit Fade
+9. butterfly-doppler.webp - Caixa Butterfly Doppler
+10. gloves-pandora.webp - Caixa Pandora
+11. awp-gungnir.webp - Caixa Gungnir
+12. souvenir-dlore.webp - Caixa Souvenir Dragon Lore
+13. contraband-howl.webp - Caixa Contraband
+
+===========================================
+INSTRUÇÕES GERAIS PARA TODAS AS IMAGENS
+===========================================
+
+✓ Formato: 512x512px ou 400x400px (quadrado)
+✓ Estilo: Fotorrealista, 3D render profissional
+✓ Iluminação: Cinematográfica, studio lighting
+✓ Background: Branco limpo ou transparente
+✓ Perspectiva: 3/4 angle (ligeiramente inclinado)
+✓ Qualidade: Alta resolução, detalhes nítidos
+✓ Material: Metal, madeira ou plástico tático
+✓ Elementos CS2: Logos, emblemas, texturas do jogo
+
+===========================================
+
+1️⃣ WEAPON CASE
+Cor: Prata/Cinza (#C0C0C0)
+Conceito: A primeira caixa lendária do CS:GO
+
+PROMPT:
+```
+Photorealistic 3D render of the CS:GO Weapon Case, the first and most iconic weapon case. Silver-grey metallic military crate with battle-worn texture. Front features CS:GO crossed guns logo emblem. Industrial rivets and metal panels. Tactical military design. Studio lighting with dramatic shadows. White background. Product photography style. 512x512px square. Valve quality game asset.
+```
+
+ALTERNATIVO:
+```
+Original CS:GO weapon case 3D model, classic silver metal box with CS logo, tactical military design, photorealistic rendering, professional studio shot, white background, square format
+```
+
+===========================================
+
+2️⃣ STARTER BRONZE (Caixa Bronze)
+Cor: Bronze (#CD7F32)
+Conceito: Caixa inicial para iniciantes
+
+PROMPT:
+```
+CS2 bronze starter case, 3D render. Bronze metallic weapon crate with worn copper finish. Simple geometric design with CS2 logo. Beginner-friendly appearance with bronze tier rank emblem. Industrial metal panels and rivets. Warm bronze lighting. White background. Product shot. 512x512px.
+```
+
+ELEMENTOS CS2: Badge de rank Bronze, logo CS2 simples
+
+===========================================
+
+3️⃣ STARTER SILVER (Caixa Prata)
+Cor: Prata (#C0C0C0)
+Conceito: Segundo nível de caixa inicial
+
+PROMPT:
+```
+CS2 silver starter case, realistic 3D render. Shiny silver metallic crate with polished chrome finish. Silver rank emblem on front. CS2 branding. Clean industrial design with metal clasps. Cool silver lighting. White background. Professional product photography. 512x512px square.
+```
+
+ELEMENTOS CS2: Badge de rank Prata, acabamento polido
+
+===========================================
+
+4️⃣ AK47 EMPRESS (Caixa Empress)
+Cor: Roxo real (#9B59B6)
+Conceito: Realeza, luxo, AK-47 Empress skin
+
+PROMPT:
+```
+CS2 Empress royal case, photorealistic 3D render. Luxurious purple velvet-covered weapon case with gold ornate decorations. Imperial Russian-inspired design with empress crown emblem. Decorative gold filigree patterns. Purple and gold color scheme. Regal and elegant appearance. Studio lighting. White background. 512x512px.
+```
+
+ELEMENTOS CS2: Coroa imperial, padrões AK-47 Empress, ouro+roxo
+
+===========================================
+
+5️⃣ M4A4 HOWL (Caixa Howl)
+Cor: Laranja queimado (#FF4500)
+Conceito: Lobo uivando, fogo, agressivo
+
+PROMPT:
+```
+CS2 Howl case, dramatic 3D render. Dark orange military crate with menacing wolf head emblem howling at moon. Burned metal texture with flame patterns. Aggressive tactical design. Wolf silhouette and fire motifs. Orange and black color scheme. Intense dramatic lighting. White background. 512x512px square.
+```
+
+ELEMENTOS CS2: Cabeça de lobo uivando, chamas, design M4A4 Howl
+
+===========================================
+
+6️⃣ AWP DRAGON LORE (Caixa Dragon Lore)
+Cor: Dourado (#FFD700)
+Conceito: Dragão dourado, mitologia, lenda
+
+PROMPT:
+```
+CS2 Dragon Lore legendary case, epic 3D render. Ornate gold weapon chest with medieval dragon relief carving. Ancient dragon emblem with spread wings. Intricate golden scrollwork and Celtic patterns. Antique gold finish with weathered patina. Mythological aesthetic. Cinematic lighting. White background. 512x512px.
+```
+
+ELEMENTOS CS2: Dragão medieval dourado, padrões celtas, AWP Dragon Lore art
+
+===========================================
+
+7️⃣ M4A4 NEO NOIR (Caixa Neo Noir)
+Cor: Preto com neon (#1A1A2E + neon colors)
+Conceito: Cyberpunk, noir, neon lights
+
+PROMPT:
+```
+CS2 Neo Noir case, futuristic 3D render. Sleek black tactical case with neon pink and cyan accents. Cyberpunk aesthetic with geometric patterns. Glowing neon circuit board lines. High-tech modern design. Black metallic finish with vibrant neon highlights. Dramatic lighting. White or dark background. 512x512px square.
+```
+
+ELEMENTOS CS2: Neon rosa/ciano, geometria cyberpunk, estética M4A4 Neo-Noir
+
+===========================================
+
+8️⃣ KARAMBIT FADE (Caixa Karambit Fade)
+Cor: Gradiente arco-íris (#FF0080 → #00D4FF)
+Conceito: Fade multicolor, Karambit knife
+
+PROMPT:
+```
+CS2 Karambit Fade case, vibrant 3D render. Luxury weapon case with rainbow gradient fade finish. Smooth color transition from pink to purple to yellow. Karambit knife silhouette emblem. Premium glossy metallic surface. Iridescent fade effect. Colorful dramatic lighting. White background. 512x512px.
+```
+
+ELEMENTOS CS2: Gradiente fade multicolor, silhueta Karambit
+
+===========================================
+
+9️⃣ BUTTERFLY DOPPLER (Caixa Butterfly Doppler)
+Cor: Azul e roxo iridescente (#4B0082)
+Conceito: Efeito Doppler, butterfly knife
+
+PROMPT:
+```
+CS2 Butterfly Doppler case, premium 3D render. High-end weapon case with iridescent blue-purple doppler effect. Butterfly knife silhouette with spread wings. Shimmering metallic finish with phase pattern. Deep blue and violet color shift. Luxury appearance. Glossy reflective surface. Studio lighting. White background. 512x512px square.
+```
+
+ELEMENTOS CS2: Efeito doppler azul/roxo, borboleta, acabamento phase
+
+===========================================
+
+🔟 GLOVES PANDORA (Caixa Pandora)
+Cor: Verde esmeralda (#50C878)
+Conceito: Luvas Pandora, caixa misteriosa
+
+PROMPT:
+```
+CS2 Pandora gloves case, mystical 3D render. Emerald green luxury case with ornate golden latch. Mysterious design with glove compartment visible inside. Ancient Greek-inspired decorations. Pandora's box aesthetic with danger warning symbols. Rich green velvet and gold accents. Dramatic lighting. White background. 512x512px.
+```
+
+ELEMENTOS CS2: Luvas visíveis, verde esmeralda, caixa de Pandora mítica
+
+===========================================
+
+1️⃣1️⃣ AWP GUNGNIR (Caixa Gungnir)
+Cor: Azul elétrico (#0095FF)
+Conceito: Lança de Odin, mitologia nórdica
+
+PROMPT:
+```
+CS2 Gungnir case, mythological 3D render. Norse-themed weapon chest with electric blue finish. Odin's spear Gungnir emblem with runes. Viking Nordic patterns and inscriptions. Metallic blue with silver accents. Ancient Norse mythology aesthetic. Powerful divine appearance. Dramatic lighting. White background. 512x512px square.
+```
+
+ELEMENTOS CS2: Runas nórdicas, lança Gungnir, padrões vikings, AWP Gungnir
+
+===========================================
+
+1️⃣2️⃣ SOUVENIR DRAGON LORE (Caixa Souvenir)
+Cor: Dourado brilhante com selos (#FFD700)
+Conceito: Souvenir edition, campeonato
+
+PROMPT:
+```
+CS2 Souvenir Dragon Lore case, championship 3D render. Premium gold weapon case with tournament stickers and seals. Official championship edition with holographic foil stickers. Dragon emblem with competition logos. Exclusive souvenir packaging. Shiny gold finish with authentication marks. Special edition appearance. Studio lighting. White background. 512x512px.
+```
+
+ELEMENTOS CS2: Stickers de torneio, holográfico, dourado especial
+
+===========================================
+
+1️⃣3️⃣ CONTRABAND HOWL (Caixa Contraband)
+Cor: Vermelho proibido (#8B0000)
+Conceito: Proibido, raro, contrabando
+
+PROMPT:
+```
+CS2 Contraband case, forbidden 3D render. Dark crimson red military crate with warning tape and danger symbols. Contraband markings and restricted labels. Locked metal case with hazard stripes. Rare and illegal appearance. Black and red color scheme. Ominous dramatic lighting. White background. 512x512px square.
+```
+
+ELEMENTOS CS2: Fitas de perigo, símbolos de proibido, vermelho escuro
+
+===========================================
+FERRAMENTAS RECOMENDADAS
+===========================================
+
+🎨 DALL-E 3 (ChatGPT Plus ou Bing)
+- Melhor para seguir instruções detalhadas
+- https://www.bing.com/images/create
+- Grátis no Bing, limitado no ChatGPT
+
+🎨 Leonardo.ai
+- Excelente para fotorrealismo
+- Modelo: Leonardo Diffusion XL ou PhotoReal
+- https://leonardo.ai
+- 150 créditos grátis/dia
+
+🎨 Midjourney
+- Qualidade profissional
+- Via Discord: /imagine [prompt]
+- Requer assinatura
+
+🎨 Stable Diffusion (RunDiffusion/Civitai)
+- Modelo: Realistic Vision v5.1 ou SDXL
+- Controle total
+- https://rundiffusion.com
+
+===========================================
+APÓS GERAR TODAS AS IMAGENS
+===========================================
+
+1. Salve todas como .webp ou .png
+2. Coloque na pasta: public/images/cases/
+3. Atualize os arquivos:
+   - cases-original.js (weapon.webp)
+   - cases-new.js (todas as outras)
+
+4. Substitua as URLs do Steam por:
+   image: '/images/cases/[nome].webp'
+
+5. Teste no navegador: http://localhost:3000/cases
+
+===========================================
+SCRIPT PARA ATUALIZAR CASES-NEW.JS
+===========================================
+
+Depois de gerar todas as imagens, use este comando:
+
+```powershell
+cd "C:\Users\Vinta\Desktop\site cs fortune\FRONT BACK\frontend CS2 Fortune completo"
+
+# Criar script de atualização
+$file = "data/cases-new.js"
+$content = Get-Content $file -Raw
+
+# Substituir todas as URLs do Steam
+$content = $content -replace "image: 'https://community\.cloudflare\.steamstatic\.com[^']*'", "image: '/images/cases/NOME_CORRETO.webp'"
+
+# Editar manualmente ou usar replace específico para cada ID
+```
+
+===========================================
+CHECKLIST FINAL
+===========================================
+
+☐ 1. Weapon Case (weapon.webp)
+☐ 2. Caixa Bronze (starter-bronze.webp)
+☐ 3. Caixa Prata (starter-silver.webp)
+☐ 4. Caixa Empress (ak47-empress.webp)
+☐ 5. Caixa Howl (m4a4-howl.webp)
+☐ 6. Caixa Dragon Lore (awp-dragon-lore.webp)
+☐ 7. Caixa Neo Noir (m4a4-neo-noir.webp)
+☐ 8. Caixa Karambit Fade (karambit-fade.webp)
+☐ 9. Caixa Butterfly Doppler (butterfly-doppler.webp)
+☐ 10. Caixa Pandora (gloves-pandora.webp)
+☐ 11. Caixa Gungnir (awp-gungnir.webp)
+☐ 12. Caixa Souvenir (souvenir-dlore.webp)
+☐ 13. Caixa Contraband (contraband-howl.webp)
+
+===========================================
+DICA PRO
+===========================================
+
+Para manter consistência com as imagens oficiais que já baixamos, ao gerar cada prompt, adicione ao final:
+
+"Match the style of official CS:GO case renders from csgodatabase.com, Valve quality, professional 3D asset"
+
+Isso ajuda a IA a manter o mesmo estilo fotorrealista!
+
+===========================================

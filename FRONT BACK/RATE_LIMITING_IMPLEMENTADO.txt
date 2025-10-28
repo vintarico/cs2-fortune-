@@ -1,0 +1,272 @@
+═══════════════════════════════════════════════════════════════
+🔧 SISTEMA DE RATE LIMITING IMPLEMENTADO - CS2 FORTUNE
+═══════════════════════════════════════════════════════════════
+
+📅 Data: 26 de Outubro de 2025
+
+═══════════════════════════════════════════════════════════════
+⚠️ PROBLEMA IDENTIFICADO:
+═══════════════════════════════════════════════════════════════
+
+❌ ERRO 429 - Too Many Requests
+
+O sistema estava fazendo MUITAS requisições simultâneas para o Steam,
+resultando em bloqueio (rate limit) com erro HTTP 429.
+
+Sintomas:
+- Mensagens: "Request failed with status code 429"
+- Imagens não carregavam
+- Steam bloqueava o IP temporariamente
+
+═══════════════════════════════════════════════════════════════
+✅ SOLUÇÃO IMPLEMENTADA:
+═══════════════════════════════════════════════════════════════
+
+🔧 SISTEMA DE RATE LIMITING INTELIGENTE
+
+1. ⏳ DELAY ENTRE REQUISIÇÕES
+   - Intervalo: 3 segundos (antes: nenhum)
+   - Garante que Steam não bloqueie
+   - Mensagem: "⏳ Aguardando Xms para evitar rate limit..."
+
+2. 🔄 RETRY AUTOMÁTICO
+   - Máximo de tentativas: 2 (3 tentativas total)
+   - Backoff exponencial: 5s → 10s → 15s
+   - Aumenta o tempo de espera a cada falha
+
+3. 💾 CACHE MELHORADO
+   - Duração: 30 minutos
+   - Cache de PREÇOS e IMAGENS separados
+   - Reduz drasticamente requisições ao Steam
+
+4. 📊 GERENCIAMENTO DE CACHE
+   - Novo endpoint: GET /api/steam/cache-stats
+   - Endpoint atualizado: POST /api/steam/clear-cache
+   - Função: clearAllCache() limpa tudo
+   - Função: getCacheStats() mostra estatísticas
+
+═══════════════════════════════════════════════════════════════
+📁 ARQUIVOS MODIFICADOS:
+═══════════════════════════════════════════════════════════════
+
+1. ✅ services/steamMarket.js
+   - Adicionado: makeRequestWithRetry() - requisições com retry
+   - Adicionado: waitForRateLimit() - controle de delay
+   - Adicionado: clearAllCache() - limpa todo cache
+   - Adicionado: getCacheStats() - estatísticas do cache
+   - Modificado: getSteamPrice() - usa novo sistema
+   - Modificado: fetchImageFromSteamPage() - usa novo sistema
+   - Modificado: updateMultipleSkins() - removido delay manual
+
+2. ✅ index.js (Backend)
+   - Modificado: POST /api/steam/clear-cache - usa clearAllCache()
+   - Adicionado: GET /api/steam/cache-stats - novo endpoint
+
+3. ✅ pages/test-images.js (Frontend)
+   - NOVO ARQUIVO - Página de teste de imagens
+   - Testa 5 skins populares
+   - Botões para limpar cache e ver stats
+   - Instruções completas de uso
+
+═══════════════════════════════════════════════════════════════
+🔍 COMO FUNCIONA:
+═══════════════════════════════════════════════════════════════
+
+FLUXO DE REQUISIÇÃO COM RATE LIMITING:
+
+1. Frontend solicita imagem: GET /api/steam/skin?name=AK-47...
+
+2. Backend verifica CACHE:
+   ✓ Tem em cache (< 30min) → Retorna imediatamente
+   ✗ Não tem em cache → Continua
+
+3. Backend chama waitForRateLimit():
+   - Calcula tempo desde última requisição
+   - Se < 3 segundos → AGUARDA
+   - Atualiza timestamp da última requisição
+
+4. Backend chama makeRequestWithRetry():
+   Tentativa 1:
+   - Faz requisição ao Steam
+   - ✓ Sucesso → Retorna dados
+   - ✗ Erro 429 → Aguarda 5s e tenta novamente
+   
+   Tentativa 2:
+   - Faz requisição ao Steam
+   - ✓ Sucesso → Retorna dados
+   - ✗ Erro 429 → Aguarda 10s e tenta novamente
+   
+   Tentativa 3 (final):
+   - Faz requisição ao Steam
+   - ✓ Sucesso → Retorna dados
+   - ✗ Erro 429 → Retorna erro
+
+5. Backend SALVA no cache (se sucesso):
+   - Preço → priceCache
+   - Imagem → imageCache
+   - Timestamp → Date.now()
+
+6. Próxima requisição da MESMA skin:
+   - Retorna do cache instantaneamente
+   - Não faz requisição ao Steam
+   - Válido por 30 minutos
+
+═══════════════════════════════════════════════════════════════
+🚀 COMO TESTAR:
+═══════════════════════════════════════════════════════════════
+
+1. Acesse: http://localhost:3000/test-images
+
+2. A página mostrará 5 skins de teste
+
+3. Observe os logs no terminal do BACKEND:
+   ✅ "🔍 Buscando imagem: [skin]"
+   ✅ "⏳ Aguardando Xms para evitar rate limit..."
+   ✅ "🖼️ Imagem encontrada: [skin]"
+   ⚠️ "⚠️ Rate limit (429) - Tentativa X/2"
+
+4. Clique em "Ver Estatísticas" para ver cache
+
+5. Clique em "Limpar Cache" para testar novamente
+
+6. Recarregue a página - imagens carregam do cache (rápido)
+
+═══════════════════════════════════════════════════════════════
+📊 PÁGINA DE CASOS: http://localhost:3000/cases
+═══════════════════════════════════════════════════════════════
+
+Agora ao abrir qualquer caixa:
+
+✅ Primeira vez:
+   - Imagens carregam COM DELAY (3s entre cada)
+   - Pode demorar alguns segundos
+   - Logs mostram scraping no backend
+   - Imagens ficam em cache
+
+✅ Segunda vez (ou próximos 30min):
+   - Imagens carregam INSTANTANEAMENTE
+   - Nenhuma requisição ao Steam
+   - Cache fornece os dados
+
+═══════════════════════════════════════════════════════════════
+⚙️ CONFIGURAÇÕES DO SISTEMA:
+═══════════════════════════════════════════════════════════════
+
+Arquivo: services/steamMarket.js
+
+const REQUEST_DELAY = 3000;        // 3 segundos entre requisições
+const MAX_RETRIES = 2;             // 2 tentativas extras (3 total)
+const CACHE_DURATION = 1800000;    // 30 minutos (1000 * 60 * 30)
+
+Backoff exponencial:
+- Tentativa 1 falha → aguarda 5 segundos
+- Tentativa 2 falha → aguarda 10 segundos
+- Tentativa 3 falha → aguarda 15 segundos
+
+═══════════════════════════════════════════════════════════════
+🎯 API ENDPOINTS DISPONÍVEIS:
+═══════════════════════════════════════════════════════════════
+
+1. GET /api/steam/cache-stats
+   Retorna:
+   {
+     prices: { total: X, items: [...] },
+     images: { total: Y, items: [...] },
+     totalItems: Z
+   }
+
+2. POST /api/steam/clear-cache (Admin)
+   Headers: { Authorization: "Bearer TOKEN" }
+   Retorna:
+   {
+     success: true,
+     message: "Cache limpo com sucesso",
+     itemsCleared: 123
+   }
+
+3. GET /api/steam/skin?name=NOME_DA_SKIN
+   Retorna:
+   {
+     name: "...",
+     price: { ... },
+     image: "https://...",
+     steam_url: "..."
+   }
+
+═══════════════════════════════════════════════════════════════
+💡 DICAS E BOAS PRÁTICAS:
+═══════════════════════════════════════════════════════════════
+
+✅ FAÇA:
+- Use a página de teste primeiro
+- Aguarde o sistema pré-carregar skins populares (cronjob)
+- Limpe o cache apenas se necessário
+- Monitore os logs do backend
+
+❌ NÃO FAÇA:
+- Não faça requisições simultâneas de muitas skins
+- Não limpe o cache frequentemente (desperdiça recursos)
+- Não reduza o REQUEST_DELAY abaixo de 2000ms
+- Não desabilite o sistema de retry
+
+═══════════════════════════════════════════════════════════════
+🐛 TROUBLESHOOTING:
+═══════════════════════════════════════════════════════════════
+
+PROBLEMA: Ainda recebendo erro 429
+
+SOLUÇÕES:
+1. Aumente REQUEST_DELAY para 5000 (5 segundos)
+2. Limpe o cache e aguarde 10 minutos
+3. Verifique se outros apps estão usando a mesma conexão
+4. Steam pode ter bloqueado temporariamente - aguarde 30min
+
+---
+
+PROBLEMA: Imagens não aparecem, só ícones fallback
+
+SOLUÇÕES:
+1. Verifique logs do backend: "⚠️ Imagem não encontrada"
+2. Nome da skin pode estar incorreto
+3. Skin pode não existir no Steam Market
+4. Verifique data/skinNameMapper.js
+
+---
+
+PROBLEMA: Cache crescendo muito
+
+SOLUÇÕES:
+1. Sistema limpa automaticamente a cada 1 hora
+2. Use POST /api/steam/clear-cache manualmente
+3. Cache máximo: ~40 skins × 2 (preço+imagem) = ~80 itens
+
+═══════════════════════════════════════════════════════════════
+📈 PRÓXIMOS PASSOS:
+═══════════════════════════════════════════════════════════════
+
+1. ✅ Sistema de rate limiting - CONCLUÍDO
+2. ⏳ Testar com casos reais
+3. ⏳ Adicionar mais skins nas caixas
+4. ⏳ Implementar pré-carga de skins populares
+5. ⏳ Adicionar fallback com imagens locais
+
+═══════════════════════════════════════════════════════════════
+✨ RESULTADO ESPERADO:
+═══════════════════════════════════════════════════════════════
+
+Após essa implementação:
+
+✅ Zero erros 429 (ou raríssimos)
+✅ Imagens carregam corretamente
+✅ Performance melhorada com cache
+✅ Sistema robusto com retry automático
+✅ Logs claros para debugging
+✅ Controle total do cache
+
+═══════════════════════════════════════════════════════════════
+
+🎮 Sistema pronto para testes!
+
+Acesse: http://localhost:3000/test-images
+
+═══════════════════════════════════════════════════════════════

@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="metalGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#E8E8E8;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#BABABA;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#C5C5C5;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#969696;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="topFace" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#D8D8D8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#A8A8A8;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="sideFace" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#A0A0A0;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#888888;stop-opacity:1" />
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur in="SourceGraphic" stdDeviation="2"/></filter>
+  </defs>
+  
+  <!-- Shadow -->
+  <ellipse cx="200" cy="350" rx="120" ry="15" fill="#000" opacity="0.3" filter="url(#blur)"/>
+  
+  <!-- Isometric box -->
+  <!-- Front face -->
+  <path d="M 100,180 L 200,120 L 300,180 L 200,240 Z" fill="url(#metalGrad)" stroke="#666" stroke-width="1.5"/>
+  
+  <!-- Top face -->
+  <path d="M 200,120 L 300,180 L 300,280 L 200,220 Z" fill="url(#topFace)" stroke="#666" stroke-width="1.5"/>
+  
+  <!-- Side face -->
+  <path d="M 100,180 L 200,240 L 200,340 L 100,280 Z" fill="url(#sideFace)" stroke="#666" stroke-width="1.5"/>
+  
+  <!-- Bottom part -->
+  <path d="M 200,220 L 300,280 L 300,320 L 200,260 Z" fill="#787878" stroke="#555" stroke-width="1.5"/>
+  <path d="M 100,280 L 200,340 L 200,380 L 100,320 Z" fill="#656565" stroke="#555" stroke-width="1.5"/>
+  <path d="M 200,260 L 300,320 L 200,380 L 100,320 Z" fill="#707070" stroke="#555" stroke-width="1.5"/>
+  
+  <!-- Metal rivets -->
+  <circle cx="130" cy="200" r="3" fill="#555" opacity="0.8"/>
+  <circle cx="270" cy="200" r="3" fill="#555" opacity="0.8"/>
+  <circle cx="130" cy="260" r="3" fill="#555" opacity="0.8"/>
+  <circle cx="270" cy="260" r="3" fill="#555" opacity="0.8"/>
+  
+  <!-- CS:GO Logo emblem (center) -->
+  <g transform="translate(200, 200)">
+    <circle r="35" fill="#404040" opacity="0.9"/>
+    <circle r="32" fill="none" stroke="#888" stroke-width="2"/>
+    
+    <!-- Crossed weapons simplified -->
+    <g opacity="0.9">
+      <rect x="-25" y="-3" width="35" height="6" rx="1" fill="#888" transform="rotate(-40)"/>
+      <rect x="-10" y="-3" width="35" height="6" rx="1" fill="#888" transform="rotate(40)"/>
+      <rect x="-30" y="-2" width="8" height="4" rx="1" fill="#AAA" transform="rotate(-40)"/>
+      <rect x="22" y="-2" width="8" height="4" rx="1" fill="#AAA" transform="rotate(40)"/>
+    </g>
+  </g>
+  
+  <!-- Highlights for realism -->
+  <path d="M 200,130 L 280,170 L 280,175 L 200,135 Z" fill="#FFF" opacity="0.15"/>
+  <path d="M 210,125 L 270,155 L 270,160 L 210,130 Z" fill="#FFF" opacity="0.1"/>
+  
+  <!-- Edge highlights -->
+  <line x1="200" y1="120" x2="300" y2="180" stroke="#FFF" stroke-width="1.5" opacity="0.3"/>
+  <line x1="100" y1="180" x2="200" y2="240" stroke="#888" stroke-width="1" opacity="0.3"/>
+</svg>

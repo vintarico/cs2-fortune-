@@ -1,0 +1,147 @@
+===========================================
+GUIA PARA GERAR IMAGEM DA WEAPON CASE
+Estilo: Realista CS2 / CS:GO Oficial
+===========================================
+
+📦 CASO FALTANTE:
+- weapon.webp (Weapon Case - A caixa original e lendária)
+
+🎨 ESTILO DE REFERÊNCIA:
+Baseie-se nas imagens já baixadas em public/images/cases/:
+- fracture.webp, kilowatt.webp, revolution.webp, etc.
+
+As caixas oficiais do CS2 têm:
+- Caixa metálica/madeira com textura realista
+- Emblema/logo central característico
+- Iluminação cinematográfica
+- Fundo transparente ou com sombra suave
+- Dimensões aproximadas: 400x400px ou 512x512px
+- Formato: WebP (ou PNG que você pode converter)
+
+===========================================
+PROMPT PARA IA (WEAPON CASE)
+===========================================
+
+Use este prompt em DALL-E 3, Midjourney ou Stable Diffusion:
+
+```
+A realistic 3D render of the CS:GO Weapon Case, the first and most iconic weapon case from Counter-Strike Global Offensive. 
+
+Design details:
+- Metallic military crate/case with worn silver/grey finish
+- CS:GO crossed guns logo prominently displayed on the front
+- Tactical military aesthetic with rivets and metal panels
+- Slight weathering and battle-worn texture
+- Dramatic studio lighting with soft shadows
+- Clean background (white or transparent)
+- Professional product photography style
+- High quality 3D render, photorealistic
+
+Style: CS:GO official case art, Valve game assets, tactical military equipment
+Perspective: Slight 3/4 angle view
+Resolution: 512x512px minimum
+Format: Square aspect ratio
+
+DO NOT include: text, labels, UI elements, people, weapons outside the case
+```
+
+===========================================
+ALTERNATIVAS DE PROMPT (MAIS SIMPLES)
+===========================================
+
+Opção 1 - Estilo Clássico:
+```
+CS:GO classic weapon case 3D render, metallic silver military crate with crossed guns emblem, tactical design, photorealistic, studio lighting, white background, 512x512px
+```
+
+Opção 2 - Estilo Original:
+```
+Counter-Strike Global Offensive original weapon case, first ever CS:GO case, silver metallic box with CS logo, military tactical design, realistic 3D asset, Valve quality, product shot
+```
+
+Opção 3 - Descrição Detalhada:
+```
+Photorealistic 3D render of a military-style weapon crate from Counter-Strike 2. Silver-grey metallic finish with battle-worn texture. Front features the iconic CS crossed guns logo. Industrial rivets and metal panels. Cinematic lighting. Studio photography. Square format 512x512.
+```
+
+===========================================
+CARACTERÍSTICAS VISUAIS IMPORTANTES
+===========================================
+
+A Weapon Case original tem estas características:
+✓ Cor predominante: Prata/Cinza metálico
+✓ Material: Metal escovado/industrial
+✓ Logo: Emblema CS:GO (armas cruzadas)
+✓ Textura: Ligeiramente desgastada, tática
+✓ Iluminação: Destaque no centro, sombras suaves
+✓ Estilo: Militar/Tático, primeira caixa do CS:GO
+
+===========================================
+FERRAMENTAS RECOMENDADAS
+===========================================
+
+1. **DALL-E 3** (ChatGPT Plus ou Bing Image Creator)
+   - Melhor para seguir instruções detalhadas
+   - https://www.bing.com/images/create
+
+2. **Midjourney** (Discord)
+   - Ótima qualidade fotorrealista
+   - Comando: /imagine [prompt]
+
+3. **Leonardo.ai** (Grátis com limite)
+   - Alchemy V2 para fotorrealismo
+   - https://leonardo.ai
+
+4. **Stable Diffusion** (Local ou online)
+   - Modelo recomendado: Realistic Vision v5.1
+   - ControlNet para maior controle
+
+===========================================
+APÓS GERAR A IMAGEM
+===========================================
+
+1. Baixe a imagem gerada
+2. Se necessário, converta para WebP:
+   - Online: https://cloudconvert.com/png-to-webp
+   - Ou use o comando PowerShell abaixo
+
+3. Salve como: weapon.webp
+
+4. Coloque em: 
+   C:\Users\Vinta\Desktop\site cs fortune\FRONT BACK\frontend CS2 Fortune completo\public\images\cases\weapon.webp
+
+5. Atualize o arquivo cases-original.js:
+   Linha ~543, mudar de:
+   image: 'https://community.cloudflare.steamstatic.com/...'
+   Para:
+   image: '/images/cases/weapon.webp'
+
+===========================================
+COMANDO PARA CONVERTER PNG → WEBP
+===========================================
+
+Se você baixar em PNG, use este comando PowerShell:
+
+```powershell
+cd "C:\Users\Vinta\Desktop\site cs fortune\FRONT BACK\frontend CS2 Fortune completo\public\images\cases"
+
+# Instalar ferramenta se necessário (apenas primeira vez)
+# winget install -e --id Google.WebP
+
+# Converter (ajuste o caminho do arquivo baixado)
+cwebp.exe "C:\Users\Vinta\Downloads\weapon-case.png" -o weapon.webp -q 85
+```
+
+===========================================
+VERIFICAÇÃO FINAL
+===========================================
+
+Após adicionar a imagem:
+1. Recarregue a página: http://localhost:3000/cases
+2. Aperte Ctrl+Shift+R para limpar cache
+3. A Weapon Case deve aparecer com imagem real!
+
+Total de casos: 15
+Com imagens reais: 14 + 1 (weapon) = 15 ✓
+
+===========================================

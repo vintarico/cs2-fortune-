@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #0066FF;
+  --color-surface: #0F1724;
+  --color-dark: #0B1220;
+  --color-muted: #9AA4B2;
+}
+
+body { background: var(--color-surface); color: white; }
+.text-muted { color: var(--color-muted); }
+
+/* Small helper for premium card shadow */
+.card-shadow { box-shadow: 0 8px 30px rgba(2,6,23,0.6); }

@@ -1,0 +1,287 @@
+═══════════════════════════════════════════════════════════════
+🖼️ SISTEMA DE IMAGENS REAIS DAS SKINS - CS2 FORTUNE
+═══════════════════════════════════════════════════════════════
+
+📅 Data: 26 de Outubro de 2025
+
+═══════════════════════════════════════════════════════════════
+🎯 OBJETIVO:
+═══════════════════════════════════════════════════════════════
+
+Exibir as IMAGENS REAIS das skins do CS2, extraídas diretamente do
+Steam Community Market, como mostrado no site de referência (Fracture Case).
+
+Referência Visual: 
+✅ Imagens em alta qualidade das skins
+✅ Fallback para ícones quando imagem não carregar
+✅ Loading state enquanto busca a imagem
+✅ Efeito glow baseado na raridade
+
+═══════════════════════════════════════════════════════════════
+🔧 IMPLEMENTAÇÃO TÉCNICA:
+═══════════════════════════════════════════════════════════════
+
+1. ✅ BACKEND - Busca de Imagens
+   📂 services/steamMarket.js
+   
+   Nova Função: fetchImageFromSteamPage()
+   
+   Como Funciona:
+   1. Acessa a página do Steam Market da skin
+   2. Extrai a URL da imagem do HTML usando regex
+   3. Salva em cache por 30 minutos
+   4. Retorna URL completa da imagem em alta resolução
+   
+   Exemplo de URL retornada:
+   https://community.cloudflare.steamstatic.com/economy/image/
+   -9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou-6kejhnwMzFJTwW09-5lpKKqPrxN7LEmyVQ7MEpiLuSrYmnjQO3-UdsZGHxJNSVdlI2aQzV-FLswu3s1J--vsvIwSdh7nUi5yzUgVXp1gYMMLJE0bHBBQ/360fx360f
+   
+   Regex Usado:
+   ```javascript
+   const imageMatch = html.match(
+     /https:\/\/community\.cloudflare\.steamstatic\.com\/economy\/image\/[^"'\s]+/i
+   );
+   ```
+
+2. ✅ FRONTEND - Componente SkinImage
+   📂 components/SkinImage.js
+   
+   Como Funciona:
+   1. Recebe o nome da skin
+   2. Converte para nome Steam Market (via skinNameMapper)
+   3. Faz requisição para /api/steam/skin
+   4. Recebe URL da imagem real
+   5. Renderiza com loading state
+   6. Fallback para ícone se falhar
+   
+   Props:
+   - skinName: 'AK-47 | Redline'
+   - size: 'small' | 'medium' | 'large' | 'xlarge'
+   - className: Classes CSS customizadas
+   - showName: Mostrar nome abaixo
+   - rarity: Para efeito de glow colorido
+
+3. ✅ API ENDPOINT
+   📂 index.js (Backend)
+   
+   GET /api/steam/skin?name=AK-47%20%7C%20Redline%20(Field-Tested)
+   
+   Resposta:
+   ```json
+   {
+     "name": "AK-47 | Redline (Field-Tested)",
+     "price": {
+       "usd": 15.50,
+       "brl": 77.50,
+       "formatted_brl": "R$ 77.50"
+     },
+     "image": "https://community.cloudflare.steamstatic.com/economy/image/...",
+     "steam_url": "https://steamcommunity.com/market/listings/730/..."
+   }
+   ```
+
+═══════════════════════════════════════════════════════════════
+📊 FLUXO COMPLETO DE BUSCA DE IMAGEM:
+═══════════════════════════════════════════════════════════════
+
+FRONTEND:
+┌─────────────────────────────────────────┐
+│  <SkinImage skinName="AK-47 | Redline"/> │
+└──────────────┬──────────────────────────┘
+               │
+               ├─> skinNameMapper.js
+               │   'AK-47 | Redline' → 'AK-47 | Redline (Field-Tested)'
+               │
+               ├─> useEffect - Fetch API
+               │   GET http://localhost:3001/api/steam/skin?name=...
+               │
+               ▼
+
+BACKEND:
+┌─────────────────────────────────────────┐
+│  Route: /api/steam/skin                  │
+└──────────────┬──────────────────────────┘
+               │
+               ├─> steamMarket.getSkinData()
+               │
+               ├─> fetchImageFromSteamPage()
+               │   ├─> Verifica cache (30min)
+               │   ├─> Se não em cache:
+               │   │   └─> Busca HTML da página Steam
+               │   │       └─> Extrai URL da imagem (regex)
+               │   │           └─> Salva em cache
+               │   └─> Retorna URL
+               │
+               ├─> getSteamPrice()
+               │   └─> Busca preço real
+               │
+               └─> Retorna JSON completo
+                   {name, price, image, steam_url}
+
+FRONTEND (continuação):
+┌─────────────────────────────────────────┐
+│  Recebe resposta JSON                    │
+└──────────────┬──────────────────────────┘
+               │
+               ├─> setImageUrl(data.image)
+               │
+               ├─> Renderiza <img src={imageUrl} />
+               │
+               ├─> onLoad → setImageLoaded(true)
+               │   └─> Esconde spinner
+               │       └─> Mostra imagem com animação
+               │
+               └─> onError → setImageError(true)
+                   └─> Mostra ícone fallback
+
+═══════════════════════════════════════════════════════════════
+🎨 EXEMPLOS DE USO:
+═══════════════════════════════════════════════════════════════
+
+1. Grid de Skins (Lista de Conteúdo da Caixa)
+   ```jsx
+   <SkinImage
+     skinName="AK-47 | Redline"
+     size="small"
+     className="w-20 h-20"
+     rarity="legendary"
+   />
+   ```
+
+2. Item Ganho (Modal Grande)
+   ```jsx
+   <SkinImage
+     skinName={wonItem.name}
+     size="large"
+     className="w-48 h-48"
+     rarity={wonItem.rarity}
+     showName={true}
+   />
+   ```
+
+3. Showcase de Skin
+   ```jsx
+   <SkinImage
+     skinName="AWP | Dragon Lore"
+     size="xlarge"
+     className="w-full h-96"
+     rarity="contraband"
+   />
+   ```
+
+═══════════════════════════════════════════════════════════════
+⚡ PERFORMANCE E OTIMIZAÇÃO:
+═══════════════════════════════════════════════════════════════
+
+✅ Cache Backend (30 minutos)
+   - Evita requisições repetidas à Steam
+   - Melhora tempo de resposta
+   - Reduz chance de rate limit
+
+✅ Lazy Loading
+   - Imagens só carregam quando visíveis
+   - Propriedade loading="lazy" nas tags <img>
+
+✅ Estados de Loading
+   - Spinner enquanto busca
+   - Ícone enquanto carrega
+   - Transição suave ao aparecer
+
+✅ Error Handling
+   - Fallback automático para ícone
+   - Não quebra interface
+   - Console.log para debug
+
+✅ Requisições Assíncronas
+   - useEffect gerencia lifecycle
+   - Não bloqueia renderização
+   - Cancelamento automático no unmount
+
+═══════════════════════════════════════════════════════════════
+🔍 DEBUGGING:
+═══════════════════════════════════════════════════════════════
+
+Console Logs do Backend:
+🔍 Buscando preço: AK-47 | Redline (Field-Tested)
+✅ AK-47 | Redline: R$ 221.00
+🖼️ Imagem encontrada: AK-47 | Redline (Field-Tested)
+
+Console Logs do Frontend:
+🔍 Buscando imagem de: AK-47 | Redline
+✅ URL recebida: https://community.cloudflare.steamstatic.com/...
+🖼️ Imagem carregada com sucesso!
+
+Se der erro:
+❌ Erro ao buscar imagem de AK-47 | Redline: [mensagem]
+⚠️ Usando fallback: ícone ⚡
+
+═══════════════════════════════════════════════════════════════
+🐛 TROUBLESHOOTING:
+═══════════════════════════════════════════════════════════════
+
+❌ PROBLEMA: Imagem não aparece, só ícone
+
+   Solução 1: Verifique console do backend
+   → A Steam pode estar bloqueando (429 - Too Many Requests)
+   → Aumentar delay entre requisições
+   → Aguardar alguns minutos
+
+   Solução 2: Verifique nome da skin
+   → Usar skinNameMapper para converter
+   → Verificar se nome está no formato exato do Steam
+   → Exemplo: "AK-47 | Redline (Field-Tested)" não "AK47 Redline"
+
+   Solução 3: CORS
+   → Backend deve permitir requisições do frontend
+   → Verificar headers no index.js (já configurado)
+
+❌ PROBLEMA: Loading infinito
+
+   Solução: Verificar conexão com backend
+   → Backend rodando em http://localhost:3001?
+   → Endpoint /api/steam/skin funcionando?
+   → Testar manualmente: 
+     curl http://localhost:3001/api/steam/skin?name=AK-47%20|%20Redline
+
+❌ PROBLEMA: Todas as imagens mostram ícones
+
+   Solução: Cache ou rate limit da Steam
+   → Limpar cache: clearExpiredCache()
+   → Aguardar 1-2 minutos
+   → Testar com poucas skins primeiro
+
+═══════════════════════════════════════════════════════════════
+📋 PRÓXIMOS PASSOS:
+═══════════════════════════════════════════════════════════════
+
+1. ✅ Sistema de imagens implementado
+2. ⏳ Testar com skins reais das caixas
+3. ⏳ Adicionar mais skins por caixa
+4. ⏳ Otimizar cache de imagens
+5. ⏳ Implementar pre-loading de imagens populares
+
+═══════════════════════════════════════════════════════════════
+🎯 STATUS ATUAL:
+═══════════════════════════════════════════════════════════════
+
+✅ Backend: Busca imagens da Steam Market (HTML scraping)
+✅ Frontend: Componente SkinImage com loading/error states
+✅ API: Endpoint /api/steam/skin retornando imagem + preço
+✅ Cache: 30 minutos para imagens e preços
+✅ Fallback: Ícones animados quando imagem não disponível
+✅ Performance: Lazy loading + estados assíncronos
+
+═══════════════════════════════════════════════════════════════
+
+🎮 PRONTO PARA TESTAR!
+
+Acesse: http://localhost:3000/cases
+Clique em qualquer caixa
+Veja as imagens REAIS das skins carregando
+
+Se alguma skin não carregar:
+- Verifique o console para logs
+- Nome pode estar incorreto no skinNameMapper
+- Steam pode ter bloqueado temporariamente (rate limit)
+
+═══════════════════════════════════════════════════════════════

@@ -1,0 +1,75 @@
+Bom — terminei a integração e a preparação para rodar tudo localmente. Resumo do que eu fiz agora, como testar e próximos passos recomendados.
+
+O que foi executado (passos realizados)
+
+Ajustei o Prisma para uso local (SQLite) e criei o schema inicial: schema.prisma.
+Gereis o Prisma Client (npx prisma generate) e apliquei a migração inicial (npx prisma migrate).
+Adicionei e executei um seed para popular dados de exemplo (usuário demo + um case com itens): seed.js.
+Adicionei rotas backend para casos:
+GET /api/cases — lista os cases
+GET /api/cases/:id — detalhes do case
+POST /api/cases/:id/open — abre o case (gera um tradeOffer stub e retorna o item sorteado)
+Arquivo: cases.js
+Adicionei prisma wrapper: prisma.js
+Integrei as rotas no server.js e adicionei cors() para permitir chamadas do frontend local.
+Criei/atualizei arquivos no frontend para apontar às APIs do backend (login e 2FA agora chamam http://localhost:4000/api/auth/...).
+Adicionei design tokens, componentes TSX (Button, Modal) e testes de exemplo no frontend.
+Atualizei a todo list marcando mapeamento de APIs/modelos completado.
+Arquivos principais criados/atualizados (localização)
+
+Backend
+schema.prisma — schema Prisma (SQLite dev)
+seed.js — seed de exemplo
+prisma.js — exporta PrismaClient
+cases.js — endpoints cases
+auth.js — stubs (criado antes)
+server.js — adicionadas rotas e CORS
+package.json — deps (express, cors, prisma instalado)
+Frontend
+login.jsx — aponta para backend
+2fa.jsx — aponta para backend
+frontend/src/design-system/* — tokens/styles
+Button.tsx
+Modal.tsx
+Docs
+API.md, ARCHITECTURE.md, DESIGN_SYSTEM.md
+Comandos que eu rodei aqui (resumo)
+
+Instalação Prisma no backend:
+npm install prisma @prisma/client --save-dev
+Gerar client:
+npx prisma generate
+Criar migração (create-only) e aplicar:
+npx prisma migrate dev --name init --create-only
+npx prisma migrate deploy
+Seed:
+node prisma/seed.js
+Iniciar backend (eu iniciei localmente):
+node server.js
+Instalei dependências do frontend (executado antes): npm install (frontend)
+Como testar localmente (passo-a-passo)
+
+Frontend (Next.js)
+Abra um terminal PowerShell:
+Abra no navegador: http://localhost:3000
+Páginas de teste:
+Home: http://localhost:3000
+Login: http://localhost:3000/login
+Submeta qualquer email/senha -> o stub responde com next: '2fa' e redireciona
+2FA: http://localhost:3000/2fa
+Para demo, o backend aceita o código 123456 (resposta success: true)
+Backend
+No terminal:
+Endpoints:
+GET http://localhost:4000/api/cases
+GET http://localhost:4000/api/cases/:id
+POST http://localhost:4000/api/cases/:id/open
+Body JSON: { "userId": "<user-id-optional>" }
+O seed já criou um usuário demo demo@cs2fortune.local e um Starter Case.
+Observações / detalhes úteis
+
+O Prisma foi configurado para SQLite local (arquivo de dev) para facilitar testes. Para produção, altere prisma/schema.prisma para provider = "postgresql" e configure DATABASE_URL.
+Seed usado: email demo@cs2fortune.local / username demouser / password 'demo' (apenas demo — não é seguro).
+O POST /api/cases/:id/open é simplificado: escolhe um item aleatório e cria um registro TradeOffer (status pending). Integração com Steam Bot e gestão real de saldo/transactions/fraude ficam para a próxima iteração.
+O backend agora tem CORS habilitado para facilitar chamadas do frontend local.
+O frontend agora aponta explicitamente para http://localhost:4000 nas páginas de auth; você pode centralizar essa URL em lib/api ou variáveis de ambiente (NEXT_PUBLIC_API_URL) para facilitar produção.

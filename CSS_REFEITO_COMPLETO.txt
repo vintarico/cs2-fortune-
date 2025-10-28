@@ -1,0 +1,490 @@
+╔══════════════════════════════════════════════════════════════════╗
+║         🎨 TODOS OS ARQUIVOS CSS FORAM REFEITOS         ║
+║              CS2 FORTUNE - SISTEMA COMPLETO              ║
+║                  Data: 26/10/2025                        ║
+╚══════════════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════════════
+📁 LOCALIZAÇÃO DOS ARQUIVOS
+═══════════════════════════════════════════════════════════════════
+
+Diretório: frontend CS2 Fortune completo/styles/
+
+✅ globals.css (21.96 KB)
+✅ animations.css (15.30 KB)
+✅ components.css (17.84 KB)
+✅ responsive.css (17.48 KB)
+
+📊 TOTAL: 72.58 KB de CSS profissional
+
+═══════════════════════════════════════════════════════════════════
+📄 1. GLOBALS.CSS (21.96 KB)
+═══════════════════════════════════════════════════════════════════
+
+📌 CONTEÚDO:
+
+✓ Variáveis CSS Personalizadas (:root)
+  • Cores principais (primary, secondary, accent)
+  • Cores de sucesso, erro, warning, info
+  • Backgrounds (dark, darker, card)
+  • Texto (primary, secondary, muted)
+  • Bordas e sombras
+  • Transições (fast, normal, slow)
+  • Border radius (sm → full)
+  • Espaçamento (xs → 2xl)
+
+✓ Reset e Base Styles
+  • HTML smooth scroll
+  • Body com fonte Inter
+  • #__next com 100% altura
+  • Antialiasing
+
+✓ Scrollbar Customizado
+  • Webkit scrollbar (purple gradient)
+  • Firefox scrollbar
+  • Hover effects com glow
+
+✓ 20+ Animações @keyframes
+  • gradient-pulse (3s)
+  • pulse-glow (2s)
+  • case-spin (2s)
+  • case-reveal (0.5s)
+  • confetti (3s)
+  • modal-appear (0.4s)
+  • bounce-slow (3s)
+  • gradient-x (3s)
+  • float-3d (3s)
+  • fade-in (0.6s)
+  • fade-in-up/down (0.6s)
+  • slide-in-left/right (0.6s)
+  • shimmer (2s)
+  • rotate (2s)
+  • scale-in (0.5s)
+  • shake (0.5s)
+  • particle-float (6s)
+
+✓ Classes de Utilidade - Animações
+  • .animate-gradient-pulse
+  • .animate-pulse-glow
+  • .animate-case-spin
+  • .animate-confetti
+  • .animate-fade-in
+  • .animate-shimmer
+  • etc. (17 classes)
+
+✓ Gradientes e Backgrounds
+  • .gradient-purple-pink
+  • .gradient-purple-blue
+  • .gradient-gold
+  • .gradient-green
+  • .gradient-red
+  • .neon-gradient
+  • .hero-gradient
+  • .card-gradient
+  • .glass-effect
+
+✓ Componentes - Cards 3D
+  • .card-3d com transform-style: preserve-3d
+  • Hover: translateY(-10px) + rotateX/Y
+  • Box-shadow com glow roxo
+  • Shimmer effect com ::before
+
+✓ Componentes - Botões
+  • .btn-primary com gradient
+  • ::before com ripple effect
+  • Hover: translateY(-2px) + glow
+  • .btn-glow com radial gradient
+
+✓ Componentes - Modais e Overlays
+  • .modal-overlay com backdrop-filter blur
+  • .modal-content com animação
+  • Border roxo e shadow
+
+✓ Componentes - Badges e Tags
+  • .badge base
+  • .badge-success (verde)
+  • .badge-warning (amarelo)
+  • .badge-danger (vermelho)
+  • .badge-info (azul)
+  • .badge-primary (roxo)
+
+✓ Componentes - Inputs e Forms
+  • .input-group
+  • .input-field com focus glow
+  • .input-label
+
+✓ Efeitos Especiais
+  • .glow-text com text-shadow
+  • .neon-border com box-shadow
+  • .hover-lift
+  • .text-gradient
+
+✓ Classes Específicas CS2 Fortune
+  • .case-card com hover effects
+  • .rarity-common (cinza)
+  • .rarity-rare (azul)
+  • .rarity-epic (roxo)
+  • .rarity-legendary (dourado)
+  • .rarity-mythic (vermelho)
+
+✓ Responsividade Base
+  • @media (max-width: 768px)
+  • @media (max-width: 480px)
+
+✓ Utilitários Personalizados
+  • .container-custom
+  • .section-padding
+  • .grid-auto-fit
+  • .flex-center
+  • .absolute-center
+  • .gpu-accelerated
+  • .no-select
+  • .smooth-edges
+
+═══════════════════════════════════════════════════════════════════
+📄 2. ANIMATIONS.CSS (15.30 KB)
+═══════════════════════════════════════════════════════════════════
+
+📌 CONTEÚDO:
+
+✓ Animações de Case Opening (8 animações)
+  • case-opening-spin (deceleração com blur)
+  • case-item-glow (pulsação de brilho)
+  • winner-reveal (scale + rotate)
+  • case-unlock (clip-path)
+
+✓ Confetti e Celebração (4 animações)
+  • confetti-fall (queda com rotação)
+  • confetti-spin (rotação 3D)
+  • firework (explosão radial)
+  • celebration-burst (scale burst)
+
+✓ Partículas e Backgrounds (4 animações)
+  • particle-drift (movimento flutuante)
+  • particle-pulse (opacity + scale)
+  • star-twinkle (piscar)
+  • aurora (rotação 360°)
+
+✓ Waves e Fluidos (3 animações)
+  • wave (translateX + translateY)
+  • ripple (ondulação)
+  • liquid-morph (border-radius morphing)
+
+✓ Glitch e Tech Effects (5 animações)
+  • glitch (translate aleatório)
+  • glitch-text (RGB separation)
+  • scan-line (linha de varredura)
+  • hologram (opacity + background-position)
+
+✓ 3D e Perspective (4 animações)
+  • rotate-3d (rotação completa 3D)
+  • flip-card (virar carta)
+  • cube-spin (rotação cúbica)
+  • tilt (inclinação suave)
+
+✓ Shimmer e Shine (4 animações)
+  • shimmer-advanced (brilho horizontal)
+  • shine (diagonal shine)
+  • glow-pulse (filter drop-shadow)
+  • neon-flicker (piscar neon)
+
+✓ Loading e Spinners (4 animações)
+  • spinner (rotação contínua)
+  • pulse-ring (expansão + fade)
+  • dots-bounce (bounce vertical)
+  • progress-bar (width 0→100%)
+
+✓ Entrance Animations (5 animações)
+  • zoom-in/zoom-out
+  • slide-up/slide-down
+  • rotate-in
+
+✓ Mobile Specific (3 animações)
+  • mobile-menu-slide
+  • touch-feedback
+  • swipe-indicator
+
+✓ Classes de Utilidade (15+ classes)
+  • .animate-case-opening-spin
+  • .animate-confetti-fall
+  • .animate-glitch
+  • .animate-neon-flicker
+  • .animate-rotate-3d
+  • .delay-100 até .delay-1000
+
+═══════════════════════════════════════════════════════════════════
+📄 3. COMPONENTS.CSS (17.84 KB)
+═══════════════════════════════════════════════════════════════════
+
+📌 CONTEÚDO:
+
+✓ Case Card Premium
+  • Background gradient
+  • Border gradient animado (::before)
+  • Hover: translateY(-10px) + scale
+  • Image transform com rotate
+
+✓ Navbar e Navegação
+  • .navbar-container sticky
+  • .navbar-link com underline animado (::after)
+  • .active state
+  • Backdrop blur
+
+✓ Botões Customizados (3 tipos)
+  • .btn-gradient (gradient + ripple)
+  • .btn-outline (border + fill)
+  • .btn-icon (com ícone SVG)
+
+✓ Payment Cards
+  • .payment-card com hover
+  • .selected state
+  • .payment-icon gradient
+  • Shimmer effect
+
+✓ Stats e Métricas
+  • .stat-card
+  • .stat-value com text gradient
+  • .stat-label uppercase
+
+✓ Winner Display
+  • .winner-card com fade-in
+  • .winner-avatar circular
+  • .winner-item-image
+  • .winner-amount (verde)
+
+✓ Testimonials
+  • .testimonial-card
+  • Aspas ::before
+  • .testimonial-stars
+  • .testimonial-author com avatar
+
+✓ Modal e Overlay
+  • .modal-backdrop com blur
+  • .modal-container animado
+  • .modal-header/body/footer
+  • .modal-close com rotate
+
+✓ Notifications e Toast (4 tipos)
+  • .toast base
+  • .success/.error/.warning/.info
+  • Border-left colorido
+  • Slide-in animation
+
+✓ Tabs
+  • .tabs-container
+  • .tab-button com underline
+  • .active state
+
+✓ Progress Bars
+  • .progress-container
+  • .progress-bar gradient
+  • Shimmer effect (::after)
+
+✓ Tooltip
+  • .tooltip container
+  • .tooltip-text com arrow
+  • Hover visibility
+
+═══════════════════════════════════════════════════════════════════
+📄 4. RESPONSIVE.CSS (17.48 KB)
+═══════════════════════════════════════════════════════════════════
+
+📌 CONTEÚDO:
+
+✓ Breakpoints Definidos
+  • xs: 0-479px (Mobile pequeno)
+  • sm: 480-767px (Mobile)
+  • md: 768-1023px (Tablet)
+  • lg: 1024-1279px (Desktop pequeno)
+  • xl: 1280-1535px (Desktop)
+  • 2xl: 1536px+ (Desktop grande)
+
+✓ Mobile Extra Small (0-479px)
+  • font-size: 13px
+  • padding reduzido
+  • h1: 2rem
+  • buttons: 0.625rem padding
+  • grid: 1 coluna
+  • toast: full width
+
+✓ Mobile (480-767px)
+  • font-size: 14px
+  • h1: 2.5rem
+  • grid: 1 coluna
+  • navbar links: 0.875rem
+
+✓ Tablet (768-1023px)
+  • font-size: 15px
+  • max-width: 768px
+  • grid: 2 colunas
+  • modal: 80% width
+
+✓ Desktop Small (1024-1279px)
+  • max-width: 1024px
+  • grid: 3 colunas
+  • section-padding: 5rem
+
+✓ Desktop (1280-1535px)
+  • max-width: 1280px
+  • grid: auto-fit 320px
+
+✓ Desktop Large (1536px+)
+  • max-width: 1536px
+  • grid: auto-fit 350px
+  • section-padding: 6rem
+  • cards: 2.5rem padding
+
+✓ Orientação Landscape Mobile
+  • section-padding: 2rem
+  • modal: 80vh max-height
+  • navbar compacto
+  • case-card: aspect 16/9
+
+✓ Utility Classes Responsivas
+  • .mobile-only
+  • .tablet-only
+  • .desktop-only
+
+✓ Grid Responsivo Customizado
+  • .responsive-grid
+  • .responsive-grid-2/3/4
+  • Auto-ajuste por breakpoint
+
+✓ Toast Responsivo
+  • Mobile: full width bottom
+  • Desktop: fixed bottom-right
+
+✓ Navbar Mobile
+  • .navbar-menu (fixed sidebar)
+  • .navbar-toggle (hamburger)
+  • .navbar-overlay
+
+✓ Cards Responsivos
+  • aspect-ratio ajustável
+  • padding variável
+  • winner-card: column em mobile
+
+✓ Forms Responsivos
+  • input font-size: 16px (evita zoom iOS)
+  • .form-row: column em mobile
+
+✓ Scrollbar Mobile
+  • width: 4px
+  • simplificado
+
+✓ Performance Mobile
+  • transform-style: flat
+  • particles: opacity 0.3
+  • backdrop-filter: blur(6px)
+  • hover: none em touch
+
+✓ Tipografia Responsiva
+  • text-xs até text-5xl
+  • Escalas por breakpoint
+
+✓ Imagens Responsivas
+  • max-width: 100%
+  • object-fit: cover
+
+✓ Animações Responsivas
+  • @media (prefers-reduced-motion)
+  • animation-duration: 0.01ms
+  • Acessibilidade
+
+═══════════════════════════════════════════════════════════════════
+🎯 CARACTERÍSTICAS GERAIS
+═══════════════════════════════════════════════════════════════════
+
+✅ Mobile-First Approach
+   Todo o CSS foi construído pensando primeiro em mobile,
+   com media queries progressivas para telas maiores.
+
+✅ 70+ Animações Customizadas
+   Desde animações simples (fade, slide) até complexas
+   (case opening, confetti, glitch effects).
+
+✅ Variáveis CSS
+   Mais de 30 variáveis CSS para fácil customização de
+   cores, espaçamentos, transições e shadows.
+
+✅ Gradientes e Efeitos Neon
+   5 gradientes pré-definidos + neon gradient com 5 cores.
+   Todos os elementos importantes têm glow effects.
+
+✅ Cards 3D com Hover Effects
+   Transform-style: preserve-3d, perspective, e rotações
+   3D completas com shimmer overlays.
+
+✅ Scrollbar Customizado
+   Purple gradient scrollbar com hover glow, compatível
+   com Chrome/Safari e Firefox.
+
+✅ Classes de Raridade CS2
+   5 níveis de raridade com cores e glows específicos:
+   Common → Rare → Epic → Legendary → Mythic
+
+✅ Performance Otimizada
+   GPU acceleration, will-change, backface-visibility,
+   animações suavizadas, reduced motion support.
+
+✅ Acessibilidade
+   Prefers-reduced-motion support, foco visível,
+   contraste adequado, tamanhos de fonte escaláveis.
+
+✅ Responsividade Completa
+   6 breakpoints (xs, sm, md, lg, xl, 2xl) com ajustes
+   específicos para cada tipo de dispositivo.
+
+═══════════════════════════════════════════════════════════════════
+📊 ESTATÍSTICAS TÉCNICAS
+═══════════════════════════════════════════════════════════════════
+
+📄 Arquivos CSS: 4
+💾 Tamanho Total: 72.58 KB
+🎨 Variáveis CSS: 30+
+✨ Animações @keyframes: 70+
+🎯 Classes Utilitárias: 100+
+📱 Breakpoints: 6
+🎴 Componentes: 20+
+🌈 Gradientes: 8+
+🎭 Efeitos Especiais: 15+
+
+═══════════════════════════════════════════════════════════════════
+🚀 COMO USAR
+═══════════════════════════════════════════════════════════════════
+
+O arquivo globals.css já está importado em _app.js:
+
+```javascript
+import '../styles/globals.css'
+```
+
+Se quiser usar os outros arquivos CSS também, adicione em _app.js:
+
+```javascript
+import '../styles/globals.css'
+import '../styles/animations.css'
+import '../styles/components.css'
+import '../styles/responsive.css'
+```
+
+Ou importe apenas o que precisar em componentes específicos.
+
+NOTA: O globals.css já contém tudo essencial para o projeto
+funcionar. Os outros 3 arquivos são complementares e opcionais.
+
+═══════════════════════════════════════════════════════════════════
+✅ STATUS FINAL
+═══════════════════════════════════════════════════════════════════
+
+🎉 TODOS OS ARQUIVOS CSS FORAM REFEITOS COM SUCESSO!
+
+✓ globals.css (21.96 KB) - COMPLETO
+✓ animations.css (15.30 KB) - COMPLETO
+✓ components.css (17.84 KB) - COMPLETO
+✓ responsive.css (17.48 KB) - COMPLETO
+
+O sistema está pronto para uso com CSS profissional,
+moderno, responsivo e totalmente otimizado!
+
+═══════════════════════════════════════════════════════════════════

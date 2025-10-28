@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="blueMain" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#60A5FA;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#0095FF;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#0369A1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0C4A6E;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blueTop" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#7DD3FC;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0095FF;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="blueSide" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0369A1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#075985;stop-opacity:1" />
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="electricGlow">
+      <feGaussianBlur stdDeviation="5"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Electric shadow -->
+  <ellipse cx="200" cy="352" rx="130" ry="17" fill="#000" opacity="0.5" filter="url(#blur)"/>
+  <ellipse cx="200" cy="348" rx="115" ry="14" fill="#0095FF" opacity="0.4" filter="url(#electricGlow)"/>
+  
+  <!-- Norse themed case -->
+  <path d="M 95,175 L 200,115 L 305,175 L 200,235 Z" fill="url(#blueMain)" stroke="#0C4A6E" stroke-width="2.5"/>
+  <path d="M 200,115 L 305,175 L 305,285 L 200,225 Z" fill="url(#blueTop)" stroke="#0C4A6E" stroke-width="2.5"/>
+  <path d="M 95,175 L 200,235 L 200,345 L 95,285 Z" fill="url(#blueSide)" stroke="#0C4A6E" stroke-width="2.5"/>
+  
+  <!-- Nordic pattern bands -->
+  <path d="M 200,115 L 305,175 L 305,185 L 200,125 Z" fill="#075985" opacity="0.7"/>
+  <path d="M 200,128 L 305,188 L 305,196 L 200,136 Z" fill="#7DD3FC" opacity="0.4"/>
+  
+  <!-- Base -->
+  <path d="M 200,225 L 305,285 L 305,320 L 200,260 Z" fill="#0369A1" stroke="#0C4A6E" stroke-width="2"/>
+  <path d="M 95,285 L 200,345 L 200,380 L 95,320 Z" fill="#075985" stroke="#0C4A6E" stroke-width="2"/>
+  <path d="M 200,260 L 305,320 L 200,380 L 95,320 Z" fill="#0C4A6E" stroke="#064E3B" stroke-width="2"/>
+  
+  <!-- Gungnir (Odin's spear) emblem -->
+  <g transform="translate(200, 190)">
+    <circle r="50" fill="#0C4A6E" opacity="0.95"/>
+    <circle r="47" fill="none" stroke="#0095FF" stroke-width="4" filter="url(#electricGlow)"/>
+    <circle r="42" fill="none" stroke="#7DD3FC" stroke-width="1.5" opacity="0.5"/>
+    
+    <!-- Gungnir spear -->
+    <g transform="translate(0, 5)">
+      <!-- Spear shaft -->
+      <rect x="-2" y="-15" width="4" height="50" fill="#8B7355" stroke="#654321" stroke-width="1"/>
+      <rect x="-1.5" y="-15" width="3" height="50" fill="#A0826D" opacity="0.5"/>
+      
+      <!-- Spear head (blade) -->
+      <path d="M 0,-40 L 8,-20 L 4,-15 L 0,-10 L -4,-15 L -8,-20 Z" 
+            fill="#E8E8E8" stroke="#000" stroke-width="1.5"/>
+      <path d="M 0,-40 L 0,-10" 
+            stroke="#FFF" stroke-width="1" opacity="0.6"/>
+      <path d="M 0,-40 L 5,-22 M 0,-40 L -5,-22" 
+            stroke="#C0C0C0" stroke-width="0.5"/>
+      
+      <!-- Electric energy on spear tip -->
+      <g filter="url(#electricGlow)">
+        <path d="M 0,-40 L -3,-45 L 0,-43 L 2,-48" 
+              stroke="#0095FF" stroke-width="2" fill="none"/>
+        <path d="M 0,-40 L 3,-45 L 0,-43 L -2,-48" 
+              stroke="#7DD3FC" stroke-width="1.5" fill="none"/>
+      </g>
+      
+      <!-- Runic inscriptions on shaft -->
+      <g fill="#0095FF" font-family="Arial" font-size="10" opacity="0.8">
+        <text x="0" y="-5" text-anchor="middle">ᚷ</text>
+        <text x="0" y="5" text-anchor="middle">ᚢ</text>
+        <text x="0" y="15" text-anchor="middle">ᚾ</text>
+      </g>
+      
+      <!-- Spear guard/crosspiece -->
+      <rect x="-10" y="-12" width="20" height="3" rx="1" fill="#8B7355" stroke="#654321" stroke-width="1"/>
+      <rect x="-8" y="-11" width="16" height="1" fill="#D4AF37" opacity="0.6"/>
+    </g>
+    
+    <!-- Runic circle around emblem -->
+    <g opacity="0.6">
+      <text x="0" y="-45" text-anchor="middle" font-size="12" fill="#7DD3FC">ᚷᚢᚾᚷᚾᛁᚱ</text>
+    </g>
+  </g>
+  
+  <!-- Nordic decorative bands -->
+  <g stroke="#0095FF" stroke-width="1.5" fill="none" opacity="0.5">
+    <!-- Top decorative band -->
+    <path d="M 110,180 L 115,175 L 120,180 L 125,175 L 130,180"/>
+    <path d="M 270,180 L 275,175 L 280,180 L 285,175 L 290,180"/>
+    
+    <!-- Middle decorative band -->
+    <circle cx="120" cy="210" r="4" fill="none" stroke="#7DD3FC" stroke-width="1"/>
+    <circle cx="280" cy="210" r="4" fill="none" stroke="#7DD3FC" stroke-width="1"/>
+  </g>
+  
+  <!-- Thunder/lightning accent -->
+  <g opacity="0.4" filter="url(#electricGlow)">
+    <path d="M 250,160 L 245,170 L 250,168 L 247,178" stroke="#7DD3FC" stroke-width="2" fill="none"/>
+  </g>
+  
+  <!-- Highlights -->
+  <path d="M 210,120 L 285,162 L 285,168 L 210,126 Z" fill="#FFF" opacity="0.2"/>
+  <path d="M 215,125 L 275,160 L 275,165 L 215,130 Z" fill="#7DD3FC" opacity="0.15"/>
+  <line x1="200" y1="115" x2="300" y2="173" stroke="#7DD3FC" stroke-width="2" opacity="0.5" filter="url(#electricGlow)"/>
+</svg>

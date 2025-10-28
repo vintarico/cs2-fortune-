@@ -1,0 +1,270 @@
+═══════════════════════════════════════════════════════════════
+📥 GUIA: ADICIONAR IMAGENS LOCAIS DAS SKINS
+═══════════════════════════════════════════════════════════════
+
+Este guia explica como adicionar imagens das skins ao servidor local
+para que funcionem mesmo quando Steam está bloqueado.
+
+═══════════════════════════════════════════════════════════════
+📂 ESTRUTURA DE PASTAS:
+═══════════════════════════════════════════════════════════════
+
+Backend completo CS 2 Fortune/
+├── public/
+│   └── skins/              ← COLOQUE AS IMAGENS AQUI
+│       ├── ak47-redline.png
+│       ├── awp-asiimov.png
+│       ├── m4a4-howl.png
+│       └── ...
+├── services/
+│   └── localImages.js      ← Configurações dos nomes
+└── index.js
+
+═══════════════════════════════════════════════════════════════
+🔍 ONDE BUSCAR IMAGENS:
+═══════════════════════════════════════════════════════════════
+
+OPÇÃO 1: Steam Community Market (Melhor qualidade)
+   URL: https://steamcommunity.com/market/listings/730/[SKIN_NAME]
+   
+   Exemplo:
+   https://steamcommunity.com/market/listings/730/AK-47%20%7C%20Redline%20(Field-Tested)
+   
+   Como pegar:
+   1. Abra a página da skin
+   2. Clique com botão direito na imagem grande
+   3. "Salvar imagem como..."
+   4. Salve como: ak47-redline.png
+
+OPÇÃO 2: CS2 Stash (Imagens limpas, sem fundo)
+   URL: https://csgostash.com/
+   
+   Como usar:
+   1. Busque a skin
+   2. Botão direito na imagem
+   3. "Salvar imagem como..."
+
+OPÇÃO 3: CS.MONEY (Boa qualidade)
+   URL: https://cs.money/csgo/trade/
+   
+   Como usar:
+   1. Busque a skin no inventário
+   2. Clique para ver detalhes
+   3. Salve a imagem 3D
+
+═══════════════════════════════════════════════════════════════
+📝 NOMEANDO ARQUIVOS:
+═══════════════════════════════════════════════════════════════
+
+Siga o padrão definido em services/localImages.js:
+
+PADRÃO: [arma]-[skin].png
+
+Exemplos CORRETOS:
+✅ ak47-redline.png
+✅ awp-asiimov.png
+✅ m4a4-howl.png
+✅ deagle-blaze.png
+✅ karambit-doppler.png
+✅ gloves-pandora.png
+
+Exemplos ERRADOS:
+❌ AK-47 Redline.png      (espaços)
+❌ ak47_redline.jpg       (.jpg em vez de .png)
+❌ redline.png            (falta o nome da arma)
+❌ ak-47-redline-ft.png   (muito específico)
+
+═══════════════════════════════════════════════════════════════
+🚀 PASSO A PASSO RÁPIDO:
+═══════════════════════════════════════════════════════════════
+
+1. ACESSE o Steam Market da skin:
+   https://steamcommunity.com/market/listings/730/AK-47%20|%20Redline%20(Field-Tested)
+
+2. SALVE a imagem:
+   - Botão direito na imagem grande
+   - "Salvar imagem como..."
+   - Navegue até: Backend completo CS 2 Fortune/public/skins/
+   - Nome: ak47-redline.png
+   - Salvar
+
+3. REPITA para outras skins populares
+
+4. REINICIE o backend (Ctrl+C e "node index.js")
+
+5. TESTE visitando:
+   http://localhost:3001/skins/ak47-redline.png
+   (Deve mostrar a imagem)
+
+═══════════════════════════════════════════════════════════════
+🎯 SKINS PRIORITÁRIAS (Baixe estas primeiro):
+═══════════════════════════════════════════════════════════════
+
+🔥 MAIS POPULARES:
+
+AK-47:
+- ak47-redline.png          → AK-47 | Redline (Field-Tested)
+- ak47-vulcan.png           → AK-47 | Vulcan (Minimal Wear)
+- ak47-inheritance.png      → AK-47 | Inheritance (Field-Tested)
+
+AWP:
+- awp-asiimov.png           → AWP | Asiimov (Field-Tested)
+- awp-duality.png           → AWP | Duality (Field-Tested)
+
+M4A4:
+- m4a4-asiimov.png          → M4A4 | Asiimov (Field-Tested)
+- m4a4-neo-noir.png         → M4A4 | Neo-Noir (Field-Tested)
+
+M4A1-S:
+- m4a1s-hyper-beast.png     → M4A1-S | Hyper Beast (Minimal Wear)
+- m4a1s-printstream.png     → M4A1-S | Printstream (Minimal Wear)
+
+Pistolas:
+- deagle-blaze.png          → Desert Eagle | Blaze (Factory New)
+- glock-fade.png            → Glock-18 | Fade (Factory New)
+- usps-kill-confirmed.png   → USP-S | Kill Confirmed (Minimal Wear)
+
+🗡️ FACAS (Caras e populares):
+- karambit-doppler.png      → Karambit | Doppler (Factory New)
+- butterfly-fade.png        → Butterfly Knife | Fade (Factory New)
+
+═══════════════════════════════════════════════════════════════
+✅ VERIFICAR SE FUNCIONOU:
+═══════════════════════════════════════════════════════════════
+
+MÉTODO 1: API Endpoint
+GET http://localhost:3001/api/local-images
+
+Resposta esperada:
+{
+  "total": 40,
+  "available": 5,      ← Quantas você baixou
+  "missing": 35,       ← Quantas faltam
+  "images": [
+    {
+      "skinName": "AK-47 | Redline (Field-Tested)",
+      "filename": "ak47-redline.png",
+      "path": "/skins/ak47-redline.png",
+      "size": 245632
+    },
+    ...
+  ]
+}
+
+MÉTODO 2: Verificar Skin Específica
+GET http://localhost:3001/api/local-images/check?name=AK-47%20%7C%20Redline%20(Field-Tested)
+
+Resposta:
+{
+  "skinName": "AK-47 | Redline (Field-Tested)",
+  "hasLocalImage": true,
+  "path": "/skins/ak47-redline.png",
+  "url": "http://localhost:3001/skins/ak47-redline.png"
+}
+
+MÉTODO 3: Abrir Direto no Navegador
+http://localhost:3001/skins/ak47-redline.png
+
+Se a imagem aparecer = ✅ Funcionou!
+
+═══════════════════════════════════════════════════════════════
+🔄 COMO O SISTEMA USA AS IMAGENS:
+═══════════════════════════════════════════════════════════════
+
+PRIORIDADE (Backend):
+
+1. IMAGEM LOCAL (Mais rápido, sempre funciona)
+   ├─ Verifica se existe em public/skins/
+   ├─ Se sim → Retorna URL local
+   └─ Log: "🖼️ [LOCAL] Usando imagem local: [skin]"
+
+2. STEAM CDN (Se tiver icon_url)
+   ├─ Usa URL do Steam CDN diretamente
+   └─ Pode falhar se Steam estiver bloqueado
+
+3. STEAM SCRAPING (Último recurso)
+   ├─ Acessa página do Steam Market
+   ├─ Extrai URL da imagem via regex
+   ├─ LENTO e pode dar erro 429
+   └─ Log: "🔍 Buscando imagem: [skin]"
+
+4. FALLBACK GRÁFICO (Frontend)
+   ├─ Se tudo falhar
+   └─ Mostra ícone animado bonito
+
+═══════════════════════════════════════════════════════════════
+📊 ESTATÍSTICAS:
+═══════════════════════════════════════════════════════════════
+
+Tamanho médio por imagem: ~200-500 KB
+Total configurado: 40 skins
+Espaço estimado (todas): ~20 MB
+
+BENEFÍCIOS:
+✅ Carregamento instantâneo
+✅ Funciona mesmo com Steam offline
+✅ Zero requisições ao Steam (economiza rate limit)
+✅ Melhor experiência do usuário
+
+═══════════════════════════════════════════════════════════════
+🛠️ TROUBLESHOOTING:
+═══════════════════════════════════════════════════════════════
+
+PROBLEMA: Imagem não aparece
+
+SOLUÇÕES:
+1. Verifique o nome do arquivo (case-sensitive no Linux)
+2. Confirme que está em: Backend completo CS 2 Fortune/public/skins/
+3. Verifique extensão: .png (não .jpg, .jpeg, etc)
+4. Reinicie o backend
+5. Teste a URL direta: http://localhost:3001/skins/[arquivo].png
+
+---
+
+PROBLEMA: API diz "hasLocalImage": false
+
+SOLUÇÕES:
+1. Nome do arquivo deve corresponder ao mapeamento
+2. Verifique services/localImages.js → LOCAL_IMAGES
+3. Nome da skin deve ser EXATO (com parênteses, pipes, etc)
+
+═══════════════════════════════════════════════════════════════
+💡 DICAS:
+═══════════════════════════════════════════════════════════════
+
+✅ Use .PNG (melhor qualidade, transparência)
+✅ Tamanho ideal: 256x256 ou 512x512
+✅ Compacte imagens se ficarem muito grandes (tinypng.com)
+✅ Baixe primeiro as skins mais caras/populares
+✅ Mantenha backup das imagens
+
+═══════════════════════════════════════════════════════════════
+📥 SCRIPT AUTOMÁTICO (OPCIONAL):
+═══════════════════════════════════════════════════════════════
+
+Você pode criar um script para baixar automaticamente:
+
+const axios = require('axios');
+const fs = require('fs');
+const path = require('path');
+
+async function downloadImage(url, filename) {
+  const response = await axios.get(url, { responseType: 'arraybuffer' });
+  fs.writeFileSync(
+    path.join(__dirname, 'public/skins', filename),
+    response.data
+  );
+  console.log(`✅ Downloaded: ${filename}`);
+}
+
+// Exemplo de uso:
+downloadImage(
+  'https://steamcommunity-a.akamaihd.net/economy/image/[ID]',
+  'ak47-redline.png'
+);
+
+═══════════════════════════════════════════════════════════════
+
+🎮 Comece baixando 5-10 skins mais populares e teste!
+
+═══════════════════════════════════════════════════════════════

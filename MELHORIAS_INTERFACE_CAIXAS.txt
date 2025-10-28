@@ -1,0 +1,170 @@
+═══════════════════════════════════════════════════════════════
+🎨 MELHORIAS NA INTERFACE DAS CAIXAS - CS2 FORTUNE
+Data: 27/10/2025
+═══════════════════════════════════════════════════════════════
+
+📋 MUDANÇAS IMPLEMENTADAS:
+═══════════════════════════════════════════════════════════════
+
+✅ 1. ROLETA LIMPA
+───────────────────────────────────────────────────────────────
+   ❌ REMOVIDO: Box de debug que mostrava o resultado abaixo da roleta
+   ✅ AGORA: Apenas a roleta + mensagem "Girando a roleta... Boa sorte!"
+   
+   Benefício: Interface mais limpa e suspense mantido até o final
+
+
+✅ 2. ITENS ORGANIZADOS POR RARIDADE
+───────────────────────────────────────────────────────────────
+   📊 ORDENAÇÃO: Melhor para Pior (Legendary → Epic → Rare → Uncommon → Common)
+   
+   ESTRUTURA NOVA:
+   ┌─────────────────────────────────────────┐
+   │ 🔥 LEGENDARY - 0.26% de chance          │
+   │ ├─ Karambit | Fade                      │
+   │ └─ Karambit | Doppler                   │
+   ├─────────────────────────────────────────┤
+   │ 💎 EPIC - 0.64% de chance               │
+   │ ├─ AWP | Dragon Lore                    │
+   │ └─ M4A4 | Howl                          │
+   ├─────────────────────────────────────────┤
+   │ ⭐ RARE - 3.20% de chance               │
+   │ ├─ M4A1-S | Printstream                 │
+   │ ├─ AWP | Asiimov                        │
+   │ └─ AK-47 | Neon Rider                   │
+   ├─────────────────────────────────────────┤
+   │ 💜 UNCOMMON - 15.98% de chance          │
+   │ ├─ AK-47 | Redline                      │
+   │ ├─ AK-47 | Vulcan                       │
+   │ └─ (mais 3 itens...)                    │
+   ├─────────────────────────────────────────┤
+   │ 🔵 COMMON - 79.92% de chance            │
+   │ ├─ Glock-18 | Water Elemental           │
+   │ └─ (mais 9 itens...)                    │
+   └─────────────────────────────────────────┘
+
+
+✅ 3. INFORMAÇÕES DE CADA RARIDADE
+───────────────────────────────────────────────────────────────
+   Cada grupo de raridade mostra:
+   ✓ Nome da raridade (Legendary, Epic, Rare, etc)
+   ✓ Cor exclusiva (vermelho, rosa, roxo, azul)
+   ✓ Ícone visual
+   ✓ % TOTAL de chance daquela raridade
+   ✓ Quantidade de itens
+
+
+✅ 4. TOOLTIP DE PREÇO AO PASSAR O MOUSE
+───────────────────────────────────────────────────────────────
+   ANTES: Preço sempre visível (poluído)
+   AGORA: Hover revela:
+   
+   ┌──────────────┐
+   │  R$ 4800.00  │ ← Preço grande e destacado
+   │    0.130%    │ ← Chance individual
+   └──────┬───────┘
+          │
+      [Imagem da Skin]
+   
+   Benefício: Interface limpa + info completa quando necessário
+
+
+✅ 5. INFORMAÇÕES DETALHADAS POR ITEM
+───────────────────────────────────────────────────────────────
+   Cada card mostra:
+   ✓ Imagem da skin (Steam ou local)
+   ✓ Nome da skin (truncado se muito longo)
+   ✓ Arma base (Glock-18, AK-47, etc)
+   ✓ % de chance individual (ex: 0.130%)
+   ✓ Preço no hover
+   
+   Layout otimizado:
+   - 2 colunas em mobile
+   - 3 colunas em tablet
+   - 4 colunas em desktop
+
+
+✅ 6. MODAL DE RESULTADO LIMPO
+───────────────────────────────────────────────────────────────
+   ❌ REMOVIDO: Box de debug (Modal exibindo: ...)
+   ✅ MANTIDO:
+      - Imagem grande da skin ganha
+      - Nome da skin (colorido pela raridade)
+      - Preço em destaque
+      - Dados do Provably Fair
+      - Botões: Vender | Guardar | Fechar | Abrir Novamente
+
+
+═══════════════════════════════════════════════════════════════
+📊 PRÓXIMOS PASSOS SUGERIDOS:
+═══════════════════════════════════════════════════════════════
+
+🔄 RECOMENDADO:
+   1. Expandir caixas de 10-15 itens para 20 itens cada
+      └─ Adicionar mais variações de cada raridade
+   
+   2. Adicionar mais caixas (Operation, Dreams & Nightmares, etc)
+   
+   3. Criar página de inventário (/inventory)
+      └─ Ver itens guardados
+      └─ Vender múltiplos itens de uma vez
+   
+   4. Implementar filtros na galeria de caixas
+      └─ Por preço
+      └─ Por raridade máxima
+      └─ Por lucro potencial
+
+
+═══════════════════════════════════════════════════════════════
+🎮 COMO TESTAR:
+═══════════════════════════════════════════════════════════════
+
+1. Acesse: http://localhost:3000/cases
+2. Clique em qualquer caixa (ex: Fracture Case)
+3. Observe a nova organização por raridade
+4. Passe o mouse sobre cada skin para ver o preço
+5. Abra a caixa e veja a roleta limpa (sem spoilers)
+6. Aguarde o resultado e veja o modal limpo
+
+
+═══════════════════════════════════════════════════════════════
+📁 ARQUIVOS MODIFICADOS:
+═══════════════════════════════════════════════════════════════
+
+✓ pages/cases/[caseId].js
+   └─ Reorganização completa da exibição de itens
+   └─ Agrupamento por raridade
+   └─ Ordenação de melhor para pior
+   └─ Tooltips de preço no hover
+   └─ Remoção de elementos de debug
+   └─ Melhoria na animação da roleta
+
+
+═══════════════════════════════════════════════════════════════
+✨ MELHORIAS DE UX:
+═══════════════════════════════════════════════════════════════
+
+✓ Interface mais limpa e profissional
+✓ Informações hierarquizadas (raridade → item)
+✓ Foco no que importa (chance + valor)
+✓ Hover interativo (descobre preço quando quer)
+✓ Suspense mantido (não mostra resultado antes da roleta parar)
+✓ Facilita comparação entre raridades
+✓ Melhor entendimento das probabilidades
+✓ Design similar ao CS2 oficial
+
+
+═══════════════════════════════════════════════════════════════
+📝 OBSERVAÇÕES:
+═══════════════════════════════════════════════════════════════
+
+• As chances individuais são calculadas dinamicamente
+• Preços vêm da Steam API (quando disponível)
+• Fallback para imagens locais quando Steam bloqueia
+• Sistema Provably Fair garante justiça nos resultados
+• Todos os dados são verificáveis
+
+
+═══════════════════════════════════════════════════════════════
+FIM DO DOCUMENTO
+═══════════════════════════════════════════════════════════════

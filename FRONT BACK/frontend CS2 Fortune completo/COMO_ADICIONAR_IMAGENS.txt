@@ -1,0 +1,63 @@
+═══════════════════════════════════════════════════════════
+  📸 GUIA DE INSTALAÇÃO DAS IMAGENS DAS CAIXAS CS2
+═══════════════════════════════════════════════════════════
+
+✅ PASSO 1: Baixe as imagens
+----------------------------
+Salve todas as imagens que você tem das caixas CS2
+
+✅ PASSO 2: Copie para a pasta correta
+---------------------------------------
+Cole TODAS as imagens nesta pasta:
+C:\Users\Vinta\Desktop\site cs fortune\FRONT BACK\frontend CS2 Fortune completo\public\images\cases\
+
+✅ PASSO 3: Renomeie os arquivos
+---------------------------------
+Use EXATAMENTE estes nomes (com .png no final):
+
+fracture.png          → Fracture Case (caixa amarela/dourada)
+kilowatt.png          → Kilowatt Case (caixa azul ciano)
+revolution.png        → Revolution Case (caixa amarela/preta listrada) 
+danger-zone.png       → Danger Zone (caixa vermelha)
+dreams-nightmares.png → Dreams & Nightmares (caixa roxa com fantasma)
+phoenix.png           → Phoenix Weapon Case (caixa amarela/phoenix)
+breakout.png          → Breakout Case (caixa verde com montanhas)
+riptide.png           → Riptide Case (caixa verde água)
+huntsman.png          → Huntsman Case (caixa verde camuflado)
+spectrum.png          → Spectrum Case (caixa azul espacial)
+bydvo.png             → BydVO/Hydra Case (caixa preta/laranja)
+weapon.png            → Weapon Case (caixa verde militar)
+bravo.png             → Bravo Case
+
+ak47-empress.png      → AK-47 Empress (caixa marrom/vermelha)
+desert-deagle.png     → Desert Deagle (caixa verde/bronze)
+m444-howl.png         → M444 Howl (caixa arco-íris holográfico)
+karambit-fade.png     → Karambit Fade (caixa arco-íris)
+glock-fade.png        → Glock-18 Fade (caixa arco-íris pequena)
+knife-droper.png      → Knife/Droper (caixa marrom/bege)
+t-agent.png           → T Agent (caixa preta/cinza)
+agent-master.png      → Agent Master Creed (octógono verde/laranja)
+
+p90-asiimov.png       → P90 Asiimov (caixa laranja/branca)
+sg-553-cyrex.png      → SG 553 Cyrex (caixa colorida graffiti)
+mp9-wildfire.png      → MP9 Wildfire (caixa dourada/bege)
+awp-gungnir.png       → AWP Gungnir (caixa branca/dourada ornamentada)
+m441-printstream.png  → M441-S Printstream (caixa branca com setas)
+glock-neo-noir.png    → Glock-18 Neo-Noir (caixa azul neon/roxo)
+ak47-bloodsport.png   → AK-47 Bloodsport (caixa vermelha/preta)
+revolter-fade.png     → Revolter R8 Fade (caixa arco-íris vertical)
+
+✅ PASSO 4: Recarregue a página
+--------------------------------
+Aperte F5 ou Ctrl+Shift+R no Chrome
+
+═══════════════════════════════════════════════════════════
+
+💡 DICA: Se alguma imagem não aparecer, verifique:
+   ✓ Nome do arquivo está EXATAMENTE como listado acima
+   ✓ Extensão é .png (minúscula)
+   ✓ Arquivo está na pasta public/images/cases/
+   
+🎨 ENQUANTO ISSO: O site está funcionando com ícones estilizados!
+
+═══════════════════════════════════════════════════════════

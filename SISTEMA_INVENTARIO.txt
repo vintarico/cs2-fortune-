@@ -1,0 +1,587 @@
+════════════════════════════════════════════════════════════════════════
+🎒 SISTEMA DE INVENTÁRIO COMPLETO - CS2 FORTUNE
+════════════════════════════════════════════════════════════════════════
+
+📅 Data: 26 de Outubro de 2025
+✨ Versão: 3.0 - INVENTÁRIO
+
+════════════════════════════════════════════════════════════════════════
+📋 RESUMO DA IMPLEMENTAÇÃO
+════════════════════════════════════════════════════════════════════════
+
+✅ Página de Inventário completa (/inventory)
+✅ Sistema de perfil de usuário com foto e informações
+✅ Sistema de níveis e XP (eventos do site)
+✅ Sistema de retirada para conta Steam
+✅ Grid de skins com seleção múltipla
+✅ Filtros por raridade e ordenação
+✅ Ações em massa (vender/retirar múltiplos itens)
+✅ Modal de retirada com validação de Trade URL
+✅ Estatísticas completas do inventário
+
+
+════════════════════════════════════════════════════════════════════════
+🎮 FUNCIONALIDADES IMPLEMENTADAS
+════════════════════════════════════════════════════════════════════════
+
+1. HEADER DE PERFIL DO USUÁRIO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+┌─────────────────────────────────────────────────────────────────┐
+│  [Foto]    Nome do Usuário                    │ Saldo  │ Itens │
+│   Nível 5  ▓▓▓▓▓▓░░░░ 60/100 XP              │ R$X.XX │  XX   │
+│            🎮 Steam ID: 76561198...           │ Valor  │       │
+│            +10 XP por caixa • Próximo em 40XP │ R$X.XX │       │
+└─────────────────────────────────────────────────────────────────┘
+
+COMPONENTES:
+├─ 📷 Foto de perfil (avatar do Steam ou emoji padrão)
+├─ 👤 Nome de usuário
+├─ 🎯 Nível do usuário (baseado em XP)
+├─ 📊 Barra de progresso de XP
+├─ 🎮 Steam ID
+├─ 💰 Saldo atual
+├─ 📦 Total de itens
+└─ 💎 Valor total do inventário
+
+SISTEMA DE NÍVEIS:
+├─ +10 XP por cada caixa aberta
+├─ Nível = XP ÷ 100 + 1
+├─ Exemplo: 450 XP = Nível 5 (50/100 para nível 6)
+└─ Visual: Badge dourado com nível
+
+DETALHES VISUAIS:
+├─ Foto com borda gradiente (azul → roxo)
+├─ Badge de nível posicionado abaixo da foto
+├─ Barra de XP animada com gradiente
+├─ Porcentagem de progresso
+├─ Cards de estatísticas com cores temáticas:
+│   ├─ Saldo: Verde
+│   ├─ Itens: Azul
+│   └─ Valor: Amarelo
+
+
+2. FILTROS E ORDENAÇÃO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FILTROS POR RARIDADE:
+├─ 📦 Todos
+├─ 👑 Lendário (dourado)
+├─ 💎 Épico (vermelho)
+├─ ⭐ Raro (rosa)
+├─ 🎯 Incomum (roxo)
+└─ 🔹 Comum (azul)
+
+ORDENAÇÃO:
+├─ 🕐 Mais Recentes
+├─ 💰 Maior Valor
+├─ 💵 Menor Valor
+└─ ⭐ Raridade
+
+INTERFACE:
+├─ Botões com cores baseadas na raridade
+├─ Seletor dropdown para ordenação
+└─ Contador: "Mostrando X de Y itens"
+
+
+3. GRID DE ITENS DO INVENTÁRIO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+LAYOUT:
+├─ Grid responsivo: 2 → 3 → 4 → 5 colunas
+├─ Cards com borda da cor da raridade
+├─ Hover: Scale 1.05 + shadow colorido
+└─ Click: Seleciona/deseleciona item
+
+COMPONENTES DO CARD:
+┌─────────────────────────┐
+│ [✓] Seleção    x5 Qtd  │
+│                         │
+│    [Imagem da Skin]     │
+│                         │
+│   Nome da Skin          │
+│   R$ 150.00  (30/un)   │
+│   [Badge: Lendário]     │
+│   26/10/2025            │
+└─────────────────────────┘
+
+INFORMAÇÕES:
+├─ Checkbox de seleção (canto superior direito)
+├─ Badge de quantidade (se > 1)
+├─ Imagem da skin (componente SkinImage)
+├─ Nome da skin (truncado)
+├─ Valor total (quantidade × preço unitário)
+├─ Preço por unidade (se quantidade > 1)
+├─ Badge de raridade
+└─ Data de adição
+
+
+4. SELEÇÃO MÚLTIPLA E AÇÕES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FUNCIONAMENTO:
+├─ Click no card = Seleciona/Deseleciona
+├─ Visual: Borda azul + shadow quando selecionado
+├─ Checkbox ✓ aparece quando selecionado
+└─ Barra de ações aparece quando há itens selecionados
+
+BARRA DE AÇÕES:
+┌─────────────────────────────────────────────────────────────┐
+│ 3 item(ns) selecionado(s)                                   │
+│          [💰 Vender] [🎮 Retirar] [❌ Cancelar]            │
+└─────────────────────────────────────────────────────────────┘
+
+AÇÕES DISPONÍVEIS:
+├─ 💰 Vender Selecionados
+│   └─ Vende todos os itens selecionados
+│   └─ Adiciona valor ao saldo
+│   └─ Remove do inventário
+│
+├─ 🎮 Retirar para Steam
+│   └─ Abre modal de retirada
+│   └─ Solicita Trade URL
+│   └─ Cria pedido de retirada
+│
+└─ ❌ Cancelar
+    └─ Limpa seleção
+
+
+5. SISTEMA DE VENDA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FLUXO:
+1. Usuário seleciona itens
+2. Clica em "💰 Vender Selecionados"
+3. Confirmação: "Deseja vender X item(ns)?"
+4. Backend processa cada item:
+   ├─ Verifica propriedade
+   ├─ Calcula valor total
+   ├─ Atualiza saldo do usuário
+   ├─ Remove/decrementa do inventário
+   └─ Registra venda
+5. Mensagem de sucesso com valor total
+6. Recarrega inventário
+
+ENDPOINT:
+POST /api/inventory/sell-from-inventory
+Body: { itemId, quantity }
+Retorno: { success, newBalance, quantitySold, valueAdded }
+
+
+6. SISTEMA DE RETIRADA PARA STEAM
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+FLUXO COMPLETO:
+1. Usuário seleciona itens
+2. Clica em "🎮 Retirar para Steam"
+3. Modal de retirada abre com:
+   ├─ Lista de itens selecionados
+   ├─ Valor total
+   ├─ Input para Trade URL
+   └─ Instruções
+
+MODAL DE RETIRADA:
+┌──────────────────────────────────────────────┐
+│  🎮 Retirar para Steam                       │
+│                                              │
+│  Você está retirando 3 item(ns):            │
+│  ┌────────────────────────────────────────┐ │
+│  │ AK-47 | Redline x1     R$ 150.00      │ │
+│  │ AWP | Asiimov x1       R$ 620.00      │ │
+│  │ Glock | Neo-Noir x1    R$ 38.00       │ │
+│  └────────────────────────────────────────┘ │
+│                                              │
+│  🔗 URL de Trade do Steam:                  │
+│  [_____________________________________]     │
+│  (Como encontrar?)                          │
+│                                              │
+│  📋 Instruções:                             │
+│  1. Acesse configurações no Steam          │
+│  2. Copie sua URL de Trade                 │
+│  3. Cole acima                             │
+│  4. Aguarde até 24h para receber oferta    │
+│  5. Aceite no Steam                        │
+│                                              │
+│  [✅ Confirmar]  [❌ Cancelar]              │
+└──────────────────────────────────────────────┘
+
+VALIDAÇÕES:
+├─ URL deve conter "steamcommunity.com"
+├─ Formato: https://steamcommunity.com/tradeoffer/new/?partner=...
+├─ Verificação de propriedade dos itens
+└─ Geração de Trade ID único
+
+BACKEND:
+├─ Cria registro de retirada (Withdrawal)
+├─ Remove itens do inventário
+├─ Gera Trade ID único
+├─ Status inicial: "pending"
+├─ TODO: Integrar com Steam Bot
+└─ Log no console para debug
+
+ENDPOINT:
+POST /api/inventory/withdraw
+Body: { items: [], tradeUrl }
+Retorno: { success, tradeId, status, message }
+
+TRADE ID GERADO:
+Formato: TRADE-{timestamp}-{random}
+Exemplo: TRADE-1730000000-ABC123XYZ
+
+
+7. HISTÓRICO DE RETIRADAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+ENDPOINT:
+GET /api/inventory/withdrawals
+
+CAMPOS:
+├─ tradeId: ID único da retirada
+├─ tradeUrl: URL de trade fornecida
+├─ items: JSON com itens
+├─ totalItems: Quantidade total
+├─ totalValue: Valor total
+├─ status: pending | processing | completed | failed
+└─ createdAt: Data de criação
+
+STATUS:
+├─ pending: Aguardando processamento
+├─ processing: Bot enviando trade
+├─ completed: Trade aceito pelo usuário
+└─ failed: Erro no envio
+
+
+════════════════════════════════════════════════════════════════════════
+🗄️ ESTRUTURA DO BANCO DE DADOS
+════════════════════════════════════════════════════════════════════════
+
+MODELO: InventoryItem
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+model InventoryItem {
+  id           String   @id @default(uuid())
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id])
+  itemName     String
+  itemValue    Float
+  itemRarity   String   // COMMON, UNCOMMON, RARE, EPIC, LEGENDARY
+  itemImage    String?
+  quantity     Int      @default(1)
+  addedAt      DateTime @default(now())
+  lastUpdated  DateTime @default(now())
+  
+  @@index([userId])
+  @@index([itemRarity])
+}
+
+MODELO: Withdrawal
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+model Withdrawal {
+  id          String   @id @default(uuid())
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id])
+  tradeId     String   @unique
+  tradeUrl    String
+  items       String   // JSON stringified
+  totalItems  Int
+  totalValue  Float
+  status      String   @default("pending") // pending, processing, completed, failed
+  createdAt   DateTime @default(now())
+  completedAt DateTime?
+  failedReason String?
+  
+  @@index([userId])
+  @@index([status])
+  @@index([tradeId])
+}
+
+MODELO: ItemSale (Histórico de Vendas)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+model ItemSale {
+  id         String   @id @default(uuid())
+  userId     Int
+  user       User     @relation(fields: [userId], references: [id])
+  itemName   String
+  itemValue  Float
+  soldAt     DateTime @default(now())
+  
+  @@index([userId])
+}
+
+
+════════════════════════════════════════════════════════════════════════
+📡 ENDPOINTS CRIADOS
+════════════════════════════════════════════════════════════════════════
+
+✅ GET /api/inventory
+   └─ Lista todos os itens do inventário do usuário
+   └─ Retorna: { items[], stats: { totalValue, totalItems, uniqueItems } }
+
+✅ POST /api/inventory/add
+   └─ Adiciona item ao inventário (ao guardar após abertura)
+   └─ Body: { itemName, itemValue, itemRarity, itemImage }
+   └─ Retorno: { success, item }
+
+✅ POST /api/inventory/sell
+   └─ Vende item imediatamente após ganhar
+   └─ Body: { itemName, itemValue }
+   └─ Retorno: { success, newBalance, itemSold, valueAdded }
+
+✅ POST /api/inventory/sell-from-inventory
+   └─ Vende item(ns) do inventário
+   └─ Body: { itemId, quantity }
+   └─ Retorno: { success, newBalance, quantitySold, valueAdded }
+
+✅ POST /api/inventory/withdraw (NOVO)
+   └─ Cria solicitação de retirada para Steam
+   └─ Body: { items: [], tradeUrl }
+   └─ Retorno: { success, tradeId, status, message }
+
+✅ GET /api/inventory/withdrawals (NOVO)
+   └─ Lista todas as retiradas do usuário
+   └─ Retorno: { withdrawals: [] }
+
+✅ GET /api/cases/history
+   └─ Histórico de aberturas (usado para calcular XP)
+   └─ Retorno: { history: [], total, stats }
+
+
+════════════════════════════════════════════════════════════════════════
+🎨 DESIGN E UX
+════════════════════════════════════════════════════════════════════════
+
+CORES E GRADIENTES:
+├─ Background: Gradiente cinza-900 → azul-900
+├─ Cards: Cinza-800 com bordas coloridas
+├─ Foto de perfil: Borda azul-500 → roxo-600
+├─ Barra XP: Azul-500 → roxo-600
+├─ Badge nível: Amarelo-500 → laranja-500
+├─ Botão vender: Verde-600 → verde-esmeralda-600
+├─ Botão retirar: Roxo-600 → roxo-700
+└─ Selecionado: Azul-500 com shadow
+
+ANIMAÇÕES:
+├─ Hover nos cards: scale(1.05)
+├─ Barra de XP: Transição suave (duration-500)
+├─ Checkbox: Fade in/out
+├─ Modal: Fade in com backdrop
+└─ Loading: Spinner animado
+
+RESPONSIVIDADE:
+├─ Mobile (< 768px): 2 colunas
+├─ Tablet (768px - 1024px): 3 colunas
+├─ Desktop (1024px - 1280px): 4 colunas
+└─ Large (> 1280px): 5 colunas
+
+ESTADOS VISUAIS:
+├─ Vazio: Emoji 📭 + mensagem
+├─ Loading: Spinner + "Carregando..."
+├─ Selecionado: Borda azul + checkbox ✓
+├─ Hover: Escala aumentada + shadow
+└─ Disabled: Opacidade 50%
+
+
+════════════════════════════════════════════════════════════════════════
+🔧 INTEGRAÇÃO FUTURA: STEAM BOT
+════════════════════════════════════════════════════════════════════════
+
+OBJETIVO:
+Automatizar o envio de ofertas de trade para usuários que solicitam
+retirada de skins.
+
+TECNOLOGIAS SUGERIDAS:
+├─ steam-user (autenticação do bot)
+├─ steam-tradeoffer-manager (envio de trades)
+├─ steam-community (interação com Steam)
+└─ Queue system (processar retiradas em fila)
+
+FLUXO DO BOT:
+1. Monitora tabela Withdrawal (status: pending)
+2. Para cada retirada pendente:
+   ├─ Valida Trade URL
+   ├─ Busca itens correspondentes no inventário do bot
+   ├─ Cria oferta de trade
+   ├─ Envia para o usuário
+   └─ Atualiza status para "processing"
+3. Monitora ofertas enviadas:
+   ├─ Se aceita → status: "completed"
+   ├─ Se recusada → status: "failed"
+   └─ Se expirada → reenviar ou marcar como failed
+
+EXEMPLO DE CÓDIGO (Futuro):
+```javascript
+const SteamUser = require('steam-user');
+const TradeOfferManager = require('steam-tradeoffer-manager');
+
+// Processar retirada
+async function processWithdrawal(withdrawal) {
+  const items = JSON.parse(withdrawal.items);
+  
+  const offer = manager.createOffer(withdrawal.tradeUrl);
+  
+  // Adicionar itens à oferta
+  for (const item of items) {
+    const botItem = findItemInBotInventory(item.name);
+    offer.addMyItem(botItem);
+  }
+  
+  // Enviar oferta
+  await offer.send();
+  
+  // Atualizar status
+  await prisma.withdrawal.update({
+    where: { id: withdrawal.id },
+    data: { status: 'processing' }
+  });
+}
+```
+
+
+════════════════════════════════════════════════════════════════════════
+📱 NAVEGAÇÃO
+════════════════════════════════════════════════════════════════════════
+
+NAVBAR ATUALIZADO:
+┌─────────────────────────────────────────────────────────────────┐
+│ CS2 Fortune  🎁 Cases  🎒 Inventário  💳 Depositar  💰 Sacar  │
+│                                              R$ 150.00  [Logout]│
+└─────────────────────────────────────────────────────────────────┘
+
+LINKS:
+├─ / → Home
+├─ /cases → Galeria de caixas
+├─ /cases/[id] → Página individual
+├─ /inventory → Inventário (NOVO)
+├─ /deposit → Depositar
+├─ /withdraw → Sacar
+├─ /login → Login
+└─ /admin → Painel Admin
+
+
+════════════════════════════════════════════════════════════════════════
+✅ TESTANDO O INVENTÁRIO
+════════════════════════════════════════════════════════════════════════
+
+1. ADICIONAR ITENS:
+   ✓ Abra uma caixa em /cases/[nome]
+   ✓ No modal de resultado, clique "🎒 Guardar"
+   ✓ Item é adicionado ao inventário
+
+2. VISUALIZAR INVENTÁRIO:
+   ✓ Acesse http://localhost:3000/inventory
+   ✓ Veja seu perfil com foto, nome, nível
+   ✓ Verifique a barra de XP
+   ✓ Veja todos os itens guardados
+
+3. FILTRAR ITENS:
+   ✓ Clique nos filtros de raridade
+   ✓ Use o dropdown de ordenação
+   ✓ Veja apenas itens da raridade selecionada
+
+4. SELECIONAR ITENS:
+   ✓ Clique em um item para selecioná-lo
+   ✓ Borda azul e checkbox aparecem
+   ✓ Barra de ações aparece embaixo
+   ✓ Selecione múltiplos itens
+
+5. VENDER ITENS:
+   ✓ Selecione um ou mais itens
+   ✓ Clique "💰 Vender Selecionados"
+   ✓ Confirme a venda
+   ✓ Veja o saldo aumentar
+   ✓ Itens somem do inventário
+
+6. RETIRAR PARA STEAM:
+   ✓ Selecione itens
+   ✓ Clique "🎮 Retirar para Steam"
+   ✓ Modal abre
+   ✓ Cole sua Trade URL do Steam
+   ✓ Clique "Confirmar Retirada"
+   ✓ Receba Trade ID
+   ✓ Itens somem do inventário
+   ✓ (Futuro) Receba oferta no Steam
+
+
+════════════════════════════════════════════════════════════════════════
+🎯 PRÓXIMAS FUNCIONALIDADES
+════════════════════════════════════════════════════════════════════════
+
+⏳ 1. Sistema de Eventos/Missões
+   └─ Missões diárias (abrir X caixas, ganhar Y valor)
+   └─ Recompensas em XP e skins
+   └─ Progresso de missões
+
+⏳ 2. Página de Retiradas
+   └─ Listar todas as retiradas (/withdrawals)
+   └─ Status de cada retirada
+   └─ Histórico completo
+
+⏳ 3. Sistema de Conquistas
+   └─ Badges por marcos (100 caixas, R$ 10k ganho, etc)
+   └─ Perfil público com conquistas
+   └─ Ranking de jogadores
+
+⏳ 4. Integração com Steam Bot
+   └─ Envio automático de trades
+   └─ Monitoramento de ofertas
+   └─ Status em tempo real
+
+⏳ 5. Depósito de Skins
+   └─ Receber skins via trade offer
+   └─ Converter para créditos no site
+   └─ Valores baseados no Steam Market
+
+⏳ 6. Sistema de Upgrade
+   └─ Combinar skins para tentar upgrade
+   └─ Chances baseadas em valores
+   └─ Multiplicadores de raridade
+
+
+════════════════════════════════════════════════════════════════════════
+📝 NOTAS IMPORTANTES
+════════════════════════════════════════════════════════════════════════
+
+1. SISTEMA DE XP:
+   - Atualmente baseado em quantidade de caixas abertas
+   - 10 XP por abertura
+   - 100 XP = 1 nível
+   - Pode ser expandido com eventos/missões
+
+2. FOTOS DE PERFIL:
+   - Usa avatar do Steam se disponível
+   - Fallback: Emoji 👤
+   - Futuro: Integração com Steam OpenID para pegar foto real
+
+3. TRADE URL:
+   - Necessária para retiradas
+   - Formato: https://steamcommunity.com/tradeoffer/new/?partner=XXX&token=YYY
+   - Obter em: https://steamcommunity.com/my/tradeoffers/privacy
+
+4. STEAM BOT:
+   - Não implementado ainda (placeholder)
+   - Sistema de retirada cria registros prontos para bot processar
+   - Log no console mostra informações da retirada
+
+5. COMPATIBILIDADE:
+   - Backend usa try/catch para modelos opcionais
+   - Se Withdrawal não existir, cria registro temporário
+   - Frontend funciona mesmo sem backend completo
+
+
+════════════════════════════════════════════════════════════════════════
+🎉 CONCLUSÃO
+════════════════════════════════════════════════════════════════════════
+
+✅ Sistema de Inventário 100% funcional
+✅ Perfil de usuário com foto e nível
+✅ Sistema de XP e progressão
+✅ Filtros e ordenação completos
+✅ Seleção múltipla de itens
+✅ Venda em massa
+✅ Sistema de retirada para Steam (base pronta)
+✅ Modal completo com validações
+✅ Design responsivo e animado
+✅ Integração com sistema de cases existente
+
+ACESSE: http://localhost:3000/inventory
+
+Próximo passo: Implementar Steam Bot para processar retiradas!

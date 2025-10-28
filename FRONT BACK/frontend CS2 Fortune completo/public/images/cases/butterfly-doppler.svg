@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <defs>
+    <linearGradient id="dopplerMain" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E3A8A;stop-opacity:1" />
+      <stop offset="25%" style="stop-color:#4B0082;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#6B21A8;stop-opacity:1" />
+      <stop offset="75%" style="stop-color:#7C3AED;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2563EB;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="dopplerTop" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#7C3AED;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4B0082;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="dopplerSide" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#4B0082;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#1E1B4B;stop-opacity:1" />
+    </linearGradient>
+    <filter id="blur"><feGaussianBlur stdDeviation="3"/></filter>
+    <filter id="iridescent">
+      <feGaussianBlur stdDeviation="5"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Iridescent shadow -->
+  <ellipse cx="200" cy="352" rx="130" ry="17" fill="#000" opacity="0.5" filter="url(#blur)"/>
+  <ellipse cx="200" cy="348" rx="115" ry="14" fill="#7C3AED" opacity="0.5" filter="url(#iridescent)"/>
+  
+  <!-- Doppler case -->
+  <path d="M 95,175 L 200,115 L 305,175 L 200,235 Z" fill="url(#dopplerMain)" stroke="#1E1B4B" stroke-width="2" filter="url(#iridescent)"/>
+  <path d="M 200,115 L 305,175 L 305,285 L 200,225 Z" fill="url(#dopplerTop)" stroke="#1E1B4B" stroke-width="2"/>
+  <path d="M 95,175 L 200,235 L 200,345 L 95,285 Z" fill="url(#dopplerSide)" stroke="#1E1B4B" stroke-width="2"/>
+  
+  <!-- Iridescent bands -->
+  <path d="M 200,118 L 302,176 L 302,186 L 200,128 Z" fill="#7C3AED" opacity="0.6"/>
+  <path d="M 200,132 L 302,190 L 302,198 L 200,140 Z" fill="#2563EB" opacity="0.4"/>
+  
+  <!-- Base -->
+  <path d="M 200,225 L 305,285 L 305,320 L 200,260 Z" fill="#4B0082" stroke="#1E1B4B" stroke-width="2"/>
+  <path d="M 95,285 L 200,345 L 200,380 L 95,320 Z" fill="#1E1B4B" stroke="#0F0A2E" stroke-width="2"/>
+  <path d="M 200,260 L 305,320 L 200,380 L 95,320 Z" fill="#312E81" stroke="#0F0A2E" stroke-width="2"/>
+  
+  <!-- Butterfly knife emblem -->
+  <g transform="translate(200, 185)">
+    <circle r="48" fill="#0F0A2E" opacity="0.95"/>
+    <circle r="45" fill="none" stroke="url(#dopplerMain)" stroke-width="4" filter="url(#iridescent)"/>
+    <circle r="40" fill="none" stroke="#7C3AED" stroke-width="1" opacity="0.6"/>
+    
+    <!-- Butterfly knife -->
+    <g transform="translate(0, 2)">
+      <!-- Left wing -->
+      <path d="M -25,5 Q -30,-5 -28,-15 Q -20,-10 -18,-5 L -10,0" 
+            fill="#6B21A8" stroke="#000" stroke-width="1.5" opacity="0.8"/>
+      <path d="M -28,-15 Q -30,-8 -25,-3" 
+            stroke="#7C3AED" stroke-width="1" fill="none" opacity="0.6"/>
+      
+      <!-- Right wing -->
+      <path d="M 25,5 Q 30,-5 28,-15 Q 20,-10 18,-5 L 10,0" 
+            fill="#2563EB" stroke="#000" stroke-width="1.5" opacity="0.8"/>
+      <path d="M 28,-15 Q 30,-8 25,-3" 
+            stroke="#3B82F6" stroke-width="1" fill="none" opacity="0.6"/>
+      
+      <!-- Blade (center) -->
+      <path d="M -10,0 L 0,-2 L 10,0 L 8,12 L 0,18 L -8,12 Z" 
+            fill="#C0C0C0" stroke="#000" stroke-width="1.5"/>
+      <path d="M 0,-2 L 0,16" 
+            stroke="#FFF" stroke-width="1" opacity="0.6"/>
+      
+      <!-- Wing antennae -->
+      <line x1="-28" y1="-15" x2="-30" y2="-22" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
+      <line x1="28" y1="-15" x2="30" y2="-22" stroke="#000" stroke-width="1.5" stroke-linecap="round"/>
+      <circle cx="-30" cy="-22" r="2" fill="#7C3AED"/>
+      <circle cx="30" cy="-22" r="2" fill="#3B82F6"/>
+      
+      <!-- Phase indicators (Doppler phases) -->
+      <circle cx="-32" cy="8" r="4" fill="#1E3A8A" stroke="#000" stroke-width="1"/>
+      <circle cx="32" cy="8" r="4" fill="#6B21A8" stroke="#000" stroke-width="1"/>
+      <text x="-32" y="11" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#FFF">1</text>
+      <text x="32" y="11" text-anchor="middle" font-family="Arial" font-size="8" font-weight="bold" fill="#FFF">2</text>
+    </g>
+  </g>
+  
+  <!-- Doppler wave pattern -->
+  <g opacity="0.3">
+    <path d="M 120,185 Q 140,180 160,185 Q 180,190 200,185" 
+          stroke="#7C3AED" stroke-width="1" fill="none"/>
+    <path d="M 200,185 Q 220,180 240,185 Q 260,190 280,185" 
+          stroke="#2563EB" stroke-width="1" fill="none"/>
+  </g>
+  
+  <!-- Highlights -->
+  <path d="M 210,120 L 285,162 L 285,168 L 210,126 Z" fill="#FFF" opacity="0.15"/>
+  <line x1="200" y1="115" x2="300" y2="173" stroke="#7C3AED" stroke-width="2" opacity="0.5" filter="url(#iridescent)"/>
+</svg>

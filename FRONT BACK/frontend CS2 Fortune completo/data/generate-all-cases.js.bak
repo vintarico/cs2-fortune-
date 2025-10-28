@@ -1,0 +1,590 @@
+/**
+ * ═══════════════════════════════════════════════════════════════
+ * GERADOR AUTOMÁTICO DE TODAS AS 35 CAIXAS
+ * ═══════════════════════════════════════════════════════════════
+ * Execu execute: node generate-all-cases.js
+ * Saída: cases-with-real-skins.js (substitui o arquivo atual)
+ */
+
+const fs = require('fs');
+const path = require('path');
+
+// Configuração de raridades (PADRÃO DEFINITIVO - NÃO ALTERAR)
+const RARITIES = {
+  'Exceedingly Rare': { chance: 0.0001, minMultiplier: 100, maxMultiplier: 1000, color: '#FFD700' }, // 0.01%
+  'Covert': { chance: 0.0015, minMultiplier: 30, maxMultiplier: 100, color: '#EB4B4B' },           // 0.15%
+  'Classified': { chance: 0.03, minMultiplier: 8, maxMultiplier: 30, color: '#D32CE6' },          // 3%
+  'Restricted': { chance: 0.19, minMultiplier: 2, maxMultiplier: 8, color: '#8847FF' },           // 19%
+  'Mil-Spec': { chance: 0.7784, minMultiplier: 0.3, maxMultiplier: 2, color: '#4B69FF' }           // 77.84%
+};
+
+// Lista de todas as caixas conforme especificado (PREÇOS ATUALIZADOS R$ 3 - R$ 1000)
+const CASE_DEFINITIONS = [
+  // Caixas Básicas (R$ 3 - R$ 20)
+  { id: "danger-zone", name: "Danger Zone Case", price: 3, theme: "danger", emoji: "⚠️", description: "Zona de perigo extremo" },
+  { id: "dreams-nightmares", name: "Dreams & Nightmares Case", price: 5, theme: "dark", emoji: "🌙", description: "Pesadelos e sonhos da comunidade" },
+  { id: "broken-fang", name: "Broken Fang Case", price: 8, theme: "wild", emoji: "🐺", description: "Presa quebrada, espírito intacto" },
+  { id: "kilowatt", name: "Kilowatt Case", price: 10, theme: "energy", emoji: "⚡", description: "Energia pura em cada skin" },
+  { id: "breakout", name: "Breakout Weapon Case", price: 12, theme: "escape", emoji: "🏃", description: "Fuga espetacular" },
+  { id: "recoil", name: "Recoil Case", price: 15, theme: "tactical", emoji: "�", description: "Controle seu recoil com estilo" },
+  { id: "hydra", name: "Hydra Case", price: 18, theme: "water", emoji: "�", description: "Hidra mitológica" },
+  
+  // Caixas Intermediárias (R$ 20 - R$ 100)
+  { id: "revolution", name: "Revolution Case", price: 22, theme: "tech", emoji: "�", description: "A revolução chegou" },
+  { id: "phoenix", name: "Phoenix Weapon Case", price: 25, theme: "fire", emoji: "🔥", description: "Renasça das cinzas" },
+  { id: "riptide", name: "Riptide Case", price: 30, theme: "ocean", emoji: "🌊", description: "Correnteza poderosa" },
+  { id: "huntsman", name: "Huntsman Case", price: 35, theme: "hunt", emoji: "🏹", description: "O caçador se torna a presa" },
+  { id: "fracture", name: "Fracture Case", price: 40, theme: "fractured", emoji: "💥", description: "Fraturas dimensionais" },
+  { id: "spectrum", name: "Spectrum Case", price: 50, theme: "rainbow", emoji: "🌈", description: "Todo o espectro de cores" },
+  { id: "bravo", name: "Bravo Case", price: 65, theme: "military", emoji: "🎖️", description: "Operação Bravo" },
+  { id: "weapon-case", name: "Weapon Case", price: 80, theme: "classic", emoji: "📦", description: "A caixa original clássica" },
+  { id: "mp9-wildfire", name: "MP9 | Wildfire Case", price: 95, theme: "wildfire", emoji: "�", description: "Incêndio selvagem" },
+
+  // Caixas Premium (R$ 100 - R$ 300)
+  { id: "sg553-cyrex", name: "SG 553 | Cyrex Case", price: 120, theme: "tech-red", emoji: "�", description: "Tecnologia vermelha avançada" },
+  { id: "usp-guardian", name: "USP-S | Guardian Case", price: 140, theme: "protection", emoji: "�️", description: "Guardião com escudo" },
+  { id: "five-seven-hyperbeast", name: "Five-SeveN | Hyper Beast Case", price: 165, theme: "psychedelic", emoji: "🎨", description: "Arte psicodélica vibrante" },
+  { id: "deagle-blaze", name: "Desert Eagle | Blaze Case", price: 190, theme: "flames", emoji: "🔥", description: "Chamas azuis metálicas" },
+  { id: "p90-asiimov", name: "P90 | Asiimov Case", price: 220, theme: "scifi", emoji: "🚀", description: "Ficção científica futurista" },
+  { id: "galil-cerberus", name: "Galil AR | Cerberus Case", price: 250, theme: "mythology", emoji: "�", description: "Cão de três cabeças" },
+  { id: "ct-phoenix", name: "CT Agent | Phoenix Connexion Case", price: 280, theme: "tactical-ct", emoji: "👮", description: "Força tática de elite" },
+
+  // Caixas Elite (R$ 300 - R$ 600)
+  { id: "t-elite", name: "T Agent | Elite Crew Case", price: 320, theme: "tactical-t", emoji: "🎭", description: "Crew de elite furtiva" },
+  { id: "glock-neonoir", name: "Glock-18 | Neo-Noir Case", price: 360, theme: "cyberpunk", emoji: "🌆", description: "Cyberpunk néon rosa" },
+  { id: "ak47-bloodsport", name: "AK-47 | Bloodsport Case", price: 400, theme: "sport", emoji: "🏁", description: "Esporte sangrento agressivo" },
+  { id: "master-chief", name: "Agent | Master Chief Collection Case", price: 450, theme: "futuristic", emoji: "🤖", description: "Tecnologia do futuro" },
+  { id: "m4a1s-printstream", name: "M4A1-S | Printstream Case", price: 500, theme: "minimal", emoji: "🖨️", description: "Minimalismo gráfico" },
+  { id: "ak47-empress", name: "AK-47 | Empress Case", price: 550, theme: "luxury", emoji: "�", description: "Luxo imperial dourado" },
+  { id: "m4a4-howl", name: "M4A4 | Howl Case", price: 600, theme: "fury", emoji: "�", description: "Fúria ardente proibida" },
+
+  // Caixas Lendárias (R$ 600 - R$ 1000)
+  { id: "glock-fade", name: "Glock-18 | Fade Case", price: 700, theme: "fade", emoji: "🎨", description: "Transição perfeita de cores" },
+  { id: "awp-dragonlore", name: "AWP | Dragon Lore Case", price: 800, theme: "legendary", emoji: "�", description: "Lenda dos dragões" },
+  { id: "awp-gungnir", name: "AWP | Gungnir Case", price: 900, theme: "norse", emoji: "⚡", description: "Lança de Odin nórdica" },
+  { id: "karambit-fade", name: "Karambit | Fade Case", price: 950, theme: "rainbow-luxury", emoji: "�", description: "Arco-íris vibrante premium" },
+  { id: "knife-doppler", name: "Knife | Doppler Case", price: 1000, theme: "cosmic", emoji: "�", description: "Ondas cósmicas profundas" },
+];
+
+// Pool genérico de skins para popular as caixas
+const WEAPON_POOL = {
+  knives: [
+    "★ Karambit | Doppler", "★ M9 Bayonet | Gamma Doppler", "★ Butterfly Knife | Fade",
+    "★ Bayonet | Tiger Tooth", "★ Talon Knife | Slaughter", "★ Ursus Knife | Marble Fade",
+    "★ Skeleton Knife | Case Hardened", "★ Stiletto Knife | Crimson Web"
+  ],
+  rifles: [
+    "AK-47 | Nightwish", "AK-47 | Head Shot", "AK-47 | Legion of Anubis", "AK-47 | Bloodsport",
+    "M4A4 | Neo-Noir", "M4A4 | Poly Mag", "M4A4 | Temukau", "M4A4 | Howl",
+    "M4A1-S | Night Terror", "M4A1-S | Printstream", "M4A1-S | Hyper Beast",
+    "FAMAS | Rapid Eye Movement", "FAMAS | Mecha Industries",
+    "Galil AR | Destroyer", "Galil AR | Cerberus", "Galil AR | Eco",
+    "AUG | Plague Doctor", "AUG | Chameleon", "SG 553 | Cyberforce", "SG 553 | Cyrex"
+  ],
+  snipers: [
+    "AWP | Chromatic Aberration", "AWP | Dragon Lore", "AWP | Gungnir", "AWP | Asiimov",
+    "SSG 08 | Dragonfire", "SSG 08 | Parallax", "SSG 08 | Dezastre",
+    "SCAR-20 | Fragments", "SCAR-20 | Bloodsport", "G3SG1 | Dream Glade"
+  ],
+  pistols: [
+    "USP-S | Ticket to Hell", "USP-S | Revolution", "USP-S | Guardian", "USP-S | Neo-Noir",
+    "Glock-18 | Bullet Queen", "Glock-18 | Umbral Rabbit", "Glock-18 | Fade",
+    "Desert Eagle | Blaze", "Desert Eagle | Printstream", "Desert Eagle | Code Red",
+    "P250 | Re.built", "P250 | Asiimov", "P2000 | Lifted Spirits", "P2000 | Wicked Sick",
+    "Five-SeveN | Hyper Beast", "Five-SeveN | Monkey Business",
+    "Dual Berettas | Melondrama", "Dual Berettas | Hideout",
+    "Tec-9 | Rebel", "Tec-9 | Snek-9", "CZ75-Auto | Distressed",
+    "R8 Revolver | Revolver Case Hardened"
+  ],
+  smgs: [
+    "P90 | Neoqueen", "P90 | Asiimov", "P90 | Dragon King",
+    "MP9 | Starlight Protector", "MP9 | Featherweight", "MP9 | Wildfire",
+    "MP7 | Abyssal Apparition", "MP7 | Bloodsport",
+    "MAC-10 | Ensnared", "MAC-10 | Sakkaku", "MAC-10 | Neon Rider",
+    "PP-Bizon | Space Cat", "PP-Bizon | Judgement of Anubis",
+    "UMP-45 | Oscillator", "UMP-45 | Road Rash", "UMP-45 | Primal Saber"
+  ],
+  shotguns: [
+    "Nova | Clear Polymer", "Nova | Dark Sigil", "Nova | Hyper Beast",
+    "XM1014 | Zombie Offensive", "XM1014 | Watchdog", "XM1014 | Tranquility",
+    "MAG-7 | Insomnia", "MAG-7 | Prism Terrace", "MAG-7 | Monster Call",
+    "Sawed-Off | Spirit Board", "Sawed-Off | Analog Input", "Sawed-Off | The Kraken"
+  ],
+  machineguns: [
+    "M249 | Deep Relief", "M249 | Aztec", "M249 | Downtown",
+    "Negev | Drop Me", "Negev | Lionfish", "Negev | Phoenix Stencil"
+  ]
+};
+
+// Condições de desgaste
+const WEAR_CONDITIONS = [
+  "Factory New", "Minimal Wear", "Field-Tested", "Well-Worn", "Battle-Scarred"
+];
+
+// Função para gerar valor aleatório dentro de um range
+function randomValue(min, max) {
+  return parseFloat((Math.random() * (max - min) + min).toFixed(2));
+}
+
+// Função para selecionar arma aleatória
+function getRandomWeapon(category) {
+  const weapons = WEAPON_POOL[category];
+  return weapons[Math.floor(Math.random() * weapons.length)];
+}
+
+// Pool de imagens reais do CSGOBackpack (62 imagens disponíveis)
+const AVAILABLE_IMAGES = [
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpoo6m1FBRp3_bGcjhQ09-jq5WYh8j3Jq_ummJW4NE_3rqSoI2njQSwr0Y6Yj3xIdKXI1c3YVDU_lHvwOnngMXtv5jPzi.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpoo7e1f1Jf0uL3ZDBSuImJkoyKmvLyP7TGk3lu5Mx2gv2Po4qn3gbjqkU6YzunLNSRewQ7YlrR_Fnsl-vq08e0uprNy3.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpopb3wflFf0Ob3YjoXuY-JkIGZnOD9Pbzum25V4dB8xL2Xptvz21bi-EA-MD_3JoDAdgA9ZFzX_lfswL3qh8K86pudzS.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpopb3wflFf0Ob3YjoXuY-Jl5mJkuXLN6nQkWRf18h0juDU-MLw2gbm-kpqMW2lI4SVdwdtZQvQ-FK5x7_pjJG0u8yYnX.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpopb3wflFf1OD3YjoXuY-JhpWYg-7LO77QgHIfvpYojL2T9t3z2FLgqUE_a2r2doPBJwE6ZgqCqwfslb25gpDqtZXOzW.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpopb3wflFf1OD3YjoXuY-JkIWKg__5Nq_QmlRc7cF4n-SP84iljVLn_EU4YzyhLdecI1A7YlHVrlC7xOzv1MXpuM-ay3.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpopuP1FABz7OORIQJE-dC6q5SDhfjgJ7fUqWdY781lxO-Yp9il3Fa1qRBpYGnzcoLDe1M3YFqE_AO3wb-8hpO8uMybyy.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpopuP1FAR17OORIQJF_tW7mb-HnvD8J_WAwjwIsMZzjLCSrdXw2Ae3-BduZ2GgItPEdwQ2MFyDq1ntw7js05Hpot.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbupIgthwczLZAJF7dC_mIGZqOf1Ia_YlWdU-_p9g-7J4cKtjQzjrxI4ZGulI4GVcAY2MljTrFa-kOjph5O6v5-fnS.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbupIgthwczPYgJF7dC_mL-bn_jxPbLJqWNU6dNoxOuX9Nms2lK380NsYWGmdobEe1RvZlDXqVe_wOi6h8W5u5yby3.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbupIgthwczPYgJF7dC_mL-dlvnwMrfum25V4dB8xOrDpo_z31Dl_UU9NWj2cNOTIVU5YgzT-gDtx73q1sO_v5nKzi.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposLOzLhRlxfbGTj5X09q_goWYkuHxPYTQmntZ6fp-h-zG9LP4jVC9vh5yYWqmcIaWcQE7aFnQ8wLowby71Mft6ZzJyX.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposLuoKhRf1fLFcC597t2ygJKCh8j5Nr_Yg2Yf65N0i7jHpY2m3AXm-Uc4YDrzd4aUJlM_M1iG_lG_w7_phpLpuJ3AzG.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FA957OfNcjVM48u3hr-ZgPXLPr7Vn35cppJz3rnDpNmtjQDh8xZlYj2idtKWJ1dvNAmBrlXqxO-9g5a76syczH.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FABz7PLfYQJG6d2inL-GkvP9JraflGlSuMFw2LnF9N6t0Fa1_BE4YGygdY7HcgI8NA7X_lPqwOa615C5v4OJly.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FAR17PLfYQJB5M65mYG0h_76OITck29Y_cg_3ruZo9nziwXj-EBkN2zxdtSRJlRqZFHWqFe3yeu90ZC-v5mYzS.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot7HxfDhh2KefTjha_NC5h4mdksj5Nr_Yg2Yf6sZ33euSoIj03gbk80VtNTr1LI-VcVU-Z1-Drlftw7vq0Je-vp7MmG.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou-6kejhjxszFJTwW09m6nZSOqOP1MK_YlWpd18h0juDU-MKh2w3n_Rc4YGD6coHAIwc6NQuC-FK5kLrq18e-tJvNzX.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou-6kejhz2v_Nfz5H_uO7wIHahMj2P7rSnVRd59FkmdbM8Ij8nVn6_0BuZG2iI4GUdgBsM1qCrgO2xee5g5Lv6Z_NzC.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou-6kejhz2v_Nfz5H_uOlm7-Ehfb6NL7ul2hS7ctlmdbM8Ij8nVn6_BJpazj0JY_DdAc8YVCCrlm_wO3oh5W-75zAzC.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou-6kejhz2v_Nfz5H_uOxh7-Gw_alIITYmHhe5ct4i9bJ8I3jkRrh8kE6Zz-iIYWcdQY8Ml2C-VDqwrjn0J-_tJ2cz3.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou-6kejhz2v_Nfz5H_uOxh7-Gw_alIITYmHhe5ct4i9bN_Iv9nBqyqRE_MmD3JIaVdgFrNwzX_1LrwLjoh8Xu6p3Iy3.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou6rwOANf0Ob3fC0X_9iJhZWClPzLP7LAg2JV6dF4hef--InxgUG55Uc6Y2ynI9CUdFU2aVDR_1ntlLvsjMO06ZjPz3.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou6rwOANf1OD3fC0X09e_kL-FkvTmPLXem2JS58tOhuDG_Zi7jVDl-xA6Ym70JoTEdlRqMgzW8gPtkr3vhJW9u5yfzn.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou6rwOANf2-r3fTxA_t2iq42bwsj4OrzZgiUCupZyiL6TpI2t2VDh-kVvMT-iIYbEdFA2YQrZqAS-l7ruhpTvtZ3B1z.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou7uifDhjxszFcDoV09SzlZaOmcj5Nr_Yg2Yfv5J10r-Y9N2h2gTmqkY-YGr7JtTBdAI8NQ6E_wfolO-9hcTttJibzG.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou7uifDhnwMzFcDoV08y5hISEkMj4OrzZgiUA6sB0i76SpYql2gfgrUI_ZTqhJdWSegE-YFrUqAC9yO7shpa_vZqb1z.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou7umeldf0Ob3fDxBvYyJhImTnvLLPr7Vn35cpscj37CS996g3FHj-EBpYWr6coPGcQFqZgqE8lPqle3pjJK5uJqbz3.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou7umeldf0uL3fDxB043mq4GHnvL6DLjQm2Ru5cB1g_zMu46njVDl8ko9ZW_xcdeVJgBvMgrT8lPtkO6705S9u5jKyi.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpovrG1eVcwg8zLZAJSvozmxL-bgvvnNoTZk2pH8Ysm2e-R8Y732VLiqUVqamqmcdfEdA82N1CE8lTtwL-61sO-6pnKzn.png",
+  "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpovrG1eVcwg8zLZAJSvteJkoySnvnzDL_Dk2pc18h0juDU-MKtjla1r0Q9N2mid4-QcwJtM1_Z_Fm5yejrgpK9usnNmC.png"
+];
+
+// Mapeamento específico de armas por categoria
+const WEAPON_IMAGE_MAP = {
+  knives: {
+    "★ M9 Bayonet | Gamma Doppler": 24,
+    "★ Karambit | Doppler": 23,
+    "★ Butterfly Knife | Fade": 3,
+    "★ Bayonet | Tiger Tooth": 23,
+    "★ Talon Knife | Slaughter": 24,
+    "★ Ursus Knife | Marble Fade": 23,
+    "★ Skeleton Knife | Case Hardened": 24,
+    "★ Stiletto Knife | Crimson Web": 23
+  },
+  rifles: {
+    "AK-47 | Nightwish": 16,
+    "AK-47 | Head Shot": 16,
+    "AK-47 | Legion of Anubis": 16,
+    "AK-47 | Bloodsport": 16,
+    "M4A4 | Neo-Noir": 18,
+    "M4A4 | Poly Mag": 18,
+    "M4A4 | Temukau": 18,
+    "M4A4 | Howl": 18,
+    "M4A1-S | Night Terror": 19,
+    "M4A1-S | Printstream": 20,
+    "M4A1-S | Hyper Beast": 19,
+    "FAMAS | Rapid Eye Movement": 14,
+    "FAMAS | Mecha Industries": 14,
+    "Galil AR | Destroyer": 14,
+    "Galil AR | Cerberus": 14,
+    "Galil AR | Eco": 14,
+    "AUG | Plague Doctor": 15,
+    "AUG | Chameleon": 15,
+    "SG 553 | Cyberforce": 0,
+    "SG 553 | Cyrex": 0
+  },
+  snipers: {
+    "AWP | Chromatic Aberration": 22,
+    "AWP | Dragon Lore": 22,
+    "AWP | Gungnir": 22,
+    "AWP | Asiimov": 23,
+    "SSG 08 | Dragonfire": 16,
+    "SSG 08 | Parallax": 16,
+    "SSG 08 | Dezastre": 16,
+    "SCAR-20 | Fragments": 16,
+    "SCAR-20 | Bloodsport": 16,
+    "G3SG1 | Dream Glade": 11
+  },
+  pistols: {
+    "USP-S | Ticket to Hell": 7,
+    "USP-S | Revolution": 7,
+    "USP-S | Guardian": 7,
+    "USP-S | Neo-Noir": 7,
+    "Glock-18 | Bullet Queen": 9,
+    "Glock-18 | Umbral Rabbit": 9,
+    "Glock-18 | Fade": 9,
+    "Desert Eagle | Blaze": 10,
+    "Desert Eagle | Printstream": 9,
+    "Desert Eagle | Code Red": 8,
+    "P250 | Re.built": 3,
+    "P250 | Asiimov": 3,
+    "P2000 | Lifted Spirits": 7,
+    "P2000 | Wicked Sick": 7,
+    "Five-SeveN | Hyper Beast": 12,
+    "Five-SeveN | Monkey Business": 12,
+    "Dual Berettas | Melondrama": 10,
+    "Dual Berettas | Hideout": 10,
+    "Tec-9 | Rebel": 13,
+    "Tec-9 | Snek-9": 13,
+    "CZ75-Auto | Distressed": 6,
+    "R8 Revolver | Revolver Case Hardened": 11
+  },
+  smgs: {
+    "P90 | Neoqueen": 6,
+    "P90 | Asiimov": 6,
+    "P90 | Dragon King": 6,
+    "MP9 | Starlight Protector": 15,
+    "MP9 | Featherweight": 15,
+    "MP9 | Wildfire": 15,
+    "MP7 | Abyssal Apparition": 14,
+    "MP7 | Bloodsport": 16,
+    "MAC-10 | Ensnared": 14,
+    "MAC-10 | Sakkaku": 13,
+    "MAC-10 | Neon Rider": 14,
+    "PP-Bizon | Space Cat": 11,
+    "PP-Bizon | Judgement of Anubis": 11,
+    "UMP-45 | Oscillator": 13,
+    "UMP-45 | Road Rash": 13,
+    "UMP-45 | Primal Saber": 13
+  },
+  shotguns: {
+    "Nova | Clear Polymer": 0,
+    "Nova | Dark Sigil": 0,
+    "Nova | Hyper Beast": 0,
+    "XM1014 | Zombie Offensive": 1,
+    "XM1014 | Watchdog": 1,
+    "XM1014 | Tranquility": 1,
+    "MAG-7 | Insomnia": 25,
+    "MAG-7 | Prism Terrace": 26,
+    "MAG-7 | Monster Call": 25,
+    "Sawed-Off | Spirit Board": 27,
+    "Sawed-Off | Analog Input": 28,
+    "Sawed-Off | The Kraken": 29
+  },
+  machineguns: {
+    "M249 | Deep Relief": 30,
+    "M249 | Aztec": 30,
+    "M249 | Downtown": 30,
+    "Negev | Drop Me": 31,
+    "Negev | Lionfish": 31,
+    "Negev | Phoenix Stencil": 31
+  }
+};
+
+// Função para gerar imagem da skin
+function getSkinImage(weaponName) {
+  // Remove a condição de desgaste do nome para buscar a imagem base
+  const baseName = weaponName.replace(/ \((Factory New|Minimal Wear|Field-Tested|Well-Worn|Battle-Scarred)\)$/, '');
+  
+  // Busca índice da imagem no mapeamento por categoria
+  for (const category in WEAPON_IMAGE_MAP) {
+    if (WEAPON_IMAGE_MAP[category][baseName] !== undefined) {
+      const imageIndex = WEAPON_IMAGE_MAP[category][baseName];
+      return `/skins/${AVAILABLE_IMAGES[imageIndex]}`;
+    }
+  }
+  
+  // Fallback: usar hash do nome para distribuir imagens uniformemente
+  const hash = baseName.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0);
+  const imageIndex = hash % AVAILABLE_IMAGES.length;
+  return `/skins/${AVAILABLE_IMAGES[imageIndex]}`;
+}
+  
+  // AK-47
+  "AK-47 | Bloodsport": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot7HxfDhh2KefTjha_NC5h4mdksj5Nr_Yg2Yf6sZ33euSoIj03gbk80VtNTr1LI-VcVU-Z1-Drlftw7vq0Je-vp7MmG.png",
+  "AK-47 | Legion of Anubis": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot7HxfDhh2KefTjha_NC5h4mdksj5Nr_Yg2Yf6sZ33euSoIj03gbk80VtNTr1LI-VcVU-Z1-Drlftw7vq0Je-vp7MmG.png",
+  "AK-47 | Head Shot": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot7HxfDhh2KefTjha_NC5h4mdksj5Nr_Yg2Yf6sZ33euSoIj03gbk80VtNTr1LI-VcVU-Z1-Drlftw7vq0Je-vp7MmG.png",
+  "AK-47 | Nightwish": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot7HxfDhh2KefTjha_NC5h4mdksj5Nr_Yg2Yf6sZ33euSoIj03gbk80VtNTr1LI-VcVU-Z1-Drlftw7vq0Je-vp7MmG.png",
+  
+  // M4A4
+  "M4A4 | Neo-Noir": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou-6kejhjxszFJTwW09m6nZSOqOP1MK_YlWpd18h0juDU-MKh2w3n_Rc4YGD6coHAIwc6NQuC-FK5kLrq18e-tJvNzX.png",
+  "M4A4 | Howl": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou-6kejhjxszFJTwW09m6nZSOqOP1MK_YlWpd18h0juDU-MKh2w3n_Rc4YGD6coHAIwc6NQuC-FK5kLrq18e-tJvNzX.png",
+  "M4A4 | Poly Mag": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou-6kejhjxszFJTwW09m6nZSOqOP1MK_YlWpd18h0juDU-MKh2w3n_Rc4YGD6coHAIwc6NQuC-FK5kLrq18e-tJvNzX.png",
+  "M4A4 | Temukau": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou-6kejhjxszFJTwW09m6nZSOqOP1MK_YlWpd18h0juDU-MKh2w3n_Rc4YGD6coHAIwc6NQuC-FK5kLrq18e-tJvNzX.png",
+  
+  // M4A1-S
+  "M4A1-S | Printstream": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou-6kejhz2v_Nfz5H_uOlm7-Ehfb6NL7ul2hS7ctlmdbM8Ij8nVn6_BJpazj0JY_DdAc8YVCCrlm_wO3oh5W-75zAzC.png",
+  "M4A1-S | Hyper Beast": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou-6kejhz2v_Nfz5H_uO7wIHahMj2P7rSnVRd59FkmdbM8Ij8nVn6_0BuZG2iI4GUdgBsM1qCrgO2xee5g5Lv6Z_NzC.png",
+  "M4A1-S | Night Terror": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou-6kejhz2v_Nfz5H_uOlm7-Ehfb6NL7ul2hS7ctlmdbM8Ij8nVn6_BJpazj0JY_DdAc8YVCCrlm_wO3oh5W-75zAzC.png",
+  
+  // AWP
+  "AWP | Dragon Lore": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou6rwOANf2-r3fTxA_t2iq42bwsj4OrzZgiUCupZyiL6TpI2t2VDh-kVvMT-iIYbEdFA2YQrZqAS-l7ruhpTvtZ3B1z.png",
+  "AWP | Gungnir": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou6rwOANf0Ob3fC0X_9iJhZWClPzLP7LAg2JV6dF4hef--InxgUG55Uc6Y2ynI9CUdFU2aVDR_1ntlLvsjMO06ZjPz3.png",
+  "AWP | Asiimov": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou6rwOANf1OD3YjoXuY-Jh5WClPzLP7LAg2JV6dF4hef--InxgUG55Uc6Y2ynI9CUdFU2aVDR_1ntlLvsjMO06ZjPz3.png",
+  "AWP | Chromatic Aberration": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou6rwOANf1OD3YjoXuY-Jh5WClPzLP7LAg2JV6dF4hef--InxgUG55Uc6Y2ynI9CUdFU2aVDR_1ntlLvsjMO06ZjPz3.png",
+  
+  // Desert Eagle
+  "Desert Eagle | Blaze": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbupIgthwczLZAJF7dC_mL-dlvnwMrfum25V4dB8xOrDpo_z31Dl_UU9NWj2cNOTIVU5YgzT-gDtx73q1sO_v5nKzi.png",
+  "Desert Eagle | Printstream": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbupIgthwczPYgJF7dC_mL-bn_jxPbLJqWNU6dNoxOuX9Nms2lK380NsYWGmdobEe1RvZlDXqVe_wOi6h8W5u5yby3.png",
+  "Desert Eagle | Code Red": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbupIgthwczLZAJF7dC_mIGZqOf1Ia_YlWdU-_p9g-7J4cKtjQzjrxI4ZGulI4GVcAY2MljTrFa-kOjph5O6v5-fnS.png",
+  
+  // Glock-18
+  "Glock-18 | Fade": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbupIgthwczPYgJF7dC_mL-bn_jxPbLJqWNU6dNoxOuX9Nms2lK380NsYWGmdobEe1RvZlDXqVe_wOi6h8W5u5yby3.png",
+  "Glock-18 | Bullet Queen": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbupIgthwczLZAJF7dC_mIGZqOf1Ia_YlWdU-_p9g-7J4cKtjQzjrxI4ZGulI4GVcAY2MljTrFa-kOjph5O6v5-fnS.png",
+  "Glock-18 | Umbral Rabbit": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposbupIgthwczPYgJF7dC_mIGZqOf1Ia_YlWdU-_p9g-7J4cKtjQzjrxI4ZGulI4GVcAY2MljTrFa-kOjph5O6v5-fnS.png",
+  
+  // USP-S
+  "USP-S | Ticket to Hell": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpopuP1FABz7OORIQJF_tW7mb-HnvD8J_WAwjwIsMZzjLCSrdXw2Ae3-BduZ2GgItPEdwQ2MFyDq1ntw7js05Hpot.png",
+  "USP-S | Revolution": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpopuP1FAR17OORIQJF_tW7mb-HnvD8J_WAwjwIsMZzjLCSrdXw2Ae3-BduZ2GgItPEdwQ2MFyDq1ntw7js05Hpot.png",
+  "USP-S | Guardian": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpopuP1FAR17OORIQJF_tW7mb-HnvD8J_WAwjwIsMZzjLCSrdXw2Ae3-BduZ2GgItPEdwQ2MFyDq1ntw7js05Hpot.png",
+  "USP-S | Neo-Noir": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpopuP1FAR17OORIQJF_tW7mb-HnvD8J_WAwjwIsMZzjLCSrdXw2Ae3-BduZ2GgItPEdwQ2MFyDq1ntw7js05Hpot.png",
+  
+  // P90
+  "P90 | Asiimov": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpopuP1FABz7OORIQJE-dC6q5SDhfjgJ7fUqWdY781lxO-Yp9il3Fa1qRBpYGnzcoLDe1M3YFqE_AO3wb-8hpO8uMybyy.png",
+  "P90 | Neoqueen": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpopuP1FABz7OORIQJE-dC6q5SDhfjgJ7fUqWdY781lxO-Yp9il3Fa1qRBpYGnzcoLDe1M3YFqE_AO3wb-8hpO8uMybyy.png",
+  "P90 | Dragon King": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpopuP1FABz7OORIQJE-dC6q5SDhfjgJ7fUqWdY781lxO-Yp9il3Fa1qRBpYGnzcoLDe1M3YFqE_AO3wb-8hpO8uMybyy.png",
+  
+  // Five-SeveN
+  "Five-SeveN | Hyper Beast": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposLuoKhRf1fLFcC597t2ygJKCh8j5Nr_Yg2Yf65N0i7jHpY2m3AXm-Uc4YDrzd4aUJlM_M1iG_lG_w7_phpLpuJ3AzG.png",
+  "Five-SeveN | Monkey Business": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposLuoKhRf1fLFcC597t2ygJKCh8j5Nr_Yg2Yf65N0i7jHpY2m3AXm-Uc4YDrzd4aUJlM_M1iG_lG_w7_phpLpuJ3AzG.png",
+  
+  // Galil AR
+  "Galil AR | Cerberus": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FABz7PLfYQJG6d2inL-GkvP9JraflGlSuMFw2LnF9N6t0Fa1_BE4YGygdY7HcgI8NA7X_lPqwOa615C5v4OJly.png",
+  "Galil AR | Destroyer": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FABz7PLfYQJG6d2inL-GkvP9JraflGlSuMFw2LnF9N6t0Fa1_BE4YGygdY7HcgI8NA7X_lPqwOa615C5v4OJly.png",
+  "Galil AR | Eco": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FABz7PLfYQJG6d2inL-GkvP9JraflGlSuMFw2LnF9N6t0Fa1_BE4YGygdY7HcgI8NA7X_lPqwOa615C5v4OJly.png",
+  
+  // SSG 08
+  "SSG 08 | Dragonfire": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot7HxfDhh2KefTjha_NC5h4mdksj5Nr_Yg2Yf6sZ33euSoIj03gbk80VtNTr1LI-VcVU-Z1-Drlftw7vq0Je-vp7MmG.png",
+  "SSG 08 | Parallax": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot7HxfDhh2KefTjha_NC5h4mdksj5Nr_Yg2Yf6sZ33euSoIj03gbk80VtNTr1LI-VcVU-Z1-Drlftw7vq0Je-vp7MmG.png",
+  
+  // G3SG1
+  "G3SG1 | Dream Glade": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgposLOzLhRlxfbGTj5X09q_goWYkuHxPYTQmntZ6fp-h-zG9LP4jVC9vh5yYWqmcIaWcQE7aFnQ8wLowby71Mft6ZzJyX.png",
+  
+  // MP9
+  "MP9 | Wildfire": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou6r8FAR17PLfYQJB5M65mYG0h_76OITck29Y_cg_3ruZo9nziwXj-EBkN2zxdtSRJlRqZFHWqFe3yeu90ZC-v5mYzS.png",
+  "MP9 | Starlight Protector": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpou6r8FAR17PLfYQJB5M65mYG0h_76OITck29Y_cg_3ruZo9nziwXj-EBkN2zxdtSRJlRqZFHWqFe3yeu90ZC-v5mYzS.png",
+  
+  // P250
+  "P250 | Asiimov": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpopb3wflFf0Ob3YjoXuY-Jl5mJkuXLN6nQkWRf18h0juDU-MLw2gbm-kpqMW2lI4SVdwdtZQvQ-FK5x7_pjJG0u8yYnX.png",
+  "P250 | Re.built": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpopb3wflFf0Ob3YjoXuY-Jl5mJkuXLN6nQkWRf18h0juDU-MLw2gbm-kpqMW2lI4SVdwdtZQvQ-FK5x7_pjJG0u8yYnX.png",
+  
+  // SCAR-20
+  "SCAR-20 | Bloodsport": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot7HxfDhh2KefTjha_NC5h4mdksj5Nr_Yg2Yf6sZ33euSoIj03gbk80VtNTr1LI-VcVU-Z1-Drlftw7vq0Je-vp7MmG.png",
+  "SCAR-20 | Fragments": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot7HxfDhh2KefTjha_NC5h4mdksj5Nr_Yg2Yf6sZ33euSoIj03gbk80VtNTr1LI-VcVU-Z1-Drlftw7vq0Je-vp7MmG.png",
+  
+  // MAC-10
+  "MAC-10 | Neon Rider": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpot621FABz7PLfYQJG6d2inL-GkvP9JraflGlSuMFw2LnF9N6t0Fa1_BE4YGygdY7HcgI8NA7X_lPqwOa615C5v4OJly.png",
+  
+  // Nova
+  "Nova | Hyper Beast": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpoo6m1FBRp3_bGcjhQ09-jq5WYh8j3Jq_ummJW4NE_3rqSoI2njQSwr0Y6Yj3xIdKXI1c3YVDU_lHvwOnngMXtv5jPzi.png",
+  "Nova | Clear Polymer": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpoo6m1FBRp3_bGcjhQ09-jq5WYh8j3Jq_ummJW4NE_3rqSoI2njQSwr0Y6Yj3xIdKXI1c3YVDU_lHvwOnngMXtv5jPzi.png",
+  
+  // Imagem padrão para skins não mapeadas
+  "default": "-9a81dlWLwJ2UUGcVs_nsVtzdOEdtWwKGZZLQHTxDZ7I56KU0Zwwo4NUX4oFJZEHLbXH5ApeO4YmlhxYQknCRvCo04DEVlxkKgpoo6m1FBRp3_bGcjhQ09-jq5WYh8j3Jq_ummJW4NE_3rqSoI2njQSwr0Y6Yj3xIdKXI1c3YVDU_lHvwOnngMXtv5jPzi.png"
+};
+
+// Função para gerar imagem da skin
+function getSkinImage(weaponName) {
+  // Remove a condição de desgaste do nome para buscar a imagem base
+  const baseName = weaponName.replace(/ \((Factory New|Minimal Wear|Field-Tested|Well-Worn|Battle-Scarred)\)$/, '');
+  
+  // Busca a imagem no mapeamento
+  const imagePath = SKIN_IMAGE_MAP[baseName] || SKIN_IMAGE_MAP["default"];
+  
+  // Retorna o caminho completo
+  return`/skins/${imagePath}`;
+}
+
+// Gerar 20+ itens para uma caixa
+function generateCaseItems(casePrice) {
+  const items = [];
+  
+  // 1 EXCEEDINGLY RARE (Faca)
+  const knifeWeapon = getRandomWeapon('knives');
+  items.push({
+    name: `${knifeWeapon} (Factory New)`,
+    rarity: "Exceedingly Rare",
+    chance: RARITIES['Exceedingly Rare'].chance,
+    value: randomValue(
+      casePrice * RARITIES['Exceedingly Rare'].minMultiplier,
+      casePrice * RARITIES['Exceedingly Rare'].maxMultiplier
+    ),
+    image: getSkinImage(`${knifeWeapon} (Factory New)`),
+    weapon: knifeWeapon.split('|')[0].trim(),
+    skin: knifeWeapon.split('|')[1]?.trim() || "Vanilla",
+    category: "knives"
+  });
+
+  // 2 COVERT (Vermelho)
+  for (let i = 0; i < 2; i++) {
+    const category = i === 0 ? 'snipers' : 'rifles';
+    const weapon = getRandomWeapon(category);
+    const wear = WEAR_CONDITIONS[Math.floor(Math.random() * 2)]; // FN ou MW
+    items.push({
+      name: `${weapon} (${wear})`,
+      rarity: "Covert",
+      chance: RARITIES['Covert'].chance,
+      value: randomValue(
+        casePrice * RARITIES['Covert'].minMultiplier,
+        casePrice * RARITIES['Covert'].maxMultiplier
+      ),
+      image: getSkinImage(`${weapon} (${wear})`),
+      weapon: weapon.split('|')[0].trim(),
+      skin: weapon.split('|')[1]?.trim() || "Skin",
+      category: category
+    });
+  }
+
+  // 3 CLASSIFIED (Rosa)
+  for (let i = 0; i < 3; i++) {
+    const categories = ['rifles', 'pistols', 'smgs'];
+    const weapon = getRandomWeapon(categories[i % categories.length]);
+    const wear = WEAR_CONDITIONS[Math.floor(Math.random() * 3)];
+    items.push({
+      name: `${weapon} (${wear})`,
+      rarity: "Classified",
+      chance: RARITIES['Classified'].chance,
+      value: randomValue(
+        casePrice * RARITIES['Classified'].minMultiplier,
+        casePrice * RARITIES['Classified'].maxMultiplier
+      ),
+      image: getSkinImage(`${weapon} (${wear})`),
+      weapon: weapon.split('|')[0].trim(),
+      skin: weapon.split('|')[1]?.trim() || "Skin",
+      category: categories[i % categories.length]
+    });
+  }
+
+  // 5 RESTRICTED (Roxo)
+  for (let i = 0; i < 5; i++) {
+    const categories = ['rifles', 'pistols', 'smgs', 'shotguns', 'snipers'];
+    const weapon = getRandomWeapon(categories[i % categories.length]);
+    const wear = WEAR_CONDITIONS[Math.floor(Math.random() * 4)];
+    items.push({
+      name: `${weapon} (${wear})`,
+      rarity: "Restricted",
+      chance: RARITIES['Restricted'].chance,
+      value: randomValue(
+        casePrice * RARITIES['Restricted'].minMultiplier,
+        casePrice * RARITIES['Restricted'].maxMultiplier
+      ),
+      image: getSkinImage(`${weapon} (${wear})`),
+      weapon: weapon.split('|')[0].trim(),
+      skin: weapon.split('|')[1]?.trim() || "Skin",
+      category: categories[i % categories.length]
+    });
+  }
+
+  // 12 MIL-SPEC (Azul) - para completar 23 itens
+  for (let i = 0; i < 12; i++) {
+    const allCategories = ['rifles', 'pistols', 'smgs', 'shotguns', 'snipers', 'machineguns'];
+    const weapon = getRandomWeapon(allCategories[i % allCategories.length]);
+    const wear = WEAR_CONDITIONS[Math.floor(Math.random() * 5)];
+    items.push({
+      name: `${weapon} (${wear})`,
+      rarity: "Mil-Spec",
+      chance: RARITIES['Mil-Spec'].chance,
+      value: randomValue(
+        casePrice * RARITIES['Mil-Spec'].minMultiplier,
+        casePrice * RARITIES['Mil-Spec'].maxMultiplier
+      ),
+      image: getSkinImage(`${weapon} (${wear})`),
+      weapon: weapon.split('|')[0].trim(),
+      skin: weapon.split('|')[1]?.trim() || "Skin",
+      category: allCategories[i % allCategories.length]
+    });
+  }
+
+  return items;
+}
+
+// Gerar imagem da caixa
+function getCaseImage(caseId) {
+  // Caixas ORIGINAIS do CS2 - Tentar imagem local primeiro, depois Steam CDN
+  const steamCases = {
+    "danger-zone": "/images/cases/danger-zone.png",
+    "dreams-nightmares": "/images/cases/dreams-nightmares.png",
+    "broken-fang": "/images/cases/broken-fang.png",
+    "kilowatt": "/images/cases/kilowatt.png",
+    "breakout": "/images/cases/breakout.png",
+    "recoil": "/images/cases/recoil.png",
+    "hydra": "/images/cases/hydra.png",
+    "revolution": "/images/cases/revolution.png",
+    "phoenix": "/images/cases/phoenix.png",
+    "riptide": "/images/cases/riptide.png",
+    "huntsman": "/images/cases/huntsman.png",
+    "fracture": "/images/cases/fracture.png",
+    "spectrum": "/images/cases/spectrum.png",
+    "bravo": "/images/cases/bravo.png",
+    "weapon-case": "/images/cases/weapon-case.png",
+  };
+  
+  // Caixas CUSTOMIZADAS do CS2 Fortune - usar imagem genérica CS2 Fortune
+  if (steamCases[caseId]) {
+    return steamCases[caseId];
+  }
+  
+  // Caixas customizadas usam imagem padrão do CS2 Fortune
+  return "/images/cases/custom-case.png";
+}
+
+// Gerar todas as caixas
+function generateAllCases() {
+  const allCases = CASE_DEFINITIONS.map(caseDef => {
+    const items = generateCaseItems(caseDef.price);
+    const totalValue = items.reduce((sum, item) => sum + item.value, 0);
+    
+    return {
+      id: caseDef.id,
+      name: caseDef.name,
+      price: caseDef.price,
+      description: caseDef.description,
+      image: getCaseImage(caseDef.id),
+      imageEmoji: caseDef.emoji,
+      theme: caseDef.theme,
+      items: items,
+      totalValue: totalValue.toFixed(2)
+    };
+  });
+
+  return allCases;
+}
+
+// Escrever arquivo JavaScript
+function writeFile() {
+  const cases = generateAllCases();
+  
+  const fileContent = `/**
+ * ═══════════════════════════════════════════════════════════════
+ * SISTEMA COMPLETO DE CAIXAS CS2 FORTUNE
+ * ═══════════════════════════════════════════════════════════════
+ * 
+ * 📦 TOTAL: ${cases.length} Caixas Únicas
+ * 🎯 23 itens por caixa (1 Faca + 2 Covert + 3 Classified + 5 Restricted + 12 Mil-Spec)
+ * 💎 Raridades e Chances (PADRÃO OFICIAL):
+ *    - Exceedingly Rare (Faca Dourada): 0.01% chance
+ *    - Covert (Vermelho): 0.15% chance
+ *    - Classified (Rosa): 3% chance
+ *    - Restricted (Roxo): 19% chance
+ *    - Mil-Spec (Azul): 77.84% chance
+ * ⚖️ Balanceamento automático baseado no preço da caixa
+ * 
+ * Gerado automaticamente em: ${new Date().toISOString()}
+ * 
+ * ═══════════════════════════════════════════════════════════════
+ */
+
+const CASES_WITH_REAL_SKINS = ${JSON.stringify(cases, null, 2)};
+
+export default CASES_WITH_REAL_SKINS;
+`;
+
+  const outputPath = path.join(__dirname, 'cases-with-real-skins.js');
+  fs.writeFileSync(outputPath, fileContent, 'utf8');
+  
+  console.log('✅ Arquivo gerado com sucesso!');
+  console.log(`📦 Total de caixas: ${cases.length}`);
+  console.log(`📄 Arquivo: ${outputPath}`);
+  console.log(`📊 Total de itens: ${cases.reduce((sum, c) => sum + c.items.length, 0)}`);
+}
+
+// Executar
+writeFile();

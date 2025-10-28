@@ -1,0 +1,81 @@
+// Prisma schema for CS2 Fortune (modelo inicial)
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // Para desenvolvimento local usamos SQLite. Para produção, altere para postgresql
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id          String   @id @default(uuid())
+  email       String   @unique
+  username    String   @unique
+  password    String
+  balance     Float    @default(0.0)
+  isAdmin     Boolean  @default(false)
+  twoFASecret String?  
+  twoFAEnabled Boolean @default(false)
+  steamId     String?  
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  trades      TradeOffer[]
+  deposits    Deposit[]
+  withdrawals Withdrawal[]
+}
+
+model Case {
+  id        String     @id @default(uuid())
+  name      String
+  price     Float
+  items     CaseItem[]
+  createdAt DateTime   @default(now())
+}
+
+model CaseItem {
+  id        String   @id @default(uuid())
+  case      Case     @relation(fields: [caseId], references: [id])
+  caseId    String
+  name      String
+  rarity    String
+  image     String?
+  value     Float
+}
+
+model TradeOffer {
+  id            String   @id @default(uuid())
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String
+  steamOfferId  String?  @unique
+  // JSON fields replaced with String for SQLite compatibility.
+  // Store serialized JSON as text (use JSON.parse/JSON.stringify in app code).
+  itemsSent     String
+  itemsReceived String
+  status        String   @default("pending")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Deposit {
+  id          String   @id @default(uuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  amount      Float
+  method      String
+  status      String   @default("pending")
+  txReference String?
+  createdAt   DateTime @default(now())
+}
+
+model Withdrawal {
+  id          String   @id @default(uuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  amount      Float
+  method      String
+  status      String   @default("pending")
+  txReference String?
+  createdAt   DateTime @default(now())
+}

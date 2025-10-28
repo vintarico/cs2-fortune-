@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(uuid())
+  email       String   @unique
+  username    String   @unique
+  password    String
+  balance     Float    @default(0.0)
+  isAdmin     Boolean  @default(false)
+  twoFASecret String?
+  twoFAEnabled Boolean @default(false)
+  steamId     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  trades      TradeOffer[]
+  deposits    Deposit[]
+  withdrawals Withdrawal[]
+}
+
+model Case {
+  id        String     @id @default(uuid())
+  name      String
+  price     Float
+  items     CaseItem[]
+  createdAt DateTime   @default(now())
+}
+
+model CaseItem {
+  id        String   @id @default(uuid())
+  case      Case     @relation(fields: [caseId], references: [id])
+  caseId    String
+  name      String
+  rarity    String
+  image     String?
+  value     Float
+}
+
+model TradeOffer {
+  id            String   @id @default(uuid())
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String
+  steamOfferId  String?  @unique
+  itemsSent     Json
+  itemsReceived Json
+  status        String   @default("pending")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Deposit {
+  id          String   @id @default(uuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  amount      Float
+  method      String
+  status      String   @default("pending")
+  txReference String?
+  createdAt   DateTime @default(now())
+}
+
+model Withdrawal {
+  id          String   @id @default(uuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  amount      Float
+  method      String
+  status      String   @default("pending")
+  txReference String?
+  createdAt   DateTime @default(now())
+}

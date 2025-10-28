@@ -1,0 +1,281 @@
+// Prisma schema para CS2 Fortune (atualizado com IA/GPT)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(uuid())
+  email          String?  @unique
+  username       String?  @unique
+  password       String?
+  balance        Float    @default(0.0)
+  isAdmin        Boolean  @default(false)
+  isPremium      Boolean  @default(false)
+  plan           String   @default("free")
+  twoFASecret    String?
+  twoFAEnabled   Boolean  @default(false)
+  steamId        String?  @unique
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  // Sistema de Níveis
+  level          Int      @default(1)
+  xp             Int      @default(0)
+  streak         Int      @default(0)
+  lastLoginAt    DateTime?
+
+  // Provably Fair
+  currentClientSeed String?
+  currentServerSeed String?
+  currentNonce      Int      @default(0)
+
+  // Campos de IA/GPT
+  aiModel        String?  @default("gpt-3.5-turbo")
+  aiQuota        Int      @default(10000)
+  aiUsage        Int      @default(0)
+  aiUsageResetAt DateTime?
+  aiTotalCost    Float    @default(0)
+  gpt5Access     Boolean  @default(false)
+  betaAccess     Boolean  @default(false)
+
+  // Relações
+  trades         TradeOffer[]
+  deposits       Deposit[]
+  withdrawals    Withdrawal[]
+  aiUsageLogs    AIUsageLog[]
+  transactions   Transaction[]
+  caseOpenings   CaseOpening[]
+  inventory      InventoryItem[]
+  battles        BattleParticipant[]
+  achievements   UserAchievement[]
+  dailyRewards   DailyReward[]
+}
+
+model Case {
+  id        String     @id @default(uuid())
+  name      String
+  price     Float
+  items     CaseItem[]
+  createdAt DateTime   @default(now())
+}
+
+model CaseItem {
+  id        String   @id @default(uuid())
+  case      Case     @relation(fields: [caseId], references: [id])
+  caseId    String
+  name      String
+  rarity    String
+  image     String?
+  value     Float
+}
+
+model TradeOffer {
+  id            String   @id @default(uuid())
+  user          User     @relation(fields: [userId], references: [id])
+  userId        String
+  steamOfferId  String?  @unique
+  // JSON como texto para SQLite
+  itemsSent     String
+  itemsReceived String
+  status        String   @default("pending")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Deposit {
+  id          String   @id @default(uuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  amount      Float
+  method      String
+  status      String   @default("pending")
+  txReference String?
+  createdAt   DateTime @default(now())
+}
+
+model Withdrawal {
+  id          String   @id @default(uuid())
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String
+  amount      Float
+  method      String
+  status      String   @default("pending")
+  txReference String?
+  createdAt   DateTime @default(now())
+}
+
+// Modelo de transação genérica (compatível com index.js)
+model Transaction {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  type      String   // "deposito", "retirada", "compra", "venda"
+  amount    Float
+  createdAt DateTime @default(now())
+}
+
+// Log de uso de IA
+model AIUsageLog {
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  model      String
+  tokensUsed Int
+  cost       Float
+  endpoint   String?
+  success    Boolean  @default(true)
+  timestamp  DateTime @default(now())
+
+  @@index([userId, timestamp])
+}
+
+// Configuração de rollout de features (simplificada para SQLite)
+model FeatureRollout {
+  id             String   @id @default(uuid())
+  featureName    String   @unique
+  enabled        Boolean  @default(false)
+  rolloutPercent Float    @default(0)
+  allowedUserIds String?  // JSON string com lista de IDs
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+// 🎁 Histórico de Abertura de Caixas
+model CaseOpening {
+  id              String   @id @default(uuid())
+  user            User     @relation(fields: [userId], references: [id])
+  userId          String
+  caseId          String   // ID da caixa (ex: 'fracture', 'kilowatt')
+  caseName        String   // Nome da caixa
+  casePrice       Float    // Preço pago pela caixa
+  itemName        String   // Item ganho
+  itemRarity      String   // Raridade do item
+  itemValue       Float    // Valor do item ganho
+  profit          Float    // Lucro/Prejuízo (itemValue - casePrice)
+  
+  // Provably Fair
+  serverSeed      String   // Seed do servidor
+  serverSeedHash  String   // Hash público do server seed
+  clientSeed      String   // Seed do cliente
+  nonce           Int      // Contador
+  resultHash      String   // Hash do resultado
+  result          Int      // Número gerado (0-9999)
+  
+  openedAt        DateTime @default(now())
+  
+  @@index([userId, openedAt])
+}
+
+// 🎒 Inventário do usuário
+model InventoryItem {
+  id          String    @id @default(uuid())
+  user        User      @relation(fields: [userId], references: [id])
+  userId      String
+  skinName    String
+  skinImage   String?
+  rarity      String
+  value       Float
+  acquiredAt  DateTime  @default(now())
+  sold        Boolean   @default(false)
+  soldAt      DateTime?
+  soldPrice   Float?
+  
+  @@index([userId, sold])
+}
+
+// ⚔️ Case Battles
+model Battle {
+  id            String              @id @default(uuid())
+  mode          String              // "1v1", "2v2", "1v1v1v1"
+  caseId        String
+  caseName      String
+  casePrice     Float
+  rounds        Int                 @default(1)
+  costPerPlayer Float
+  isPrivate     Boolean             @default(false)
+  status        String              @default("waiting") // waiting, active, finished
+  winnerId      String?
+  createdAt     DateTime            @default(now())
+  startedAt     DateTime?
+  finishedAt    DateTime?
+  
+  participants  BattleParticipant[]
+  results       BattleResult[]
+  
+  @@index([status, createdAt])
+}
+
+model BattleParticipant {
+  id         String   @id @default(uuid())
+  battle     Battle   @relation(fields: [battleId], references: [id])
+  battleId   String
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  position   Int      // 1, 2, 3, 4
+  totalValue Float    @default(0)
+  isWinner   Boolean  @default(false)
+  joinedAt   DateTime @default(now())
+  
+  @@index([battleId, position])
+}
+
+model BattleResult {
+  id        String   @id @default(uuid())
+  battle    Battle   @relation(fields: [battleId], references: [id])
+  battleId  String
+  round     Int
+  userId    String
+  itemName  String
+  itemValue Float
+  createdAt DateTime @default(now())
+  
+  @@index([battleId, round])
+}
+
+// 🏆 Achievements (Conquistas)
+model Achievement {
+  id          String            @id @default(uuid())
+  code        String            @unique
+  name        String
+  description String
+  icon        String
+  rewardType  String            // balance, xp, case
+  rewardValue Float
+  requirement Int               // Quantidade necessária
+  
+  users       UserAchievement[]
+}
+
+model UserAchievement {
+  id            String      @id @default(uuid())
+  user          User        @relation(fields: [userId], references: [id])
+  userId        String
+  achievement   Achievement @relation(fields: [achievementId], references: [id])
+  achievementId String
+  progress      Int         @default(0)
+  completed     Boolean     @default(false)
+  completedAt   DateTime?
+  claimed       Boolean     @default(false)
+  claimedAt     DateTime?
+  
+  @@index([userId, completed])
+}
+
+// 🎁 Recompensas Diárias
+model DailyReward {
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  day        Int      // 1-7
+  rewardType String   // balance, case, xp
+  rewardValue Float
+  claimedAt  DateTime @default(now())
+  
+  @@index([userId, claimedAt])
+}

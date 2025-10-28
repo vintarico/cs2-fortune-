@@ -14,7 +14,25 @@ model User {
   saldo     Float    @default(0)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  
+  // Campos de permissões e planos
+  isAdmin   Boolean  @default(false)
+  isPremium Boolean  @default(false)
+  plan      String   @default("free") // "free", "premium", "vip", "admin"
+  
+  // 🔥 NOVOS CAMPOS PARA IA/GPT
+  aiModel         String?   @default("gpt-3.5-turbo") // Modelo preferido do usuário
+  aiQuota         Int       @default(10000) // Quota mensal de tokens
+  aiUsage         Int       @default(0) // Tokens usados no período
+  aiUsageResetAt  DateTime? // Data de reset da quota
+  aiTotalCost     Float     @default(0) // Custo total acumulado em USD
+  
+  // Flags individuais de acesso
+  gpt5Access      Boolean   @default(false) // ⭐ Acesso ao GPT-5
+  betaAccess      Boolean   @default(false) // Acesso a features beta
+  
   transactions Transaction[]
+  aiUsageLogs  AIUsageLog[]
 }
 
 model Transaction {
@@ -24,4 +42,50 @@ model Transaction {
   amount    Float
   createdAt DateTime @default(now())
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model Case {
+  id          Int      @id @default(autoincrement())
+  name        String
+  price       Float
+  imageUrl    String?
+  description String?
+  createdAt   DateTime @default(now())
+}
+
+model Skin {
+  id        Int      @id @default(autoincrement())
+  name      String
+  rarity    String
+  price     Float
+  imageUrl  String?
+  caseId    Int?
+  createdAt DateTime @default(now())
+}
+
+// 🆕 NOVA TABELA: Log de uso de IA
+model AIUsageLog {
+  id         Int      @id @default(autoincrement())
+  userId     Int
+  model      String   // Modelo usado (gpt-3.5-turbo, gpt-4, gpt-5)
+  tokensUsed Int      // Tokens consumidos
+  cost       Float    // Custo em USD
+  endpoint   String?  // Endpoint usado (/api/ai/chat, etc)
+  success    Boolean  @default(true)
+  timestamp  DateTime @default(now())
+  
+  user User @relation(fields: [userId], references: [id])
+  
+  @@index([userId, timestamp])
+}
+
+// 🆕 NOVA TABELA: Configuração de rollout de features
+model FeatureRollout {
+  id            Int      @id @default(autoincrement())
+  featureName   String   @unique // "gpt5", "beta-features", etc
+  enabled       Boolean  @default(false)
+  rolloutPercent Float   @default(0) // Percentual de usuários com acesso
+  allowedUserIds Int[]   // IDs específicos com acesso
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 }

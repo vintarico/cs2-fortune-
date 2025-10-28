@@ -1,0 +1,65 @@
+analise o site https://csgo-skins.com/ e pegue referencia das recompensas e % de chance de cada caixa que estamos implementando
+e para as novas caixas use a criatividade para criar recompensas e % seguindo a referencia do site, ja vou por preços das caixas originais ja criadas
+e das novas que iremos criar voce tera que analizar cada item que contem dentro e fazer o calculo de quanto cada uma valera, 
+gere caixas de 1 real a 3000 reais com as novas caixas.
+
+Fracture Case 
+Kilowatt Case 
+Recoil Case 
+Revolution Case 
+Danger Zone Case 
+Dreams & Nightmares Case 
+Phoenix Weapon Case 
+Broken Fang Case 
+Breakout Weapon Case 
+Riptide Case 
+Huntsman Case 
+Spectrum Case 
+Hydra Case 
+Bravo Case 
+Weapon Case 
+
+
+Novas Caixas Inspiradas em Armas e Personagens CS2:
+
+
+
+AK-47 | Empress Case: Uma caixa luxuosa, dourada e vermelha, talvez com detalhes imperiais.
+
+M4A4 | Howl Case: Design ardente, preto e laranja, com uma aura de perigo.
+
+AWP | Dragon Lore Case: Verde-esmeralda e dourada, com escamas de dragão estilizadas.
+
+Desert Eagle | Blaze Case: Uma caixa metálica com chamas azuis e detalhes em cromo.
+
+Karambit | Fade Case: Cores vibrantes do arco-íris, transicionando suavemente pelo metal.
+
+Glock-18 | Fade Case: (Similar à Karambit Fade, mas com o formato de uma caixa menor e mais compacta).
+
+Knife | Doppler Case: Design com padrões de ondas de cores profundas (rubi, safira, esmeralda, black pearl).
+
+CT Agent | Phoenix Connexion Case: Uma caixa robusta, com insígnias militares e um design tático.
+
+T Agent | Elite Crew Case: Design mais furtivo e escuro, com símbolos de facção terrorista.
+
+Agent | Master Chief Collection Case: Uma caixa futurista com elementos de armadura de alta tecnologia.
+
+P90 | Asiimov Case: Um design futurista em laranja, branco e preto.
+
+USP-S | Guardian Case: Azul e branco, com o símbolo de um escudo estilizado.
+
+Five-SeveN | Hyper Beast Case: Uma caixa com arte vibrante e monstruosa, em tons psicodélicos.
+
+SG 553 | Cyrex Case: Um visual tecnológico em vermelho, branco e preto.
+
+MP9 | Wildfire Case: Design com explosões de chamas e tons escuros.
+
+AWP | Gungnir Case: Uma caixa majestosa, branca e dourada, inspirada em motivos nórdicos.
+
+M4A1-S | Printstream Case: Um design minimalista em preto e branco com detalhes gráficos.
+
+Glock-18 | Neo-Noir Case: Uma caixa escura com detalhes em néon rosa e azul, estilo cyberpunk.
+
+AK-47 | Bloodsport Case: Vermelha e cinza, com grafismos esportivos agressivos.
+
+Galil AR | Cerberus Case: Caixa com a figura de um cão de três cabeças, em tons sombrios.

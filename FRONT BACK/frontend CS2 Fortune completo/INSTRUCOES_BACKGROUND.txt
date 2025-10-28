@@ -1,0 +1,30 @@
+═══════════════════════════════════════════════════════════════
+🎨 INSTRUÇÕES - ADICIONAR BACKGROUND CS2
+═══════════════════════════════════════════════════════════════
+
+✅ PASSO A PASSO:
+
+1. Salve a imagem CS2 Monaco que você anexou
+
+2. Renomeie para: background-cs2.jpg
+
+3. Cole no caminho:
+   C:\Users\Vinta\Desktop\site cs fortune\FRONT BACK\frontend CS2 Fortune completo\public\images\
+
+4. Atualize a página (Ctrl + Shift + R para limpar cache)
+
+═══════════════════════════════════════════════════════════════
+
+📝 NOTA: O CSS já está configurado para usar a imagem.
+Ela aparecerá automaticamente quando você colocar o arquivo
+no caminho correto com o nome correto.
+
+═══════════════════════════════════════════════════════════════
+
+🎯 CARACTERÍSTICAS DO BACKGROUND:
+- Imagem fixa (não rola com a página)
+- Overlay escuro para melhor legibilidade do texto
+- Responsivo (cobre toda a tela)
+- Centralizado
+
+═══════════════════════════════════════════════════════════════

@@ -1,0 +1,13 @@
+:root {
+  --color-primary: #0066FF;
+  --color-surface: #0F1724;
+  --color-dark: #0B1220;
+  --color-muted: #9AA4B2;
+  --color-success: #2DD4BF;
+  --color-danger: #FF6B6B;
+  --radius-sm: 6px;
+  --radius-md: 12px;
+}
+
+/* Utility classes for the design system */
+.ds-card { box-shadow: 0 8px 30px rgba(2,6,23,0.6); border-radius: var(--radius-md); background: var(--color-surface); }
