@@ -19,6 +19,9 @@ export default function Navbar() {
             <Link href="/inventory">
               <span className="text-gray-300 hover:text-white cursor-pointer transition">🎒 Inventário</span>
             </Link>
+            <Link href="/statistics">
+              <span className="text-gray-300 hover:text-white cursor-pointer transition">📊 Estatísticas</span>
+            </Link>
             <Link href="/provably-fair">
               <span className="text-gray-300 hover:text-white cursor-pointer transition">🔒 Provably Fair</span>
             </Link>

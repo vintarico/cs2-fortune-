@@ -219,6 +219,8 @@ const adminRoutes = require('./routes/admin');
 const aiRoutes = require('./routes/ai');
 // Importar rotas Provably Fair
 const provablyFairRoutes = require('./routes/provablyFair');
+// Importar rotas de estatísticas do usuário
+const userStatsRoutes = require('./src/routes/userStats');
 
 // Middleware para verificar se o usuário é admin
 function requireAdmin(req, res, next) {
@@ -234,6 +236,8 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/ai', authenticateToken, aiRoutes);
 // Usar rotas Provably Fair
 app.use('/api/provably-fair', provablyFairRoutes);
+// Usar rotas de estatísticas do usuário
+app.use('/api/user', userStatsRoutes);
 
 // ═══════════════════════════════════════════════════════════════
 // 🎁 ROTAS DE CASES - Sistema de Abertura de Caixas
